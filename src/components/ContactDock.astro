@@ -1,0 +1,106 @@
+---
+import { site } from '../data/site';
+
+const actions = [
+  { label: 'Phone', href: site.phoneHref, external: false, icon: 'M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1z', fill: true },
+  { label: 'Email', href: `mailto:${site.email}`, external: false, icon: 'M3 6h18v12H3V6zm0 0l9 7 9-7', fill: false },
+  { label: 'WhatsApp', href: site.whatsappHref, external: true, icon: 'M3.5 20.5l1.3-4.2A8.5 8.5 0 1 1 8 19.4l-4.5 1.1zM9 8.5c.2 2.6 2.7 5.4 5.7 6.2l1.3-1.4-1.8-1-1 .8c-1-.4-2-1.4-2.4-2.4l.8-1-1-1.8L9 8.5z', fill: false },
+  { label: 'Book a quote', href: '/contact#quote', external: false, icon: 'M7 3h7l4 4v14H7V3zM14 3v4h4M10 12h5M10 15.5h5', fill: false },
+];
+---
+<div class="dock" data-dock>
+  <ul class="dock__menu" id="dock-menu" role="list" data-dock-menu>
+    {actions.map((a, i) => (
+      <li style={`--i:${actions.length - 1 - i}`}>
+        <a class="dock__action" href={a.href} target={a.external ? '_blank' : undefined} rel={a.external ? 'noopener' : undefined} tabindex="-1">
+          <span class="dock__label">{a.label}</span>
+          <span class="dock__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="20" height="20"><path d={a.icon} fill={a.fill ? 'currentColor' : 'none'} stroke={a.fill ? 'none' : 'currentColor'} stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" /></svg>
+          </span>
+        </a>
+      </li>
+    ))}
+  </ul>
+  <button class="dock__toggle" type="button" aria-expanded="false" aria-controls="dock-menu" aria-label="Contact us" data-dock-toggle>
+    <svg class="dock__open-icon" aria-hidden="true" viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M4 4h16a1 1 0 0 1 1 1v11a1 1 0 0 1-1 1H9l-4.4 3.5A.4.4 0 0 1 4 20.2V5a1 1 0 0 1 0-1zm4 6.2a1.2 1.2 0 1 0 0 2.4 1.2 1.2 0 0 0 0-2.4zm4 0a1.2 1.2 0 1 0 0 2.4 1.2 1.2 0 0 0 0-2.4zm4 0a1.2 1.2 0 1 0 0 2.4 1.2 1.2 0 0 0 0-2.4z"/></svg>
+    <svg class="dock__close-icon" aria-hidden="true" viewBox="0 0 24 24" width="22" height="22"><path fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" d="M6 6l12 12M18 6L6 18"/></svg>
+  </button>
+</div>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-dock]').forEach((dock) => {
+    const toggle = dock.querySelector<HTMLButtonElement>('[data-dock-toggle]')!;
+    const links = [...dock.querySelectorAll<HTMLAnchorElement>('.dock__action')];
+
+    const setOpen = (open: boolean) => {
+      dock.classList.toggle('is-open', open);
+      toggle.setAttribute('aria-expanded', String(open));
+      toggle.setAttribute('aria-label', open ? 'Close contact options' : 'Contact us');
+      links.forEach((a) => (a.tabIndex = open ? 0 : -1));
+    };
+
+    toggle.addEventListener('click', () => setOpen(!dock.classList.contains('is-open')));
+    links.forEach((a) => a.addEventListener('click', () => setOpen(false)));
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && dock.classList.contains('is-open')) {
+        setOpen(false);
+        toggle.focus();
+      }
+    });
+    document.addEventListener('click', (e) => {
+      if (dock.classList.contains('is-open') && !dock.contains(e.target as Node)) setOpen(false);
+    });
+  });
+</script>
+
+<style>
+  .dock {
+    position: fixed; z-index: 60;
+    right: max(18px, env(safe-area-inset-right));
+    bottom: max(18px, env(safe-area-inset-bottom));
+    display: flex; flex-direction: column; align-items: flex-end; gap: 12px;
+  }
+
+  .dock__menu { display: grid; gap: 10px; justify-items: end; margin: 0; padding: 0; pointer-events: none; }
+  .dock__menu li {
+    opacity: 0; transform: translateY(12px) scale(0.96);
+    transition: opacity 0.25s ease, transform 0.35s var(--ease-out);
+    transition-delay: calc(var(--i) * 40ms);
+  }
+  .dock.is-open .dock__menu { pointer-events: auto; }
+  .dock.is-open .dock__menu li { opacity: 1; transform: none; }
+
+  .dock__action { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+  .dock__label {
+    padding: 7px 12px; border-radius: 6px; background: #fff; color: #000;
+    font-size: 14px; font-weight: 600; white-space: nowrap;
+    box-shadow: 0 6px 20px -6px rgba(0, 0, 0, 0.35);
+  }
+  .dock__icon {
+    display: grid; place-items: center; width: 48px; height: 48px; border-radius: 50%;
+    background: #000; color: #fff; box-shadow: 0 8px 22px -8px rgba(0, 0, 0, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    transition: background-color 0.2s ease;
+  }
+  .dock__action:hover .dock__icon, .dock__action:focus-visible .dock__icon { background: var(--brand); }
+
+  .dock__toggle {
+    position: relative; display: grid; place-items: center; width: 60px; height: 60px; padding: 0;
+    border: 3px solid #fff; border-radius: 50%; background: var(--brand); color: #fff; cursor: pointer;
+    box-shadow: 0 12px 30px -10px rgba(8, 118, 244, 0.8), 0 2px 8px rgba(0, 0, 0, 0.25);
+    transition: transform 0.3s var(--ease-out), background-color 0.2s ease;
+  }
+  .dock__toggle:hover { background: var(--brand-deep); }
+  .dock__toggle svg { position: absolute; transition: opacity 0.2s ease, transform 0.3s var(--ease-out); }
+  .dock__close-icon { opacity: 0; transform: rotate(-90deg); }
+  .dock.is-open .dock__open-icon { opacity: 0; transform: rotate(90deg); }
+  .dock.is-open .dock__close-icon { opacity: 1; transform: none; }
+
+  @media (max-width: 560px) {
+    .dock__toggle { width: 56px; height: 56px; }
+    .dock__icon { width: 46px; height: 46px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .dock__menu li, .dock__toggle svg { transition: none; }
+  }
+</style>

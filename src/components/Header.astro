@@ -1,5 +1,6 @@
 ---
 import { nav, site } from '../data/site';
+import { categories, servicesIn } from '../data/services';
 
 const path = Astro.url.pathname.replace(/\/$/, '') || '/';
 const isCurrent = (href: string) => path === href || path.startsWith(`${href}/`);
@@ -11,7 +12,28 @@ const isCurrent = (href: string) => path === href || path.startsWith(`${href}/`)
 
   <nav class="nav" aria-label="Primary">
     <ul class="nav__list" id="nav-menu" role="list" data-menu>
-      {nav.map((item) => (
+      {nav.map((item) => item.href === '/services' ? (
+        <li class="has-mega">
+          <a href={item.href} aria-current={isCurrent(item.href) ? 'page' : undefined} aria-haspopup="true">
+            {item.label}
+            <svg class="chev" aria-hidden="true" viewBox="0 0 24 24" width="14" height="14"><path fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg>
+          </a>
+          <!-- Desktop dropdown: opens on hover and on keyboard focus. Hidden in the mobile menu. -->
+          <div class="mega">
+            <div class="mega__panel">
+              {categories.map((c) => (
+                <div class="mega__col">
+                  <p class="mega__heading">{c.name}</p>
+                  <ul role="list">
+                    {servicesIn(c.id).map((s) => <li><a href={`/services/${s.slug}`}>{s.name}</a></li>)}
+                  </ul>
+                </div>
+              ))}
+              <a class="mega__all" href="/services">View all services <span aria-hidden="true">→</span></a>
+            </div>
+          </div>
+        </li>
+      ) : (
         <li><a href={item.href} aria-current={isCurrent(item.href) ? 'page' : undefined}>{item.label}</a></li>
       ))}
       <li class="nav__mobile-only"><a href={site.phoneHref}>Call {site.phone}</a></li>
@@ -69,8 +91,9 @@ const isCurrent = (href: string) => path === href || path.startsWith(`${href}/`)
   }
   :global(.site-header.is-scrolled) .brand__logo { --logo-h: 60px; }
 
-  .nav__list { display: flex; gap: 34px; margin: 0; padding: 0; }
-  .nav__list a { position: relative; font-size: 14px; font-weight: 500; text-decoration: none; color: var(--paper-dim); transition: color 0.2s ease; }
+  .nav { align-self: stretch; display: flex; }
+  .nav__list { display: flex; align-items: center; gap: 34px; height: 100%; margin: 0; padding: 0; }
+  .nav__list a { position: relative; font-size: 14.5px; font-weight: 500; text-decoration: none; color: var(--paper-dim); transition: color 0.2s ease; }
   .nav__list a::after {
     content: ""; position: absolute; left: 0; right: 0; bottom: -6px; height: 1px;
     background: currentColor; transform: scaleX(0); transform-origin: right; transition: transform 0.35s var(--ease-out);
@@ -78,6 +101,44 @@ const isCurrent = (href: string) => path === href || path.startsWith(`${href}/`)
   .nav__list a:hover, .nav__list a[aria-current="page"] { color: var(--paper); }
   .nav__list a:hover::after, .nav__list a[aria-current="page"]::after { transform: scaleX(1); transform-origin: left; }
   .nav__mobile-only { display: none; }
+
+  /* ---------- Services dropdown (desktop) ----------
+     The list item spans the full header height and the panel is positioned against the fixed header,
+     so the pointer can travel from the link into the panel without the hover dropping, and the panel
+     stays centred on the page whatever the link's position. */
+  .has-mega { height: 100%; display: flex; align-items: center; }
+  .has-mega > a { display: inline-flex; align-items: center; gap: 6px; }
+  .chev { transition: transform 0.3s var(--ease-out); }
+  .has-mega:hover .chev, .has-mega:focus-within .chev { transform: rotate(180deg); }
+  .mega {
+    position: absolute; top: 100%; left: 0; right: 0;
+    display: flex; justify-content: center; padding: 0 var(--gutter);
+    opacity: 0; visibility: hidden; transform: translateY(8px);
+    transition: opacity 0.22s ease, visibility 0.22s, transform 0.3s var(--ease-out);
+  }
+  .has-mega:hover .mega, .has-mega:focus-within .mega { opacity: 1; visibility: visible; transform: none; }
+  .mega__panel {
+    width: min(920px, 100%); display: grid; grid-template-columns: repeat(4, 1fr); gap: 4px 28px;
+    padding: 26px 28px 20px; background: #fff; color: #000;
+    border-top: 3px solid var(--brand); border-radius: 0 0 12px 12px;
+    box-shadow: 0 30px 80px -20px rgba(0, 0, 0, 0.55);
+  }
+  .mega__heading {
+    font-size: 12px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--char-faint);
+    padding-bottom: 10px; margin-bottom: 6px; border-bottom: 1px solid var(--rule);
+  }
+  .mega__col ul { display: grid; gap: 1px; margin: 0; padding: 0; }
+  .mega__col a, .nav__list .mega__col a {
+    display: block; padding: 8px 10px; margin: 0 -10px; border-radius: 6px;
+    font-size: 14.5px; font-weight: 500; color: #111;
+  }
+  .mega a::after { display: none; }
+  .nav__list .mega__col a:hover, .nav__list .mega__col a:focus-visible { background: var(--sand-2); color: var(--brand); }
+  .nav__list .mega__all {
+    grid-column: 1 / -1; justify-self: start; margin-top: 12px; padding-top: 14px; width: 100%;
+    border-top: 1px solid var(--rule); font-size: 14.5px; font-weight: 700; color: var(--brand);
+  }
+  .nav__list .mega__all:hover { color: var(--brand-deep); }
 
   .header-actions { display: flex; align-items: center; gap: 20px; }
   .header-phone { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-width: 44px; min-height: 44px; font-size: 14px; font-weight: 600; text-decoration: none; color: var(--paper-dim); font-variant-numeric: tabular-nums; }
@@ -98,7 +159,7 @@ const isCurrent = (href: string) => path === href || path.startsWith(`${href}/`)
     .nav__list { gap: 24px; }
   }
 
-  @media (max-width: 900px) {
+  @media (max-width: 1024px) {
     .header-phone { display: none; }
     .menu-toggle { display: block; }
     .nav__list {
@@ -113,6 +174,9 @@ const isCurrent = (href: string) => path === href || path.startsWith(`${href}/`)
       transition: transform 0.5s var(--ease-out), visibility 0.5s;
     }
     :global(.nav__list.is-open) { transform: none; visibility: visible; }
+    .nav__list { height: auto; align-items: stretch; }
+    .has-mega { height: auto; display: block; }
+    .mega, .chev { display: none; }
     .nav__list li { border-bottom: 1px solid var(--line-soft); }
     .nav__list a { display: block; padding: 16px 0; font: 650 30px/1.1 var(--font-display); color: var(--paper); }
     .nav__list a::after { display: none; }
@@ -126,7 +190,7 @@ const isCurrent = (href: string) => path === href || path.startsWith(`${href}/`)
     }
   }
 
-  @media (max-width: 900px) {
+  @media (max-width: 1024px) {
     .site-header { --header-h: 76px; }
     :global(.site-header.is-scrolled) { --header-h: 68px; }
     .brand__logo { --logo-h: 62px; }

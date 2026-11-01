@@ -1,10 +1,13 @@
 ---
-// The four commitments from the client's original site, rewritten for clarity.
+// "Why choose us": every point follows the client's published terms (/terms) or their own earlier site,
+// worded so it does not promise more than those do (no fixed-price or guaranteed-finish-date claims).
 const values = [
-  { title: 'Experience', text: 'Experienced trades on every job, so the work is done properly and in the right order.' },
-  { title: 'Quality', text: 'Good materials and close attention to detail, in the parts you see and the parts you don’t.' },
-  { title: 'Communication', text: 'Clear updates and no surprises, from the first call to handover.' },
-  { title: 'Fair pricing', text: 'Competitive, written quotations that are clear about what is included.' },
+  { title: 'Experienced trades', text: 'Skilled tradespeople on every job, doing the work properly and in the right order.' },
+  { title: 'Written quotes', text: 'Your price is set out in a written quotation, and any extra work is confirmed in writing first.' },
+  { title: 'Fully insured', text: 'Public and employers’ liability insurance to £1,000,000 on every job.' },
+  { title: 'Written guarantee', text: 'A 12-month guarantee on new workmanship, set out in our terms.' },
+  { title: 'Protected home', text: 'Dust sheets and sheeting over floors and surfaces, and a tidy site while we work.' },
+  { title: 'Agreed schedule', text: 'We agree the timescale with you before we start and keep you updated throughout.' },
 ];
 
 interface Props {
@@ -12,46 +15,64 @@ interface Props {
 }
 const { heading = true } = Astro.props;
 ---
-<section class="values section on-light" aria-labelledby={heading ? 'values-title' : undefined} aria-label={heading ? undefined : 'Our commitments'}>
+<section class="why section" aria-labelledby={heading ? 'why-title' : undefined} aria-label={heading ? undefined : 'Why choose us'}>
   <div class="container">
     {heading && (
-      <div class="values__intro">
-        <p class="eyebrow" data-reveal>About us</p>
-        <h2 class="h2" id="values-title" data-reveal>A Coventry building team that looks after the whole job.</h2>
-        <p class="lede" data-reveal>From the first call to the final coat of paint, you deal with one company and get a written quotation before any work starts.</p>
+      <div class="why__head">
+        <p class="why__eyebrow" data-reveal>Why choose us</p>
+        <h2 class="why__title" id="why-title" data-reveal>
+          Dependable building,<br />
+          <em>done properly.</em>
+        </h2>
       </div>
     )}
-    <ol class="values__grid" role="list">
-      {values.map((v) => (
-        <li class="value" data-reveal>
-          <h3 class="value__title">{v.title}</h3>
-          <p class="value__text">{v.text}</p>
-        </li>
-      ))}
-    </ol>
+
+    <div class="why__body">
+      <figure class="why__media" data-reveal>
+        <img src="/gallery/brickwork-2.webp" alt="" width="1280" height="853" loading="lazy" decoding="async" />
+      </figure>
+
+      <ol class="why__list" role="list">
+        {values.map((v, i) => (
+          <li class="why__item" data-reveal>
+            <span class="why__num">{String(i + 1).padStart(2, '0')}</span>
+            <h3 class="why__name">{v.title}</h3>
+            <p class="why__text">{v.text}</p>
+          </li>
+        ))}
+      </ol>
+    </div>
+    <p class="why__note">Insurance and guarantee details are in our <a href="/terms">terms &amp; conditions</a>.</p>
   </div>
 </section>
 
 <style>
-  .values__intro { display: grid; grid-template-columns: 1fr minmax(260px, 380px); gap: 22px 64px; align-items: end; margin-bottom: clamp(48px, 6vw, 88px); }
-  .values__intro .eyebrow { grid-column: 1 / -1; }
-  .values__intro .h2 { max-width: 18ch; }
-  .values__grid { display: grid; grid-template-columns: repeat(4, 1fr); border-top: 1px solid var(--rule); margin: 0; padding: 0; }
-  .value { padding: 28px 28px 8px 0; border-right: 1px solid var(--rule); }
-  .value + .value { padding-left: 28px; }
-  .value:last-child { border-right: 0; }
-  .value__title { font: 700 22px/1.2 var(--font-display); letter-spacing: -0.02em; margin-bottom: 10px; }
-  .value__text { font-size: 15.5px; color: var(--char-dim); max-width: 30ch; }
+  .why { background: var(--sand-2); color: var(--char); }
 
-  @media (max-width: 980px) {
-    .values__intro { grid-template-columns: 1fr; }
-    .values__grid { grid-template-columns: 1fr 1fr; }
-    .value { padding: 28px 24px 28px 0; border-bottom: 1px solid var(--rule); }
-    .value + .value { padding-left: 0; }
-    .value:nth-child(even) { padding-left: 24px; border-right: 0; }
+  .why__head { margin-bottom: clamp(40px, 5vw, 72px); }
+  .why__eyebrow { font-size: 12.5px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--char-dim); margin-bottom: 18px; }
+  .why__title { font: 700 clamp(38px, 5vw, 76px)/1 var(--font-display); letter-spacing: -0.035em; }
+  .why__title em { font-style: italic; color: var(--brand); }
+
+  .why__body { display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); gap: clamp(32px, 5vw, 72px); align-items: stretch; }
+  .why__media { margin: 0; min-height: 420px; overflow: hidden; background: var(--rule); }
+  .why__media img { width: 100%; height: 100%; object-fit: cover; }
+
+  .why__list { display: grid; grid-template-columns: 1fr 1fr; gap: 0 clamp(24px, 3vw, 44px); margin: 0; padding: 0; align-content: start; }
+  .why__item { padding: 24px 0 30px; border-top: 1px solid rgba(0, 0, 0, 0.18); }
+  .why__num { display: block; font-size: 14px; font-style: italic; font-weight: 600; color: var(--brand); margin-bottom: 14px; }
+  .why__name { font: 700 18px/1.25 var(--font-display); letter-spacing: -0.015em; margin-bottom: 8px; }
+  .why__text { font-size: 14.5px; line-height: 1.6; color: var(--char-dim); max-width: 34ch; }
+
+  .why__note { margin-top: 28px; font-size: 13px; color: var(--char-faint); }
+  .why__note a { color: var(--char-dim); }
+
+  @media (max-width: 900px) {
+    .why__body { grid-template-columns: 1fr; }
+    .why__media { min-height: 0; aspect-ratio: 16 / 10; }
   }
-  @media (max-width: 560px) {
-    .values__grid { grid-template-columns: 1fr; }
-    .value, .value:nth-child(even) { padding: 24px 0; border-right: 0; }
+  @media (max-width: 520px) {
+    .why__list { grid-template-columns: 1fr; }
+    .why__item { padding: 20px 0 22px; }
   }
 </style>

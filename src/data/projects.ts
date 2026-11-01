@@ -5,26 +5,38 @@ export interface Project {
   alt: string;
   category: CategoryId;
   href?: string;
-  /** True for stand-in images that are not Piran’s own work. While any remain, the gallery is titled as ideas, not projects. */
+  /** True for stand-in images that are not Piran’s own work. The gallery heading reflects how many are real. */
   placeholder: boolean;
 }
 
-// Stock photos (Pixabay) stand in until the client supplies photos of real Piran projects.
-// Replace with real project photos and set `placeholder: false` to retitle the section "Recent projects".
+// Stock photos (Pixabay) stand in until the client supplies photos of real Piran projects. Add real
+// project photos with `placeholder: false`; the heading then changes from "Ideas for your project" to
+// "Ideas and our recent work" (some real) and "Our recent work" (all real).
 // Eleven tiles fill the grid exactly: one large tile plus ten small ones over four rows.
-const GALLERY_SERVICES = [
-  'kitchen-renovation', 'loft-extension', 'bathrooms', 'landscaping',
-  'double-storey-extensions', 'tiling', 'driveways', 'window-work',
-  'plastering', 'kitchen-refits', 'block-paving',
+// Each pick is [service, photo index]; the first is the large tile, so it gets the strongest photo.
+const PICKS: [string, number][] = [
+  ['kitchen-renovation', 3],
+  ['loft-extension', 1],
+  ['bathrooms', 1],
+  ['landscaping', 1],
+  ['double-storey-extensions', 1],
+  ['tiling', 1],
+  ['driveways', 2],
+  ['window-work', 1],
+  ['plastering', 1],
+  ['kitchen-refits', 1],
+  ['block-paving', 1],
 ];
 
-export const projects: Project[] = GALLERY_SERVICES.flatMap((slug) => {
+export const projects: Project[] = PICKS.flatMap(([slug, index]) => {
   const service = services.find((s) => s.slug === slug);
-  // The second photo, so the gallery doesn't repeat the services-list thumbnail.
-  const photo = service && (photosFor(service)[1] ?? photosFor(service)[0]);
+  const photo = service && (photosFor(service)[index] ?? photosFor(service)[0]);
   return service && photo
     ? [{ src: photo.src, alt: service.name, category: service.category, href: `/services/${service.slug}`, placeholder: true }]
     : [];
 });
 
-export const galleryIsPublishable = projects.length > 0 && projects.every((p) => !p.placeholder);
+const realCount = projects.filter((p) => !p.placeholder).length;
+
+/** 'none' while every photo is a stand-in, 'some' once real work is mixed in, 'all' when every photo is real. */
+export const realWork: 'none' | 'some' | 'all' = realCount === 0 ? 'none' : realCount === projects.length ? 'all' : 'some';

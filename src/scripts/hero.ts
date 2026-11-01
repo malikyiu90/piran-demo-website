@@ -2,6 +2,7 @@
 // with GSAP ScrollTrigger. Adjacent frames are cross-blended so the sequence stays smooth between samples.
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { getLenis } from './smooth-scroll';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -13,18 +14,9 @@ function initHero(hero: HTMLElement) {
   const ctx = canvas.getContext('2d')!;
   const media = hero.querySelector<HTMLElement>('[data-media]')!;
   const chapters = [...hero.querySelectorAll<HTMLElement>('[data-chapter]')];
-  const steps = [...hero.querySelectorAll<HTMLElement>('[data-step]')];
-  const progressFill = hero.querySelector<HTMLElement>('[data-progress-fill]');
-  const progressPct = hero.querySelector<HTMLElement>('[data-progress-pct]');
-  const cue = hero.querySelector<HTMLElement>('[data-scroll-cue]');
-  const loader = hero.querySelector<HTMLElement>('[data-loader]');
-  const loaderFill = hero.querySelector<HTMLElement>('[data-loader-fill]');
-  const loaderPct = hero.querySelector<HTMLElement>('[data-loader-pct]');
 
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  // Build stages as fractions of the video timeline (foundation → frame → finish → handover).
-  const STAGE_STARTS = [0, 0.13, 0.33, 0.66];
   // Share of the hero's visible width the house occupies; narrow screens zoom out to keep it in frame.
   const FOCUS_WIDTH = 0.6;
   // Share of the frame's (empty) sky cut off on tall screens; the finished roof starts ~15% down, so stay below that.
@@ -35,7 +27,6 @@ function initHero(hero: HTMLElement) {
 
   const frameCount = Math.max(1, Number(hero.dataset.frameCount) || 1);
   const lastIndex = frameCount - 1;
-  const progressSpan = lastIndex || 1;
   const frameSet = pickFrameSet();
   const frames: (HTMLImageElement | undefined)[] = new Array(frameCount);
   const edgeCache = new Map<HTMLImageElement, { top: string; bottom: string }>();
@@ -87,9 +78,6 @@ function initHero(hero: HTMLElement) {
 
   function onFrameLoaded(i: number) {
     loadedCount += 1;
-    if (loaderFill) loaderFill.style.transform = `scaleX(${loadedCount / frameCount})`;
-    if (loaderPct) loaderPct.textContent = String(Math.round((loadedCount / frameCount) * 100));
-    if (loadedCount >= frameCount) loader?.classList.add('is-done');
     if (Math.abs(i - state.frame) <= 1 || !canvas.classList.contains('is-ready')) requestRender();
   }
 
@@ -142,8 +130,10 @@ function initHero(hero: HTMLElement) {
     const cover = Math.max(cw / iw, ch / ih);
     let scale = cover;
     if (cw / ch < 1.2) {
-      // Narrow viewport: cover would crop the house, so fit the focus area instead.
-      scale = Math.min(cover, Math.max(cw / iw, cw / (iw * FOCUS_WIDTH)));
+      // Narrow viewport: cover would crop the house, so fit the focus area instead. Very tall phones zoom
+      // in a little more so the image fills more of the height.
+      const focus = ch / cw > 1.9 ? 0.52 : FOCUS_WIDTH;
+      scale = Math.min(cover, Math.max(cw / iw, cw / (iw * focus)));
     }
     const dw = iw * scale;
     const dh = ih * scale;
@@ -205,11 +195,28 @@ function initHero(hero: HTMLElement) {
     const base = nearestLoaded(i);
     if (!base) return;
     drawFrame(base, 1);
+    const key = `${canvas.width}x${canvas.height}:${base.naturalWidth}`;
+    if (key !== layoutKey) { layoutKey = key; syncTextPosition(computeLayout(base)); }
     if (t > 0.02 && i < lastIndex) {
       const next = nearestLoaded(i + 1);
       if (next && next !== base) drawFrame(next, t);
     }
     canvas.classList.add('is-ready');
+  }
+
+  // On tall phones the image ends well above the bottom of the screen. When there is room, the text
+  // follows straight on from the image (data-stack) instead of leaving a dark gap above it.
+  let layoutKey = '';
+  function syncTextPosition(l: ReturnType<typeof computeLayout>) {
+    const k = canvas.clientWidth / canvas.width;
+    const bandBottom = l.letterbox ? (l.dy + l.dh) * k : canvas.clientHeight;
+    hero.style.setProperty('--band-bottom', `${Math.round(bandBottom)}px`);
+    if (window.innerWidth <= 900 && l.letterbox) {
+      const tallest = Math.max(...chapters.map((c) => c.offsetHeight));
+      hero.dataset.stack = String(bandBottom + 18 + tallest + 32 <= canvas.clientHeight);
+    } else {
+      delete hero.dataset.stack;
+    }
   }
 
   function sizeCanvas() {
@@ -225,27 +232,6 @@ function initHero(hero: HTMLElement) {
     requestRender();
   }
 
-  /* -------------------------------------------------------------- progress */
-
-  const verticalProgress = window.matchMedia('(min-width: 901px)');
-  let activeStep = -1;
-  let lastProgress = 0;
-  function updateProgress(p: number) {
-    lastProgress = p;
-    const pct = String(Math.round(p * 100));
-    if (progressPct && progressPct.textContent !== pct) progressPct.textContent = pct;
-    if (progressFill) progressFill.style.transform = verticalProgress.matches ? `scaleY(${p})` : `scaleX(${p})`;
-    let step = 0;
-    STAGE_STARTS.forEach((start, idx) => { if (p >= start) step = idx; });
-    if (step !== activeStep) {
-      activeStep = step;
-      steps.forEach((el, idx) => {
-        el.classList.toggle('is-active', idx === step);
-        el.classList.toggle('is-done', idx < step);
-      });
-    }
-  }
-
   let resizeRaf = 0;
   window.addEventListener('resize', () => {
     cancelAnimationFrame(resizeRaf);
@@ -258,7 +244,7 @@ function initHero(hero: HTMLElement) {
     hero.classList.add('is-static');
     state.frame = lastIndex;
     sizeCanvas();
-    loadFrames([lastIndex]).then(() => loader?.classList.add('is-done'));
+    loadFrames([lastIndex]);
     return;
   }
 
@@ -270,32 +256,12 @@ function initHero(hero: HTMLElement) {
   const [intro, structure, finish, handover] = chapters;
   const FRAMES_END = 1; // frame scrub runs 0 → 1, then the final chapter holds until 1.12
 
-  const tl = gsap.timeline({
-    defaults: { ease: 'none' },
-    scrollTrigger: {
-      trigger: hero,
-      start: 'top top',
-      end: () => `+=${window.innerHeight * 4.4}`,
-      pin: true,
-      scrub: true,
-      anticipatePin: 1,
-      invalidateOnRefresh: true,
-      // While the hero is pinned the header stays transparent so it never covers the house.
-      onToggle: (self) => document.documentElement.classList.toggle('over-hero', self.isActive),
-    },
-  });
+  // The timeline is driven by a smoothed playhead (below), not directly by the scrollbar.
+  const tl = gsap.timeline({ paused: true, defaults: { ease: 'none' } });
 
-  tl.to(state, {
-    frame: lastIndex,
-    duration: FRAMES_END,
-    onUpdate: () => {
-      requestRender();
-      updateProgress(state.frame / progressSpan);
-    },
-  }, 0);
+  tl.to(state, { frame: lastIndex, duration: FRAMES_END, onUpdate: requestRender }, 0);
   tl.fromTo(media, { scale: 1.06 }, { scale: 1, duration: FRAMES_END }, 0);
 
-  if (cue) tl.fromTo(cue, { autoAlpha: 1 }, { autoAlpha: 0, duration: 0.03, immediateRender: false }, 0.005);
   tl.to(intro, { autoAlpha: 0, y: -60, duration: 0.07, ease: 'power1.in' }, 0.05);
 
   const chapterSpan = (el: HTMLElement, inAt: number, outAt: number | null) => {
@@ -308,13 +274,73 @@ function initHero(hero: HTMLElement) {
   chapterSpan(handover, 0.84, null);
   tl.to({}, { duration: 0.12 }, FRAMES_END); // hold on the lit house
 
+  /* ------------------------------------------------------- paced playhead */
+  // Scroll sets a target; the playhead eases towards it with a speed cap, so a fast flick can't skip
+  // the build:  step = diff · (1 − e^(−K·dt)),  |step| ≤ dt / MIN_DURATION.
+  // If the visitor scrolls past the hero before the build has finished, the page holds at the end of
+  // the hero until it catches up, then scrolling continues.
+  const MIN_DURATION = window.innerWidth <= 900 ? 2.2 : 2.6; // seconds for a full 0 → 1 run at top speed
+  const K = 7; // smoothing rate (1/s)
+  const lenis = getLenis();
+  let target = 0;
+  let playhead = 0;
+  let engaged = false;
+  let holding = false;
+
+  const pin = ScrollTrigger.create({
+    trigger: hero,
+    start: 'top top',
+    end: () => `+=${window.innerHeight * 4.4}`,
+    pin: true,
+    anticipatePin: 1,
+    invalidateOnRefresh: true,
+    // While the hero is pinned the header stays transparent so it never covers the house.
+    onToggle: (self) => document.documentElement.classList.toggle('over-hero', self.isActive),
+    onUpdate: (self) => {
+      target = self.progress;
+      if (target > 0.005 && target < 0.995) engaged = true;
+    },
+  });
+
+  // Arriving below the hero (reload, back button): show the finished state, no replay and no hold.
+  if (pin.progress >= 1) {
+    target = playhead = 1;
+    tl.progress(1);
+  }
+
+  function setHold(on: boolean) {
+    holding = on;
+    if (on) {
+      lenis?.stop();
+      if (lenis) lenis.scrollTo(pin.end - 1, { immediate: true, force: true });
+      else window.scrollTo(0, pin.end - 1);
+    } else {
+      lenis?.start();
+    }
+  }
+
+  gsap.ticker.add((_time, deltaMs) => {
+    const dt = Math.min(deltaMs / 1000, 0.05);
+    const diff = target - playhead;
+    if (diff !== 0) {
+      const cap = dt / MIN_DURATION;
+      const step = Math.abs(diff) < 0.0005 ? diff : Math.max(-cap, Math.min(cap, diff * (1 - Math.exp(-K * dt))));
+      playhead += step;
+      tl.progress(playhead);
+    }
+    const unfinished = playhead < 0.985;
+    // A nav link jumping past the hero is not someone watching the build: never hold for that.
+    if (document.documentElement.dataset.jumping) engaged = false;
+    if (!holding && engaged && unfinished && target >= 1 && window.scrollY >= pin.end - 2) setHold(true);
+    else if (holding && !lenis) window.scrollTo(0, pin.end - 1);
+    if (holding && !unfinished) setHold(false);
+    if (playhead >= 0.999) engaged = false;
+  });
+
   // Intro reveal on load.
   gsap.timeline({ defaults: { ease: 'expo.out' } })
     .from(intro.querySelectorAll('.line__inner'), { yPercent: 110, duration: 1.4, stagger: 0.1 }, 0.15)
     .from(intro.querySelectorAll('.eyebrow, .lede, .cta-row'), { autoAlpha: 0, y: 24, duration: 1.2, stagger: 0.08 }, 0.45)
-    .from('[data-header]', { autoAlpha: 0, y: -16, duration: 1.2, clearProps: 'transform,opacity,visibility' }, 0.3)
-    .from([cue, hero.querySelector('[data-progress]')].filter(Boolean), { autoAlpha: 0, duration: 1 }, 0.9);
+    .from('[data-header]', { autoAlpha: 0, y: -16, duration: 1.2, clearProps: 'transform,opacity,visibility' }, 0.3);
 
-  updateProgress(0);
-  verticalProgress.addEventListener('change', () => updateProgress(lastProgress));
 }

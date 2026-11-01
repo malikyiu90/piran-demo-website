@@ -18,13 +18,15 @@ import { site } from '../data/site';
   preload="/frames/poster.jpg"
   hideFooterCta
 >
+  <!-- Order follows the visitor's questions: what do you do, why you, show me, how does it work,
+       who vouches for you, what about…, then contact. Landlords are a secondary audience, so last. -->
   <Hero />
-  <Values />
   <ServiceList />
-  <Process />
+  <Values />
   <Gallery />
-  <LandlordsBand />
+  <Process />
   <Reviews />
   <FaqSection />
   <QuoteSection />
+  <LandlordsBand />
 </Base>

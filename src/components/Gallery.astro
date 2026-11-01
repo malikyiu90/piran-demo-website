@@ -1,13 +1,15 @@
 ---
 import { categories } from '../data/services';
-import { galleryIsPublishable, projects } from '../data/projects';
+import { projects, realWork } from '../data/projects';
 
 const used = categories.filter((c) => projects.some((p) => p.category === c.id));
-// While the images are stand-ins, the copy presents them as ideas rather than as Piran's own projects.
-// It switches to "Recent projects" automatically once every image is a real project photo.
-const copy = galleryIsPublishable
-  ? { eyebrow: 'Our work', title: 'Recent projects.', lede: 'A look at the quality, detail and finish we deliver on every job.' }
-  : { eyebrow: 'Gallery', title: 'Ideas for your project.', lede: 'A few ideas to get you started. Ask us for photos of our recent work in your area.' };
+// The heading only claims "our work" for as much of the gallery as really is Piran's work.
+const COPY = {
+  none: { eyebrow: 'Gallery', title: 'Ideas for your project.', lede: 'A few ideas to get you started. Ask us for photos of our recent work in your area.' },
+  some: { eyebrow: 'Gallery', title: 'Ideas and our recent work.', lede: 'Ideas to get you started, alongside a look at some of the projects we have finished.' },
+  all: { eyebrow: 'Our work', title: 'Our recent work.', lede: 'A look at the quality, detail and finish we deliver on every job.' },
+};
+const copy = COPY[realWork];
 ---
 {projects.length > 0 && (
   <section class="gallery section on-ink" id="work" aria-labelledby="gallery-title">

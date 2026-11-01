@@ -1,7 +1,7 @@
 // Site-wide behaviour: smooth scroll, header state, mobile menu and scroll reveals.
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import Lenis from 'lenis';
+import { getLenis } from './smooth-scroll';
 
 gsap.registerPlugin(ScrollTrigger);
 ScrollTrigger.config({ ignoreMobileResize: true });
@@ -10,17 +10,20 @@ const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').match
 
 /* ---------------------------------------------------------------- scroll */
 
-let lenis: Lenis | null = null;
-if (!reduceMotion) {
-  lenis = new Lenis({ lerp: 0.09, smoothWheel: true });
+const lenis = getLenis();
+if (lenis) {
   lenis.on('scroll', ScrollTrigger.update);
   gsap.ticker.add((time) => lenis?.raf(time * 1000));
   gsap.ticker.lagSmoothing(0);
 }
 
+// data-jumping marks a link-driven scroll so the hero doesn't hold the page while it passes through.
 function scrollToTarget(target: HTMLElement | number) {
-  if (lenis) lenis.scrollTo(target, { offset: typeof target === 'number' ? 0 : -80, duration: 1.4 });
-  else if (typeof target === 'number') window.scrollTo({ top: target });
+  const root = document.documentElement;
+  if (lenis) {
+    root.dataset.jumping = 'true';
+    lenis.scrollTo(target, { offset: typeof target === 'number' ? 0 : -80, duration: 1.4, onComplete: () => delete root.dataset.jumping });
+  } else if (typeof target === 'number') window.scrollTo({ top: target });
   else target.scrollIntoView();
 }
 
@@ -78,7 +81,7 @@ document.addEventListener('keydown', (e) => {
     menuToggle?.focus();
   }
 });
-window.matchMedia('(min-width: 901px)').addEventListener('change', (e) => {
+window.matchMedia('(min-width: 1025px)').addEventListener('change', (e) => {
   if (e.matches && menuOpen) setMenu(false);
 });
 
