@@ -12,7 +12,7 @@ interface Stat {
 // Client-supplied figures first, then facts the site already states (service count, insurance in the terms,
 // guarantee in the terms, free consultation in the process). The first four available are shown, so the grid never has a gap.
 const stats = [
-  proof.googleRating && { value: proof.googleRating.toFixed(1), star: true, label: 'Google rating', text: 'Rated by homeowners across Coventry.' },
+  proof.googleRating && { value: proof.googleRating.toFixed(1), star: true, label: 'Google rating', text: 'Consistently 5-star rated by homeowners across Coventry.' },
   proof.googleReviewCount && { value: `${proof.googleReviewCount}+`, label: 'Verified reviews', text: 'Every review is from a real client who trusted us with their home.' },
   proof.alwaysOpen && { value: '24/7', label: 'Always available', text: 'Call us any time for advice or emergencies.' },
   { value: `${services.length}`, label: 'Services offered', text: 'From foundations to finishing, every trade under one roof.' },

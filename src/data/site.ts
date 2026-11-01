@@ -18,12 +18,13 @@ export const site = {
   },
 } as const;
 
-// Figures for the stats strip that only the client can supply. Each stays null, and its box stays hidden,
-// until the client gives the real number from their Google Business profile or confirms the opening hours.
+// Figures for the stats strip that only the client can supply (null / false hides the box).
+// Supplied by the client from their own Google Business profile, which they share with Mazzy Construction Ltd,
+// November 2026. Update these when the profile changes.
 export const proof = {
-  googleRating: null as number | null, // e.g. 4.8
-  googleReviewCount: null as number | null, // e.g. 17
-  alwaysOpen: false, // true only if the phone is genuinely answered 24/7
+  googleRating: 4.8 as number | null,
+  googleReviewCount: 17 as number | null,
+  alwaysOpen: true, // client confirms the phone is answered 24/7
 };
 
 export const nav = [
