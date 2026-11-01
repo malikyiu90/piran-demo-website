@@ -1,5 +1,5 @@
 ---
-import { categories } from '../data/services';
+import { categories, thumbOf } from '../data/services';
 import { projects, realWork } from '../data/projects';
 
 const used = categories.filter((c) => projects.some((p) => p.category === c.id));
@@ -10,6 +10,9 @@ const COPY = {
   all: { eyebrow: 'Our work', title: 'Our recent work.', lede: 'A look at the quality, detail and finish we deliver on every job.' },
 };
 const copy = COPY[realWork];
+// Small tiles get the 960px copy; the large first tile can use the 2560px original on sharp screens.
+const srcset = (src: string) => `${thumbOf(src)} 960w, ${src} 2560w`;
+const sizes = (i: number) => (i === 0 ? '(max-width: 900px) 100vw, 60vw' : '(max-width: 900px) 50vw, 30vw');
 ---
 {projects.length > 0 && (
   <section class="gallery section on-ink" id="work" aria-labelledby="gallery-title">
@@ -28,16 +31,16 @@ const copy = COPY[realWork];
       </div>
 
       <ul class="grid" role="list" data-gallery>
-        {projects.map((p) => (
+        {projects.map((p, i) => (
           <li class="tile" data-category={p.category}>
             {p.href ? (
               <a class="tile__link" href={p.href}>
-                <img src={p.src} alt="" loading="lazy" decoding="async" width="1280" height="853" />
+                <img src={p.src} srcset={srcset(p.src)} sizes={sizes(i)} alt="" loading="lazy" decoding="async" width="1280" height="853" />
                 <span class="tile__label">{p.alt} <span aria-hidden="true">→</span></span>
               </a>
             ) : (
               <>
-                <img src={p.src} alt={p.alt} loading="lazy" decoding="async" width="1280" height="853" />
+                <img src={p.src} srcset={srcset(p.src)} sizes={sizes(i)} alt={p.alt} loading="lazy" decoding="async" width="1280" height="853" />
                 <span class="tile__label">{p.alt}</span>
               </>
             )}

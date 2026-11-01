@@ -49,6 +49,8 @@ html.lenis, html.lenis body { height: auto; }
 
 body {
   margin: 0;
+  /* The pinned hero sizes itself to the window including a classic (Windows) scrollbar; clip that sliver. */
+  overflow-x: clip;
   background: var(--ink);
   color: var(--paper);
   font-family: var(--font-ui);

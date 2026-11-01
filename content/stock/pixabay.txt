@@ -1,15 +1,16 @@
-# Stock photos from pixabay.com (Pixabay Content License: free for commercial use, no attribution required).
-# Format: service-slug|cdn path under https://cdn.pixabay.com/photo/|photo page under https://pixabay.com/photos/
-bathrooms|2021/10/06/15/05/bathroom-6686057_1280.jpg|bathroom-furniture-interior-design-6686057
-bathrooms|2021/12/25/13/10/bathroom-6893077_1280.jpg|bathroom-sink-interior-design-6893077
+# Stock photos: pixabay.com (Pixabay Content License), pexels.com (Pexels License) and unsplash.com (Unsplash License),
+# all free for commercial use with no attribution required. The homepage photos come from 4K+ Pexels/Unsplash originals.
+# Format: service-slug|cdn path under https://cdn.pixabay.com/photo/ or a full download URL|pixabay photo slug or full page URL
+bathrooms|https://images.pexels.com/photos/16249146/pexels-photo-16249146.jpeg|https://www.pexels.com/photo/16249146/
+bathrooms|https://images.pexels.com/photos/7166639/pexels-photo-7166639.jpeg|https://www.pexels.com/photo/7166639/
 bathrooms|2021/12/25/13/13/bathroom-6893122_1280.jpg|bathroom-interior-design-indoors-6893122
 bathrooms|2023/09/10/12/07/bathroom-8244818_1280.jpg|bathroom-room-interior-design-8244818
 block-paving|2018/02/11/23/33/pavement-3147099_1280.jpg|pavement-paving-sidewalk-tile-3147099
-block-paving|2020/02/29/05/43/bridge-4889152_1280.jpg|bridge-paving-stone-stones-pavement-4889152
+block-paving|https://images.pexels.com/photos/8134848/pexels-photo-8134848.jpeg|https://www.pexels.com/photo/8134848/
 block-paving|2018/05/14/12/31/patch-3399837_1280.jpg|pavement-flooring-paving-stones-3399837
 block-paving|2018/04/02/23/08/patch-3285482_1280.jpg|pavement-flooring-paving-stones-3285482
 brickwork|2013/02/05/19/16/sky-78113_1280.jpg|sky-clouds-construction-brick-layer-78113
-brickwork|2017/06/06/06/13/mason-2376322_1280.jpg|mason-brick-level-2376322
+brickwork|https://images.pexels.com/photos/4626268/pexels-photo-4626268.jpeg|https://www.pexels.com/photo/4626268/
 brickwork|2017/06/06/06/15/mason-2376323_1280.jpg|mason-building-bucket-work-2376323
 brickwork|2021/05/17/11/36/workers-6260397_1280.jpg|workers-construction-bricks-6260397
 decorating|2015/09/05/08/12/painting-924144_1280.jpg|painting-paint-roller-black-924144
@@ -21,12 +22,12 @@ double-glazing|2019/09/17/12/59/building-4483435_1280.jpg|building-window-archit
 double-glazing|2017/07/29/16/10/windows-2551954_1280.jpg|windows-building-palm-tree-house-2551954
 double-glazing|2018/04/10/10/37/window-3307004_1280.png|window-room-interior-home-design-3307004
 double-storey-extensions|2018/03/15/18/37/site-3229160_1280.jpg|construction-site-to-build-house-3229160
-double-storey-extensions|2016/05/21/21/39/housebuilding-1407499_1280.jpg|housebuilding-new-building-1407499
+double-storey-extensions|https://images.pexels.com/photos/35361412/pexels-photo-35361412.jpeg|https://www.pexels.com/photo/35361412/
 double-storey-extensions|2015/06/07/23/08/excavators-800996_1280.jpg|excavator-construction-site-vehicle-800996
 double-storey-extensions|2016/05/21/21/31/housebuilding-1407480_1280.jpg|housebuilding-new-building-1407480
-driveways|2016/11/29/03/53/house-1867187_1280.jpg|house-garage-driveway-architecture-1867187
+driveways|https://images.pexels.com/photos/8134821/pexels-photo-8134821.jpeg|https://www.pexels.com/photo/8134821/
 driveways|2018/01/17/15/52/driveway-3088488_1280.jpg|driveway-suburb-house-garage-3088488
-driveways|2018/03/19/18/46/driveway-3240834_1280.jpg|driveway-house-suburb-family-home-3240834
+driveways|https://images.pexels.com/photos/8134845/pexels-photo-8134845.jpeg|https://www.pexels.com/photo/8134845/
 driveways|2022/03/04/10/21/property-7046997_1280.jpg|property-house-real-estate-court-7046997
 electrical|2015/12/07/10/49/electrician-1080554_1280.jpg|electrician-repair-electricity-1080554
 electrical|2019/05/12/15/07/electric-4198293_1280.jpg|electric-wiring-electrics-electro-4198293
@@ -41,23 +42,23 @@ fencing|2020/04/11/05/36/garden-fence-5028876_1280.jpg|garden-fence-fence-wooden
 fencing|2022/09/21/15/32/flower-pots-7470594_1280.jpg|flower-pots-fence-garden-clay-pots-7470594
 fencing|2017/11/03/16/42/fence-2914882_1280.jpg|fence-garden-fence-watering-can-2914882
 kitchen-refits|2017/03/22/17/39/kitchen-2165756_1280.jpg|kitchen-home-interior-modern-room-2165756
-kitchen-refits|2017/03/25/23/32/kitchen-2174593_1280.jpg|kitchen-counter-room-chairs-home-2174593
+kitchen-refits|https://unsplash.com/photos/XKLZia7hPYI/download?force=true|https://unsplash.com/photos/XKLZia7hPYI
 kitchen-refits|2020/12/16/00/10/home-5835289_1280.jpg|home-kitchen-interior-5835289
 kitchen-refits|2017/07/09/03/19/home-2486092_1280.jpg|home-interiors-kitchen-2486092
-kitchen-renovation|2015/05/31/11/24/tap-791172_1280.jpg|tap-black-faucet-kitchen-sink-791172
+kitchen-renovation|https://unsplash.com/photos/9j9b2L0qAYU/download?force=true|https://unsplash.com/photos/9j9b2L0qAYU
 kitchen-renovation|2022/01/04/05/29/kitchen-6914223_1280.jpg|kitchen-interior-design-oven-6914223
 kitchen-renovation|2021/10/12/14/46/kitchen-6703778_1280.jpg|kitchen-interior-design-6703778
-kitchen-renovation|2024/08/31/11/18/kitchen-9011230_1280.jpg|kitchen-house-apartment-real-estate-9011230
-landscaping|2022/06/07/05/55/garden-7247559_1280.jpg|garden-park-landscaped-garden-7247559
-landscaping|2020/04/24/06/21/garden-5085356_1280.jpg|garden-yard-courtyard-back-garden-5085356
+kitchen-renovation|https://images.pexels.com/photos/35189706/pexels-photo-35189706.jpeg|https://www.pexels.com/photo/35189706/
+landscaping|https://images.pexels.com/photos/7174105/pexels-photo-7174105.jpeg|https://www.pexels.com/photo/7174105/
+landscaping|https://images.pexels.com/photos/7061672/pexels-photo-7061672.jpeg|https://www.pexels.com/photo/7061672/
 landscaping|2020/04/25/13/23/japanese-garden-5090792_1280.jpg|japanese-garden-flowers-garden-5090792
 landscaping|2019/10/21/10/33/garden-4565700_1280.jpg|garden-park-decoration-outdoors-4565700
-loft-extension|2017/08/05/14/42/house-2584139_1280.jpg|house-architecture-bedroom-bed-2584139
-loft-extension|2014/08/08/21/03/bedroom-413706_1280.jpg|bedroom-beds-sleeping-iceland-413706
+loft-extension|https://images.pexels.com/photos/16116303/pexels-photo-16116303.jpeg|https://www.pexels.com/photo/16116303/
+loft-extension|https://images.pexels.com/photos/17477443/pexels-photo-17477443.jpeg|https://www.pexels.com/photo/17477443/
 loft-extension|2020/01/18/16/20/bedroom-4775699_1280.jpg|bedroom-wood-flooring-floor-house-4775699
 loft-extension|2016/11/30/08/48/bedroom-1872196_1280.jpg|bedroom-cupboard-bed-room-sofa-1872196
-plastering|2018/05/19/23/40/painting-3414652_1280.jpg|painting-wall-renovation-arm-3414652
-plastering|2016/07/08/13/37/texture-1504364_1280.jpg|texture-rough-plaster-plaster-wall-1504364
+plastering|https://images.pexels.com/photos/7195287/pexels-photo-7195287.jpeg|https://www.pexels.com/photo/7195287/
+plastering|https://images.pexels.com/photos/31737843/pexels-photo-31737843.jpeg|https://www.pexels.com/photo/31737843/
 plastering|2013/03/01/19/02/drill-88181_1280.jpg|drill-nylon-plasterboard-plastic-88181
 plastering|2022/03/10/16/49/wall-7060291_1280.jpg|wall-plaster-texture-facade-7060291
 plumbing|2015/07/11/14/53/plumbing-840835_1280.jpg|plumbing-pipe-wrenches-plumber-840835
@@ -80,11 +81,11 @@ tile-and-flooring|2017/02/23/02/41/wood-2091171_1280.jpg|wood-floor-wood-floor-w
 tile-and-flooring|2015/01/11/12/28/wood-glue-596161_1280.jpg|wood-glue-work-laminate-embarrassed-596161
 tile-and-flooring|2017/11/07/22/29/wood-fibre-boards-2928524_1280.jpg|wood-fibre-boards-wood-parquet-2928524
 tile-and-flooring|2016/06/25/09/04/tiles-1478499_1280.jpg|tiles-vitrifiedtiles-india-1478499
-tiling|2015/12/07/11/01/building-1080597_1280.jpg|building-tiler-ceramic-tiles-1080597
-tiling|2017/09/14/12/18/building-2748837_1280.jpg|building-tiler-ceramic-tiles-2748837
+tiling|https://images.pexels.com/photos/8082195/pexels-photo-8082195.jpeg|https://www.pexels.com/photo/8082195/
+tiling|https://images.pexels.com/photos/16113325/pexels-photo-16113325.jpeg|https://www.pexels.com/photo/16113325/
 tiling|2020/01/27/18/47/background-4798051_1280.jpg|background-glass-tiles-square-4798051
 tiling|2015/12/07/11/03/building-1080605_1280.jpg|building-tiler-ceramic-tiles-1080605
-window-work|2017/02/24/21/00/door-2096367_1280.jpg|door-window-wooden-blue-entrance-2096367
-window-work|2022/05/02/10/12/window-7169327_1280.jpg|window-ivy-shutter-balcony-house-7169327
+window-work|https://images.pexels.com/photos/5982764/pexels-photo-5982764.jpeg|https://www.pexels.com/photo/5982764/
+window-work|https://images.pexels.com/photos/6580232/pexels-photo-6580232.jpeg|https://www.pexels.com/photo/6580232/
 window-work|2023/08/18/16/35/shutters-8198905_1280.jpg|shutters-wall-window-facade-door-8198905
 window-work|2023/04/14/08/47/window-7924525_1280.jpg|window-wall-brick-wall-building-7924525

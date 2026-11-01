@@ -9,7 +9,7 @@ export interface Project {
   placeholder: boolean;
 }
 
-// Stock photos (Pixabay) stand in until the client supplies photos of real Piran projects. Add real
+// Stock photos (Pexels, Unsplash and Pixabay; see content/stock/pixabay.txt) stand in until the client supplies photos of real Piran projects. Add real
 // project photos with `placeholder: false`; the heading then changes from "Ideas for your project" to
 // "Ideas and our recent work" (some real) and "Our recent work" (all real).
 // Eleven tiles fill the grid exactly: one large tile plus ten small ones over four rows.

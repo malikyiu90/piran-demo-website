@@ -29,7 +29,7 @@ const { heading = true } = Astro.props;
 
     <div class="why__body">
       <figure class="why__media" data-reveal>
-        <img src="/gallery/brickwork-2.webp" alt="" width="1280" height="853" loading="lazy" decoding="async" />
+        <img src="/gallery/brickwork-2.webp" srcset="/gallery/sm/brickwork-2.webp 960w, /gallery/brickwork-2.webp 2560w" sizes="(max-width: 900px) 100vw, 45vw" alt="" width="1280" height="853" loading="lazy" decoding="async" />
       </figure>
 
       <ol class="why__list" role="list">
