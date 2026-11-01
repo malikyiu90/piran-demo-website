@@ -3,17 +3,21 @@ import { categories } from '../data/services';
 import { galleryIsPublishable, projects } from '../data/projects';
 
 const used = categories.filter((c) => projects.some((p) => p.category === c.id));
-const show = galleryIsPublishable || import.meta.env.DEV;
+// While the images are stand-ins, the copy presents them as ideas rather than as Piran's own projects.
+// It switches to "Recent projects" automatically once every image is a real project photo.
+const copy = galleryIsPublishable
+  ? { eyebrow: 'Our work', title: 'Recent projects.', lede: 'A look at the quality, detail and finish we deliver on every job.' }
+  : { eyebrow: 'Gallery', title: 'Ideas for your project.', lede: 'A few ideas to get you started. Ask us for photos of our recent work in your area.' };
 ---
-{show && (
+{projects.length > 0 && (
   <section class="gallery section on-ink" id="work" aria-labelledby="gallery-title">
     <div class="container">
       <div class="gallery__head">
         <div>
-          <p class="eyebrow" data-reveal>Our work</p>
-          <h2 class="h2" id="gallery-title" data-reveal>Recent projects.</h2>
+          <p class="eyebrow" data-reveal>{copy.eyebrow}</p>
+          <h2 class="h2" id="gallery-title" data-reveal>{copy.title}</h2>
         </div>
-        <p class="lede" data-reveal>A look at the quality, detail and finish we deliver on every job.</p>
+        <p class="lede" data-reveal>{copy.lede}</p>
       </div>
 
       <div class="filters" role="group" aria-label="Filter projects" data-reveal>
@@ -24,8 +28,17 @@ const show = galleryIsPublishable || import.meta.env.DEV;
       <ul class="grid" role="list" data-gallery>
         {projects.map((p) => (
           <li class="tile" data-category={p.category}>
-            <img src={p.src} alt={p.alt} loading="lazy" decoding="async" width="1600" height="1067" />
-            <span class="tile__label">{p.alt}</span>
+            {p.href ? (
+              <a class="tile__link" href={p.href}>
+                <img src={p.src} alt="" loading="lazy" decoding="async" width="1280" height="853" />
+                <span class="tile__label">{p.alt} <span aria-hidden="true">→</span></span>
+              </a>
+            ) : (
+              <>
+                <img src={p.src} alt={p.alt} loading="lazy" decoding="async" width="1280" height="853" />
+                <span class="tile__label">{p.alt}</span>
+              </>
+            )}
           </li>
         ))}
       </ul>
@@ -62,6 +75,9 @@ const show = galleryIsPublishable || import.meta.env.DEV;
   .grid:not(.is-filtered) .tile:first-child { grid-row: span 2; }
   .tile { position: relative; overflow: hidden; background: var(--ink-3); }
   .tile[hidden] { display: none; }
+  .tile__link { display: block; width: 100%; height: 100%; color: #fff; text-decoration: none; }
+  .tile__link:focus-visible { outline-offset: -4px; }
+  .tile__link:focus-visible .tile__label { opacity: 1; transform: none; }
   .tile img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.9s var(--ease-out); }
   .tile:hover img { transform: scale(1.05); }
   .tile__label {

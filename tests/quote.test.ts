@@ -21,7 +21,7 @@ function valid(overrides: Record<string, unknown> = {}) {
     name: 'Jane Smith',
     email: 'jane@example.com',
     phone: '+44 7700 900123',
-    service: 'kitchens',
+    service: 'kitchen-renovation',
     message: 'We would like a quote for a new kitchen.',
     consent: 'yes',
     submissionId: 'abc12345-def6',
@@ -50,7 +50,7 @@ describe('handleQuote', () => {
     const out = await handleQuote(valid(), '1.1.1.1', d);
     expect(out).toEqual({ status: 200, body: { ok: true } });
     expect(sent).toHaveLength(1);
-    expect(sent[0].subject).toBe('Quote request: Kitchens from Jane Smith');
+    expect(sent[0].subject).toBe('Quote request: Kitchen renovation from Jane Smith');
     expect(sent[0].replyTo).toBe('jane@example.com');
   });
 
@@ -129,8 +129,8 @@ describe('handleQuote', () => {
     expect((await handleQuote(valid({ ...noJs, name: 'First Person' }), 'ip-a', d)).status).toBe(200);
     expect((await handleQuote(valid({ ...noJs, name: 'Second Person' }), 'ip-b', d)).status).toBe(200);
     expect(sent.map((m) => m.subject)).toEqual([
-      'Quote request: Kitchens from First Person',
-      'Quote request: Kitchens from Second Person',
+      'Quote request: Kitchen renovation from First Person',
+      'Quote request: Kitchen renovation from Second Person',
     ]);
   });
 

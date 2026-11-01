@@ -9,7 +9,8 @@
     "preview": "astro preview",
     "check": "astro check",
     "test": "vitest run",
-    "frames": "node scripts/extract-frames.mjs hero-v2.mp4"
+    "frames": "node scripts/extract-frames.mjs hero-v2.mp4",
+    "photos": "node scripts/fetch-stock.mjs"
   },
   "dependencies": {
     "@astrojs/vercel": "^11.0.17",

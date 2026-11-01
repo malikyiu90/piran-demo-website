@@ -1,24 +1,30 @@
-import type { CategoryId } from './services';
+import { photosFor, services, type CategoryId } from './services';
 
 export interface Project {
   src: string;
   alt: string;
   category: CategoryId;
-  /** True for stand-in images that are not Piran's own work. The gallery never ships to production while any remain. */
+  href?: string;
+  /** True for stand-in images that are not Piran’s own work. While any remain, the gallery is titled as ideas, not projects. */
   placeholder: boolean;
 }
 
-// ⚠ Stand-in images (old-site service photos) so the gallery design can be reviewed locally.
-// Replace with photos of real Piran projects and set `placeholder: false` to publish the gallery.
-export const projects: Project[] = [
-  { src: '/services/kitchens-lg.webp', alt: 'Kitchen renovation', category: 'kitchens-bathrooms', placeholder: true },
-  { src: '/services/loft-conversions-lg.webp', alt: 'Loft conversion', category: 'extensions', placeholder: true },
-  { src: '/services/bathrooms-lg.webp', alt: 'Bathroom renovation', category: 'kitchens-bathrooms', placeholder: true },
-  { src: '/services/landscaping-lg.webp', alt: 'Landscaped garden', category: 'exterior', placeholder: true },
-  { src: '/services/brickwork-lg.webp', alt: 'Brickwork', category: 'exterior', placeholder: true },
-  { src: '/services/tiling-and-flooring-lg.webp', alt: 'Tiling and flooring', category: 'interiors', placeholder: true },
-  { src: '/services/driveways-and-paving-lg.webp', alt: 'Block paved driveway', category: 'exterior', placeholder: true },
-  { src: '/services/roofing-and-fascias-lg.webp', alt: 'Roofing', category: 'exterior', placeholder: true },
+// Stock photos (Pixabay) stand in until the client supplies photos of real Piran projects.
+// Replace with real project photos and set `placeholder: false` to retitle the section "Recent projects".
+// Eleven tiles fill the grid exactly: one large tile plus ten small ones over four rows.
+const GALLERY_SERVICES = [
+  'kitchen-renovation', 'loft-extension', 'bathrooms', 'landscaping',
+  'double-storey-extensions', 'tiling', 'driveways', 'window-work',
+  'plastering', 'kitchen-refits', 'block-paving',
 ];
+
+export const projects: Project[] = GALLERY_SERVICES.flatMap((slug) => {
+  const service = services.find((s) => s.slug === slug);
+  // The second photo, so the gallery doesn't repeat the services-list thumbnail.
+  const photo = service && (photosFor(service)[1] ?? photosFor(service)[0]);
+  return service && photo
+    ? [{ src: photo.src, alt: service.name, category: service.category, href: `/services/${service.slug}`, placeholder: true }]
+    : [];
+});
 
 export const galleryIsPublishable = projects.length > 0 && projects.every((p) => !p.placeholder);

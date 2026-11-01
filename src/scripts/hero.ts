@@ -26,7 +26,9 @@ function initHero(hero: HTMLElement) {
   // Build stages as fractions of the video timeline (foundation → frame → finish → handover).
   const STAGE_STARTS = [0, 0.13, 0.33, 0.66];
   // Share of the hero's visible width the house occupies; narrow screens zoom out to keep it in frame.
-  const FOCUS_WIDTH = 0.62;
+  const FOCUS_WIDTH = 0.6;
+  // Share of the frame's (empty) sky cut off on tall screens; the finished roof starts ~15% down, so stay below that.
+  const SKY_TRIM = 0.08;
   const FALLBACK_EDGES = { top: 'rgb(28, 38, 56)', bottom: 'rgb(12, 15, 20)' };
 
   /* ---------------------------------------------------------------- frames */
@@ -146,8 +148,16 @@ function initHero(hero: HTMLElement) {
     const dw = iw * scale;
     const dh = ih * scale;
     const dx = (cw - dw) / 2;
-    // When cover crops vertically, take most of it from the ground so the roofline stays in view below the header.
-    const dy = dh >= ch ? (ch - dh) * 0.15 : (ch - dh) * 0.36;
+    let dy: number;
+    if (dh >= ch) {
+      // Cover crops vertically: take most of it from the ground so the roofline stays in view below the header.
+      dy = (ch - dh) * 0.15;
+    } else {
+      // Tall screens: start the image right under the header (trimming a little empty sky) so there is no
+      // dead band above it; the text then sits on the dark ground fill below.
+      const headerPx = (document.querySelector('[data-header]')?.getBoundingClientRect().height ?? 0) * (cw / canvas.clientWidth);
+      dy = Math.min(headerPx - dh * SKY_TRIM, (ch - dh) * 0.36);
+    }
     return { cw, ch, dw, dh, dx, dy, letterbox: dh < ch - 1 };
   }
 

@@ -1,0 +1,398 @@
+{
+  "bathrooms": [
+    {
+      "src": "/gallery/bathrooms-1.webp",
+      "source": "https://pixabay.com/photos/bathroom-furniture-interior-design-6686057/"
+    },
+    {
+      "src": "/gallery/bathrooms-2.webp",
+      "source": "https://pixabay.com/photos/bathroom-sink-interior-design-6893077/"
+    },
+    {
+      "src": "/gallery/bathrooms-3.webp",
+      "source": "https://pixabay.com/photos/bathroom-interior-design-indoors-6893122/"
+    },
+    {
+      "src": "/gallery/bathrooms-4.webp",
+      "source": "https://pixabay.com/photos/bathroom-room-interior-design-8244818/"
+    }
+  ],
+  "block-paving": [
+    {
+      "src": "/gallery/block-paving-1.webp",
+      "source": "https://pixabay.com/photos/pavement-paving-sidewalk-tile-3147099/"
+    },
+    {
+      "src": "/gallery/block-paving-2.webp",
+      "source": "https://pixabay.com/photos/bridge-paving-stone-stones-pavement-4889152/"
+    },
+    {
+      "src": "/gallery/block-paving-3.webp",
+      "source": "https://pixabay.com/photos/pavement-flooring-paving-stones-3399837/"
+    },
+    {
+      "src": "/gallery/block-paving-4.webp",
+      "source": "https://pixabay.com/photos/pavement-flooring-paving-stones-3285482/"
+    }
+  ],
+  "brickwork": [
+    {
+      "src": "/gallery/brickwork-1.webp",
+      "source": "https://pixabay.com/photos/sky-clouds-construction-brick-layer-78113/"
+    },
+    {
+      "src": "/gallery/brickwork-2.webp",
+      "source": "https://pixabay.com/photos/mason-brick-level-2376322/"
+    },
+    {
+      "src": "/gallery/brickwork-3.webp",
+      "source": "https://pixabay.com/photos/mason-building-bucket-work-2376323/"
+    },
+    {
+      "src": "/gallery/brickwork-4.webp",
+      "source": "https://pixabay.com/photos/workers-construction-bricks-6260397/"
+    }
+  ],
+  "decorating": [
+    {
+      "src": "/gallery/decorating-1.webp",
+      "source": "https://pixabay.com/photos/painting-paint-roller-black-924144/"
+    },
+    {
+      "src": "/gallery/decorating-2.webp",
+      "source": "https://pixabay.com/photos/colour-paint-bucket-paint-roller-3238003/"
+    },
+    {
+      "src": "/gallery/decorating-3.webp",
+      "source": "https://pixabay.com/photos/man-house-painter-painting-wall-2748352/"
+    },
+    {
+      "src": "/gallery/decorating-4.webp",
+      "source": "https://pixabay.com/photos/painter-painting-employee-building-2751658/"
+    }
+  ],
+  "double-glazing": [
+    {
+      "src": "/gallery/double-glazing-1.webp",
+      "source": "https://pixabay.com/photos/shutters-architecture-window-house-669296/"
+    },
+    {
+      "src": "/gallery/double-glazing-2.webp",
+      "source": "https://pixabay.com/photos/building-window-architecture-old-4483435/"
+    },
+    {
+      "src": "/gallery/double-glazing-3.webp",
+      "source": "https://pixabay.com/photos/windows-building-palm-tree-house-2551954/"
+    },
+    {
+      "src": "/gallery/double-glazing-4.webp",
+      "source": "https://pixabay.com/photos/window-room-interior-home-design-3307004/"
+    }
+  ],
+  "double-storey-extensions": [
+    {
+      "src": "/gallery/double-storey-extensions-1.webp",
+      "source": "https://pixabay.com/photos/construction-site-to-build-house-3229160/"
+    },
+    {
+      "src": "/gallery/double-storey-extensions-2.webp",
+      "source": "https://pixabay.com/photos/housebuilding-new-building-1407499/"
+    },
+    {
+      "src": "/gallery/double-storey-extensions-3.webp",
+      "source": "https://pixabay.com/photos/excavator-construction-site-vehicle-800996/"
+    },
+    {
+      "src": "/gallery/double-storey-extensions-4.webp",
+      "source": "https://pixabay.com/photos/housebuilding-new-building-1407480/"
+    }
+  ],
+  "driveways": [
+    {
+      "src": "/gallery/driveways-1.webp",
+      "source": "https://pixabay.com/photos/house-garage-driveway-architecture-1867187/"
+    },
+    {
+      "src": "/gallery/driveways-2.webp",
+      "source": "https://pixabay.com/photos/driveway-suburb-house-garage-3088488/"
+    },
+    {
+      "src": "/gallery/driveways-3.webp",
+      "source": "https://pixabay.com/photos/driveway-house-suburb-family-home-3240834/"
+    },
+    {
+      "src": "/gallery/driveways-4.webp",
+      "source": "https://pixabay.com/photos/property-house-real-estate-court-7046997/"
+    }
+  ],
+  "electrical": [
+    {
+      "src": "/gallery/electrical-1.webp",
+      "source": "https://pixabay.com/photos/electrician-repair-electricity-1080554/"
+    },
+    {
+      "src": "/gallery/electrical-2.webp",
+      "source": "https://pixabay.com/photos/electric-wiring-electrics-electro-4198293/"
+    },
+    {
+      "src": "/gallery/electrical-3.webp",
+      "source": "https://pixabay.com/photos/electrician-electric-electricity-1080561/"
+    },
+    {
+      "src": "/gallery/electrical-4.webp",
+      "source": "https://pixabay.com/photos/electric-component-current-digital-948208/"
+    }
+  ],
+  "extension-and-loft": [
+    {
+      "src": "/gallery/extension-and-loft-1.webp",
+      "source": "https://pixabay.com/photos/shell-house-building-conversion-367402/"
+    },
+    {
+      "src": "/gallery/extension-and-loft-2.webp",
+      "source": "https://pixabay.com/photos/house-building-conversion-367403/"
+    },
+    {
+      "src": "/gallery/extension-and-loft-3.webp",
+      "source": "https://pixabay.com/photos/building-lodge-crane-lifting-roof-5737012/"
+    },
+    {
+      "src": "/gallery/extension-and-loft-4.webp",
+      "source": "https://pixabay.com/photos/housebuilding-new-building-1407462/"
+    }
+  ],
+  "fencing": [
+    {
+      "src": "/gallery/fencing-1.webp",
+      "source": "https://pixabay.com/photos/wooden-fence-fence-nature-wood-1610150/"
+    },
+    {
+      "src": "/gallery/fencing-2.webp",
+      "source": "https://pixabay.com/photos/garden-fence-fence-wooden-fence-5028876/"
+    },
+    {
+      "src": "/gallery/fencing-3.webp",
+      "source": "https://pixabay.com/photos/flower-pots-fence-garden-clay-pots-7470594/"
+    },
+    {
+      "src": "/gallery/fencing-4.webp",
+      "source": "https://pixabay.com/photos/fence-garden-fence-watering-can-2914882/"
+    }
+  ],
+  "kitchen-refits": [
+    {
+      "src": "/gallery/kitchen-refits-1.webp",
+      "source": "https://pixabay.com/photos/kitchen-home-interior-modern-room-2165756/"
+    },
+    {
+      "src": "/gallery/kitchen-refits-2.webp",
+      "source": "https://pixabay.com/photos/kitchen-counter-room-chairs-home-2174593/"
+    },
+    {
+      "src": "/gallery/kitchen-refits-3.webp",
+      "source": "https://pixabay.com/photos/home-kitchen-interior-5835289/"
+    },
+    {
+      "src": "/gallery/kitchen-refits-4.webp",
+      "source": "https://pixabay.com/photos/home-interiors-kitchen-2486092/"
+    }
+  ],
+  "kitchen-renovation": [
+    {
+      "src": "/gallery/kitchen-renovation-1.webp",
+      "source": "https://pixabay.com/photos/tap-black-faucet-kitchen-sink-791172/"
+    },
+    {
+      "src": "/gallery/kitchen-renovation-2.webp",
+      "source": "https://pixabay.com/photos/kitchen-interior-design-oven-6914223/"
+    },
+    {
+      "src": "/gallery/kitchen-renovation-3.webp",
+      "source": "https://pixabay.com/photos/kitchen-interior-design-6703778/"
+    },
+    {
+      "src": "/gallery/kitchen-renovation-4.webp",
+      "source": "https://pixabay.com/photos/kitchen-house-apartment-real-estate-9011230/"
+    }
+  ],
+  "landscaping": [
+    {
+      "src": "/gallery/landscaping-1.webp",
+      "source": "https://pixabay.com/photos/garden-park-landscaped-garden-7247559/"
+    },
+    {
+      "src": "/gallery/landscaping-2.webp",
+      "source": "https://pixabay.com/photos/garden-yard-courtyard-back-garden-5085356/"
+    },
+    {
+      "src": "/gallery/landscaping-3.webp",
+      "source": "https://pixabay.com/photos/japanese-garden-flowers-garden-5090792/"
+    },
+    {
+      "src": "/gallery/landscaping-4.webp",
+      "source": "https://pixabay.com/photos/garden-park-decoration-outdoors-4565700/"
+    }
+  ],
+  "loft-extension": [
+    {
+      "src": "/gallery/loft-extension-1.webp",
+      "source": "https://pixabay.com/photos/house-architecture-bedroom-bed-2584139/"
+    },
+    {
+      "src": "/gallery/loft-extension-2.webp",
+      "source": "https://pixabay.com/photos/bedroom-beds-sleeping-iceland-413706/"
+    },
+    {
+      "src": "/gallery/loft-extension-3.webp",
+      "source": "https://pixabay.com/photos/bedroom-wood-flooring-floor-house-4775699/"
+    },
+    {
+      "src": "/gallery/loft-extension-4.webp",
+      "source": "https://pixabay.com/photos/bedroom-cupboard-bed-room-sofa-1872196/"
+    }
+  ],
+  "plastering": [
+    {
+      "src": "/gallery/plastering-1.webp",
+      "source": "https://pixabay.com/photos/painting-wall-renovation-arm-3414652/"
+    },
+    {
+      "src": "/gallery/plastering-2.webp",
+      "source": "https://pixabay.com/photos/texture-rough-plaster-plaster-wall-1504364/"
+    },
+    {
+      "src": "/gallery/plastering-3.webp",
+      "source": "https://pixabay.com/photos/drill-nylon-plasterboard-plastic-88181/"
+    },
+    {
+      "src": "/gallery/plastering-4.webp",
+      "source": "https://pixabay.com/photos/wall-plaster-texture-facade-7060291/"
+    }
+  ],
+  "plumbing": [
+    {
+      "src": "/gallery/plumbing-1.webp",
+      "source": "https://pixabay.com/photos/plumbing-pipe-wrenches-plumber-840835/"
+    },
+    {
+      "src": "/gallery/plumbing-2.webp",
+      "source": "https://pixabay.com/photos/plumber-handyman-repair-worker-228010/"
+    },
+    {
+      "src": "/gallery/plumbing-3.webp",
+      "source": "https://pixabay.com/photos/water-tap-soap-hand-washing-1581573/"
+    },
+    {
+      "src": "/gallery/plumbing-4.webp",
+      "source": "https://pixabay.com/photos/plumber-repair-tap-battery-2788329/"
+    }
+  ],
+  "rendering": [
+    {
+      "src": "/gallery/rendering-1.webp",
+      "source": "https://pixabay.com/photos/house-home-facade-exterior-540796/"
+    },
+    {
+      "src": "/gallery/rendering-2.webp",
+      "source": "https://pixabay.com/photos/cubic-house-architecture-house-6566412/"
+    },
+    {
+      "src": "/gallery/rendering-3.webp",
+      "source": "https://pixabay.com/photos/row-houses-serial-houses-houses-384596/"
+    },
+    {
+      "src": "/gallery/rendering-4.webp",
+      "source": "https://pixabay.com/photos/house-architecture-front-yard-1836070/"
+    }
+  ],
+  "roof-work": [
+    {
+      "src": "/gallery/roof-work-1.webp",
+      "source": "https://pixabay.com/photos/roof-brick-tile-house-plate-cumin-7001746/"
+    },
+    {
+      "src": "/gallery/roof-work-2.webp",
+      "source": "https://pixabay.com/photos/scaffold-roof-tiles-repair-1207389/"
+    },
+    {
+      "src": "/gallery/roof-work-3.webp",
+      "source": "https://pixabay.com/photos/roof-carpenter-roofer-slate-1808936/"
+    },
+    {
+      "src": "/gallery/roof-work-4.webp",
+      "source": "https://pixabay.com/photos/thatched-roof-straw-craft-3544783/"
+    }
+  ],
+  "roofing-fascias": [
+    {
+      "src": "/gallery/roofing-fascias-1.webp",
+      "source": "https://pixabay.com/photos/gutter-guard-ipswich-2434467/"
+    },
+    {
+      "src": "/gallery/roofing-fascias-2.webp",
+      "source": "https://pixabay.com/photos/gutter-downpipe-snow-winter-935586/"
+    },
+    {
+      "src": "/gallery/roofing-fascias-3.webp",
+      "source": "https://pixabay.com/photos/house-yellow-facade-roof-348106/"
+    },
+    {
+      "src": "/gallery/roofing-fascias-4.webp",
+      "source": "https://pixabay.com/photos/roof-slate-roof-house-gable-window-1408338/"
+    }
+  ],
+  "tile-and-flooring": [
+    {
+      "src": "/gallery/tile-and-flooring-1.webp",
+      "source": "https://pixabay.com/photos/wood-floor-wood-floor-wood-flooring-2091171/"
+    },
+    {
+      "src": "/gallery/tile-and-flooring-2.webp",
+      "source": "https://pixabay.com/photos/wood-glue-work-laminate-embarrassed-596161/"
+    },
+    {
+      "src": "/gallery/tile-and-flooring-3.webp",
+      "source": "https://pixabay.com/photos/wood-fibre-boards-wood-parquet-2928524/"
+    },
+    {
+      "src": "/gallery/tile-and-flooring-4.webp",
+      "source": "https://pixabay.com/photos/tiles-vitrifiedtiles-india-1478499/"
+    }
+  ],
+  "tiling": [
+    {
+      "src": "/gallery/tiling-1.webp",
+      "source": "https://pixabay.com/photos/building-tiler-ceramic-tiles-1080597/"
+    },
+    {
+      "src": "/gallery/tiling-2.webp",
+      "source": "https://pixabay.com/photos/building-tiler-ceramic-tiles-2748837/"
+    },
+    {
+      "src": "/gallery/tiling-3.webp",
+      "source": "https://pixabay.com/photos/background-glass-tiles-square-4798051/"
+    },
+    {
+      "src": "/gallery/tiling-4.webp",
+      "source": "https://pixabay.com/photos/building-tiler-ceramic-tiles-1080605/"
+    }
+  ],
+  "window-work": [
+    {
+      "src": "/gallery/window-work-1.webp",
+      "source": "https://pixabay.com/photos/door-window-wooden-blue-entrance-2096367/"
+    },
+    {
+      "src": "/gallery/window-work-2.webp",
+      "source": "https://pixabay.com/photos/window-ivy-shutter-balcony-house-7169327/"
+    },
+    {
+      "src": "/gallery/window-work-3.webp",
+      "source": "https://pixabay.com/photos/shutters-wall-window-facade-door-8198905/"
+    },
+    {
+      "src": "/gallery/window-work-4.webp",
+      "source": "https://pixabay.com/photos/window-wall-brick-wall-building-7924525/"
+    }
+  ]
+}
