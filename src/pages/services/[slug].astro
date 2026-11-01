@@ -3,7 +3,10 @@ import Base from '../../layouts/Base.astro';
 import PageHero from '../../components/PageHero.astro';
 import Faq from '../../components/Faq.astro';
 import QuoteSection from '../../components/QuoteSection.astro';
-import { categoryOf, guaranteeFor, photoFor, photosFor, services, servicesIn, thumbOf, type Service } from '../../data/services';
+import Process from '../../components/Process.astro';
+import Reviews from '../../components/Reviews.astro';
+import { detailsFor } from '../../data/serviceDetails';
+import { categoryOf, faqsFor, guaranteeFor, photoFor, photosFor, services, servicesIn, thumbOf, type Service } from '../../data/services';
 import { site } from '../../data/site';
 
 export function getStaticPaths() {
@@ -19,16 +22,18 @@ const related = servicesIn(service.category).filter((s) => s.slug !== service.sl
 const guarantee = guaranteeFor(service);
 const heroImage = photoFor(service).hero ?? category.image;
 const photos = photosFor(service);
+const details = detailsFor(service.slug);
+const faqs = faqsFor(service);
 const faqSchema = {
   '@context': 'https://schema.org',
   '@type': 'FAQPage',
-  mainEntity: service.faqs.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+  mainEntity: faqs.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
 };
 ---
 <Base title={`${service.name} in ${site.locality}`} description={service.summary} image={heroImage} hideFooterCta>
   <PageHero
     eyebrow={category.name}
-    title={service.name}
+    title={`${service.name} in ${site.locality}`}
     lede={service.summary}
     image={heroImage}
     crumbs={[{ label: 'Services', href: '/services' }, { label: service.name }]}
@@ -41,20 +46,6 @@ const faqSchema = {
       <a class="btn btn--ghost" href={site.phoneHref}>{site.phone}</a>
     </div>
   </PageHero>
-
-  {photos.length > 0 && (
-    <section class="photos on-light" aria-label={`${service.name} photos`}>
-      <div class="container">
-        <ul class="photos__grid" role="list">
-          {photos.map((photo, i) => (
-            <li data-reveal>
-              <img src={thumbOf(photo.src)} alt={`${service.name} example ${i + 1}`} width="720" height="480" loading={i < 2 ? 'eager' : 'lazy'} decoding="async" />
-            </li>
-          ))}
-        </ul>
-      </div>
-    </section>
-  )}
 
   <section class="detail section on-light">
     <div class="container detail__grid">
@@ -73,8 +64,25 @@ const faqSchema = {
           ))}
         </ul>
 
-        <h2 class="h3 detail__heading" data-reveal>Questions</h2>
-        <Faq items={service.faqs} />
+        {details && (
+          <>
+            <h2 class="h3 detail__heading" data-reveal>Options</h2>
+            <ul class="options" role="list">
+              {details.options.map((o) => (
+                <li class="option" data-reveal>
+                  <h3 class="option__name">{o.name}</h3>
+                  <p class="option__text">{o.text}</p>
+                </li>
+              ))}
+            </ul>
+
+            <div class="planning" data-reveal>
+              <p class="planning__label">Planning permission &amp; Building Regulations</p>
+              <p>{details.planning}</p>
+              <p class="planning__small">General guidance only; your local council has the final say. Under our <a href="/terms">terms</a>, arranging permissions is the customer’s responsibility, and we’re happy to talk it through on the first call.</p>
+            </div>
+          </>
+        )}
       </div>
 
       <aside class="aside" aria-label={`More in ${category.name}`}>
@@ -101,18 +109,42 @@ const faqSchema = {
     </div>
   </section>
 
+  {photos.length > 0 && (
+    <section class="photos section on-light" aria-labelledby="photos-title">
+      <div class="container">
+        <h2 class="h3 photos__title" id="photos-title" data-reveal>Example photos</h2>
+        <ul class="photos__grid" role="list">
+          {photos.map((photo, i) => (
+            <li data-reveal>
+              <img src={thumbOf(photo.src)} alt={`${service.name} example ${i + 1}`} width="720" height="480" loading="lazy" decoding="async" />
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  )}
+
+  <Process />
+  <Reviews />
+
+  <section class="service-faq section on-light" aria-labelledby="service-faq-title">
+    <div class="container service-faq__grid">
+      <h2 class="h2" id="service-faq-title" data-reveal>{service.name}: common questions.</h2>
+      <Faq items={faqs} />
+    </div>
+  </section>
+
   <QuoteSection service={service.slug} />
   <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
 </Base>
 
 <style>
-  .photos { padding-top: clamp(40px, 5vw, 72px); }
+  .photos__title { margin-bottom: 24px; }
   .photos__grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin: 0; padding: 0; }
   .photos__grid li { aspect-ratio: 4 / 3; overflow: hidden; background: var(--sand-2); }
   .photos__grid img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.8s var(--ease-out); }
   .photos__grid li:hover img { transform: scale(1.05); }
   @media (max-width: 900px) { .photos__grid { grid-template-columns: 1fr 1fr; gap: 8px; } }
-  .photos + .detail { padding-top: clamp(48px, 6vw, 88px); }
 
   .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 12px; }
 
@@ -142,6 +174,25 @@ const faqSchema = {
     .detail__grid { grid-template-columns: 1fr; }
     .aside { position: static; }
   }
+  .options { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin: 0; padding: 0; }
+  .option { padding: 20px; background: var(--sand-2); border-top: 2px solid var(--brand); }
+  .option__name { font: 700 17px/1.25 var(--font-display); letter-spacing: -0.015em; margin-bottom: 6px; }
+  .option__text { font-size: 14.5px; line-height: 1.55; color: var(--char-dim); }
+
+  .planning { margin-top: clamp(40px, 5vw, 64px); padding: 24px 26px; border: 1px solid var(--rule); border-left: 3px solid var(--brand); background: #fff; }
+  .planning p { font-size: 15.5px; line-height: 1.65; color: var(--char-dim); }
+  .planning p + p { margin-top: 10px; }
+  .planning__label { font-size: 12.5px !important; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--char) !important; margin-bottom: 10px; }
+  .planning .planning__small { font-size: 13px; color: var(--char-faint); }
+  .planning a { color: var(--char-dim); }
+
+  .service-faq__grid { display: grid; grid-template-columns: 0.8fr 1.2fr; gap: clamp(32px, 5vw, 80px); align-items: start; }
+
+  @media (max-width: 900px) {
+    .options { grid-template-columns: 1fr; }
+    .service-faq__grid { grid-template-columns: 1fr; }
+  }
+
   @media (max-width: 600px) {
     .includes { grid-template-columns: 1fr; }
   }

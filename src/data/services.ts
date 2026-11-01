@@ -529,6 +529,31 @@ export function photosFor(service: Service): Photo[] {
   return (servicePhotos as Record<string, Photo[]>)[service.slug] ?? [];
 }
 
+/**
+ * All FAQs for a service page: its own questions followed by questions every customer asks, answered
+ * from the client's terms. The guarantee answer follows the service (plastering 6 months, decorating none).
+ */
+export function faqsFor(service: Service): { q: string; a: string }[] {
+  const guarantee = guaranteeFor(service);
+  const guaranteeAnswer = guarantee === null
+    ? 'Decoration is signed off with you on completion and is not covered by our workmanship guarantee. Any other new work on the same job carries our 12-month workmanship guarantee.'
+    : guarantee === DEFAULT_GUARANTEE
+      ? 'Yes. New workmanship carries a 12-month guarantee, and materials follow the manufacturer’s warranty. Full details are in our terms.'
+      : `Yes. ${service.name} carries a ${guarantee.split(' ')[0]} guarantee to allow for settling, and materials follow the manufacturer’s warranty. Full details are in our terms.`;
+
+  return [
+    ...service.faqs,
+    {
+      q: `How do I get a quote for ${service.name.toLowerCase()}?`,
+      a: 'Send us your details with the form, call or WhatsApp us. We will call you to discuss your requirements, then follow up with a proposal of work and a written quotation.',
+    },
+    { q: 'What if the job changes once work has started?', a: 'Any extra work is confirmed with you in writing, including the cost, before it goes ahead.' },
+    { q: 'Is the work guaranteed?', a: guaranteeAnswer },
+    { q: 'Are you insured?', a: 'Yes. We hold public liability and employers’ liability insurance to the sum of £1,000,000.' },
+    { q: 'How does payment work?', a: 'Work is confirmed once you accept the quotation and pay the deposit. We agree a payment plan with you before work begins.' },
+  ];
+}
+
 /** 720px version of a gallery photo, for lists and grids (generated next to the 1280px original). */
 export function thumbOf(src: string): string {
   return src.replace('/gallery/', '/gallery/sm/');

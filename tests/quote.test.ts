@@ -12,7 +12,7 @@ import {
   type OutgoingEmail,
   type QuoteDeps,
 } from '../src/lib/quote';
-import { legacyRedirects, services } from '../src/data/services';
+import { faqsFor, legacyRedirects, services } from '../src/data/services';
 
 const NOW = 1_800_000_000_000;
 
@@ -177,6 +177,17 @@ describe('resendSender', () => {
 });
 
 describe('service catalogue', () => {
+  it('gives every service page at least five FAQs', () => {
+    for (const service of services) expect(faqsFor(service).length, service.slug).toBeGreaterThanOrEqual(5);
+  });
+
+  it('answers the guarantee question in line with the terms', () => {
+    const answer = (slug: string) => faqsFor(services.find((s) => s.slug === slug)!).find((f) => f.q === 'Is the work guaranteed?')!.a;
+    expect(answer('plastering')).toContain('6-month guarantee');
+    expect(answer('decorating')).toContain('not covered');
+    expect(answer('bathrooms')).toContain('12-month');
+  });
+
   it('has unique slugs', () => {
     const slugs = services.map((s) => s.slug);
     expect(new Set(slugs).size).toBe(slugs.length);

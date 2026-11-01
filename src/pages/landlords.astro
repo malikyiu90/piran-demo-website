@@ -5,10 +5,9 @@ import Process from '../components/Process.astro';
 import QuoteSection from '../components/QuoteSection.astro';
 
 const work = [
-  { title: 'Refurbishments', text: 'Full or partial refurbishments to bring a property up to standard and lift its value.' },
+  { title: 'Refurbishments & turnarounds', text: 'Full refurbishments, or plastering, decorating and flooring between tenancies, scheduled around your timeline.' },
   { title: 'Kitchens & bathrooms', text: 'Hard-wearing kitchens and bathrooms that tenants like and that are easy to maintain.' },
   { title: 'Extensions & lofts', text: 'Add bedrooms and living space with extensions and loft conversions.' },
-  { title: 'Turnarounds', text: 'Plastering, decorating and flooring between tenancies, scheduled around your timeline.' },
   { title: 'Exterior & repairs', text: 'Roofing, windows, brickwork and rendering to keep the building sound.' },
 ];
 const terms = [
@@ -62,7 +61,7 @@ const terms = [
 
 <style>
   .ll__head { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: end; margin-bottom: clamp(48px, 6vw, 88px); }
-  .ll__work { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 0; margin: 0; padding: 0; border-top: 1px solid var(--rule); }
+  .ll__work { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0 28px; margin: 0; padding: 0; border-top: 1px solid var(--rule); }
   .ll__work li { padding: 32px 24px 32px 0; border-bottom: 1px solid var(--rule); }
   .ll__num { font: 600 20px/1 var(--font-display); color: var(--brand); }
   .ll__title { margin: 28px 0 12px; font: 650 28px/1.1 var(--font-display); }
@@ -76,6 +75,10 @@ const terms = [
   .ll__note a { color: var(--paper-dim); }
   @media (max-width: 900px) {
     .ll__head, .ll__terms { grid-template-columns: 1fr; }
+    .ll__work { grid-template-columns: 1fr 1fr; }
     .ll__note { grid-column: auto; }
+  }
+  @media (max-width: 560px) {
+    .ll__work { grid-template-columns: 1fr; }
   }
 </style>
