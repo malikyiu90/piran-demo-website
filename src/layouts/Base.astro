@@ -32,6 +32,7 @@ const schema = {
   image: new URL('/frames/poster.jpg', Astro.site).href,
   address: { '@type': 'PostalAddress', addressLocality: site.locality, addressCountry: site.country },
   areaServed: site.locality,
+  sameAs: Object.values(site.social).filter(Boolean),
 };
 ---
 <!doctype html>

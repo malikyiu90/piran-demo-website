@@ -41,6 +41,12 @@ const year = new Date().getFullYear();
         <img src="/logo.png" alt={site.name} width="461" height="226" loading="lazy" />
       </a>
       <p class="footer-text">Construction and renovation in {site.locality}, from window work and plastering to kitchens, bathrooms and double-storey extensions.</p>
+      {site.social.facebook && (
+        <a class="footer-social" href={site.social.facebook} target="_blank" rel="noopener">
+          <svg aria-hidden="true" viewBox="0 0 24 24" width="22" height="22"><path fill="currentColor" d="M9.101 23.691v-7.98H6.627v-3.667h2.474v-1.58c0-4.085 1.848-5.978 5.858-5.978.401 0 .955.042 1.468.103a8.68 8.68 0 0 1 1.141.195v3.325a8.623 8.623 0 0 0-.653-.036 26.805 26.805 0 0 0-.733-.009c-.707 0-1.259.096-1.675.309a1.686 1.686 0 0 0-.679.622c-.258.42-.374.995-.374 1.752v1.297h3.919l-.386 2.103-.287 1.564h-3.246v8.245C19.396 23.238 24 18.179 24 12.044c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.628 3.874 10.35 9.101 11.647Z"/></svg>
+          <span>Follow us on Facebook</span>
+        </a>
+      )}
     </div>
 
     <nav class="footer-col" aria-label="Services">
@@ -108,6 +114,9 @@ const year = new Date().getFullYear();
   }
   .footer-brand { display: inline-block; }
   .footer-brand img { width: auto; height: clamp(80px, 8.2vw, 106px); }
+  .footer-col .footer-social { display: inline-flex; align-items: center; gap: 10px; margin-top: 22px; color: var(--paper-dim); font-size: 14.5px; font-weight: 600; text-decoration: none; transition: color 0.2s ease; }
+  .footer-social svg { flex: none; width: 34px; height: 34px; color: #0866ff; background: #fff; border-radius: 50%; }
+  .footer-col .footer-social:hover { color: #fff; }
   .footer-text { margin-top: 18px; max-width: 38ch; color: var(--paper-faint); font-size: 15px; }
 
   .footer-heading { font-size: 16px; font-weight: 700; color: #fff; padding-bottom: 14px; margin-bottom: 18px; position: relative; }

@@ -12,7 +12,7 @@ export const site = {
   locality: 'Coventry',
   country: 'GB',
   social: {
-    facebook: null as string | null,
+    facebook: 'https://www.facebook.com/3piran/' as string | null,
     instagram: null as string | null,
     youtube: null as string | null,
   },
