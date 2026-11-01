@@ -1,8 +1,6 @@
 // Business details shown across the site. Only facts taken from the client's existing site live here.
 export const site = {
   name: 'Piran Trading',
-  // Registered company name. UK trading-disclosure rules require it on the website, so it stays in the footer and privacy notice.
-  legalName: 'Piran Trading Limited',
   shortName: 'Piran',
   tagline: 'Construction & renovation in Coventry',
   url: 'https://pirantrading.com',
