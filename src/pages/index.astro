@@ -2,6 +2,7 @@
 import Base from '../layouts/Base.astro';
 import Hero from '../components/Hero.astro';
 import Values from '../components/Values.astro';
+import Stats from '../components/Stats.astro';
 import ServiceList from '../components/ServiceList.astro';
 import Process from '../components/Process.astro';
 import Gallery from '../components/Gallery.astro';
@@ -21,6 +22,7 @@ import { site } from '../data/site';
   <!-- Order follows the visitor's questions: what do you do, why you, show me, how does it work,
        who vouches for you, what about…, then contact. Landlords are a secondary audience, so last. -->
   <Hero />
+  <Stats />
   <ServiceList />
   <Values />
   <Gallery />

@@ -221,7 +221,7 @@ const { service } = Astro.props;
 <style>
   .quote-card {
     position: relative; padding: clamp(24px, 3.5vw, 44px);
-    border-radius: 14px; background: #fff; color: var(--char);
+    border-radius: 14px; background: var(--sand-2); color: var(--char); border: 1px solid var(--rule);
     box-shadow: 0 30px 80px -30px rgba(0, 0, 0, 0.55);
   }
   .quote-form { display: grid; gap: 20px; }
@@ -230,47 +230,48 @@ const { service } = Astro.props;
   .field label { font-size: 13px; font-weight: 600; letter-spacing: 0.02em; color: var(--char); }
   .field input:not([type="checkbox"]), .field select, .field textarea {
     width: 100%; min-height: 54px; padding: 14px 16px;
-    border: 1px solid transparent; border-radius: 8px; background: var(--sand-2);
+    border: 1px solid var(--rule); border-radius: 8px; background: #17191c;
     font-size: 16px; color: var(--char);
     transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
   }
   .field textarea { resize: vertical; min-height: 140px; line-height: 1.5; }
   .field input::placeholder, .field textarea::placeholder { color: var(--char-faint); }
-  .field input:hover, .field select:hover, .field textarea:hover { border-color: rgba(0, 0, 0, 0.18); }
-  .field input:focus, .field select:focus, .field textarea:focus { outline: none; border-color: var(--brand); background: #fff; box-shadow: 0 0 0 4px rgba(8, 118, 244, 0.14); }
+  .field input:hover, .field select:hover, .field textarea:hover { border-color: rgba(255, 255, 255, 0.28); }
+  .field input:focus, .field select:focus, .field textarea:focus { outline: none; border-color: var(--brand); background: #1b1e22; box-shadow: 0 0 0 4px rgba(8, 118, 244, 0.25); }
   .select { position: relative; }
   .select::after { content: ""; position: absolute; right: 18px; top: 50%; width: 8px; height: 8px; border-right: 1.5px solid var(--char-dim); border-bottom: 1.5px solid var(--char-dim); transform: translateY(-70%) rotate(45deg); pointer-events: none; }
+  .field select option { background: #17191c; color: #fff; }
   .field select { appearance: none; padding-right: 44px; cursor: pointer; }
 
   .field__hint { font-size: 13px; color: var(--char-faint); text-align: right; margin-top: -2px; font-variant-numeric: tabular-nums; }
-  .field__error { font-size: 13px; font-weight: 500; color: #c62828; min-height: 0; }
+  .field__error { font-size: 13px; font-weight: 500; color: #ff8a80; min-height: 0; }
   .field__error:empty { display: none; }
-  .is-invalid input:not([type="checkbox"]), .is-invalid select, .is-invalid textarea { border-color: #c62828; background: #fff7f7; }
+  .is-invalid input:not([type="checkbox"]), .is-invalid select, .is-invalid textarea { border-color: #ff5252; background: rgba(255, 82, 82, 0.08); }
 
   .field--check { grid-template-columns: auto 1fr; column-gap: 12px; align-items: start; }
   .field--check input { width: 24px; height: 24px; margin: 1px 0 0; accent-color: var(--brand); cursor: pointer; }
   .field--check label { font-size: 14px; font-weight: 400; color: var(--char-dim); cursor: pointer; }
-  .field--check label a { color: var(--char); }
+  .field--check label a { color: var(--brand-tint); }
   .field--check .field__error { grid-column: 2; }
 
   .hp { position: absolute; left: -10000px; width: 1px; height: 1px; overflow: hidden; }
 
-  .quote-form__error { padding: 14px 16px; border-radius: 12px; background: #fdecec; color: #8e1b1b; font-size: 14px; font-weight: 500; }
+  .quote-form__error { padding: 14px 16px; border-radius: 12px; background: rgba(255, 82, 82, 0.12); color: #ffb4ab; border: 1px solid rgba(255, 82, 82, 0.35); font-size: 14px; font-weight: 500; }
   .quote-form__head { padding-bottom: 20px; margin-bottom: 4px; border-bottom: 1px solid var(--rule); }
   .quote-form__title { font: 700 24px/1.2 var(--font-display); letter-spacing: -0.02em; }
   .quote-form__sub { margin-top: 6px; font-size: 14.5px; color: var(--char-dim); }
   .quote-form__foot { display: grid; gap: 14px; margin-top: 4px; }
   .quote-form__submit { width: 100%; --h: 56px; font-size: 16px; }
   .quote-form__note { display: flex; align-items: flex-start; gap: 8px; font-size: 13.5px; color: var(--char-dim); }
-  .quote-form__note svg { flex: none; margin-top: 1px; color: var(--brand); }
+  .quote-form__note svg { flex: none; margin-top: 1px; color: var(--brand-tint); }
   .quote-form__submit[disabled] { cursor: progress; }
 
   .quote-success { display: grid; gap: 14px; justify-items: start; padding: 12px 0; outline: none; }
   .quote-success[hidden] { display: none; }
-  .quote-success__icon { display: grid; place-items: center; width: 56px; height: 56px; border-radius: 50%; background: rgba(8, 118, 244, 0.1); color: var(--brand); }
+  .quote-success__icon { display: grid; place-items: center; width: 56px; height: 56px; border-radius: 50%; background: rgba(8, 118, 244, 0.18); color: var(--brand-tint); }
   .quote-success__title { font: 650 clamp(32px, 3.4vw, 44px)/1.05 var(--font-display); }
   .quote-success p { color: var(--char-dim); max-width: 46ch; }
-  .quote-success a { color: var(--char); font-weight: 600; }
+  .quote-success a { color: var(--brand-tint); font-weight: 600; }
 
   @media (max-width: 640px) {
     .field-row { grid-template-columns: 1fr; }

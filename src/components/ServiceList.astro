@@ -50,9 +50,9 @@ const list: Service[] = variant === 'all' ? services : featuredServices();
 
 <style>
   .svc__head { display: grid; grid-template-columns: 1fr minmax(260px, 340px); gap: 32px 48px; align-items: end; margin-bottom: clamp(48px, 6vw, 80px); }
-  .svc__eyebrow { font-size: 13px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--char); margin-bottom: 22px; }
+  .svc__eyebrow { font-size: 13px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--brand-tint); margin-bottom: 22px; }
   .svc__title { font: 650 clamp(44px, 6vw, 92px)/0.98 var(--font-display); letter-spacing: -0.015em; }
-  .svc__title em { font-style: italic; color: var(--brand); }
+  .svc__title em { font-style: italic; color: var(--brand-tint); }
   .svc__lede { font-size: 17px; line-height: 1.6; color: var(--char-dim); padding-bottom: 8px; }
 
   .svc__list { margin: 0; padding: 0; border-top: 1px solid var(--rule); }

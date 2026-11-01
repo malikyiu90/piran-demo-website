@@ -1,0 +1,68 @@
+---
+import { proof } from '../data/site';
+import { services } from '../data/services';
+
+interface Stat {
+  value: string;
+  star?: boolean;
+  label: string;
+  text: string;
+}
+
+// Client-supplied figures first, then facts the site already states (service count, insurance in the terms,
+// guarantee in the terms, free consultation in the process). The first four available are shown, so the grid never has a gap.
+const stats = [
+  proof.googleRating && { value: proof.googleRating.toFixed(1), star: true, label: 'Google rating', text: 'Rated by homeowners across Coventry.' },
+  proof.googleReviewCount && { value: `${proof.googleReviewCount}+`, label: 'Verified reviews', text: 'Every review is from a real client who trusted us with their home.' },
+  proof.alwaysOpen && { value: '24/7', label: 'Always available', text: 'Call us any time for advice or emergencies.' },
+  { value: `${services.length}`, label: 'Services offered', text: 'From foundations to finishing, every trade under one roof.' },
+  { value: '£1m', label: 'Fully insured', text: 'Public and employers’ liability cover on every job.' },
+  { value: '1 year', label: 'Written guarantee', text: 'On new workmanship, as set out in our terms.' },
+  { value: 'Free', label: 'Consultation', text: 'We call you, talk it through and send a written quotation.' },
+].filter(Boolean).slice(0, 4) as Stat[];
+---
+<section class="stats on-light" aria-label="Piran at a glance">
+  <div class="container">
+    <ul class="stats__grid" role="list">
+      {stats.map((s) => (
+        <li class="stat" data-reveal>
+          <p class="stat__value">{s.value}{s.star && <><span class="stat__star" aria-hidden="true">★</span><span class="sr-only"> out of 5</span></>}</p>
+          <div>
+            <h2 class="stat__label">{s.label}</h2>
+            <p class="stat__text">{s.text}</p>
+          </div>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
+
+<style>
+  .stats { padding-block: clamp(48px, 6vw, 88px); border-bottom: 1px solid var(--rule); }
+  :global(.stats + .section) { padding-top: clamp(64px, 8vw, 112px); }
+  .stats__grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin: 0; padding: 0; }
+  .stat {
+    display: grid; gap: 18px; align-content: start; padding: 28px 26px;
+    background: var(--sand-2); border: 1px solid var(--rule);
+    transition: border-color 0.3s ease;
+  }
+  .stat:hover { border-color: rgba(61, 148, 255, 0.5); }
+  .stat__value {
+    font: 800 clamp(44px, 4.4vw, 64px)/0.9 var(--font-display); letter-spacing: -0.045em;
+    color: var(--brand-tint); font-variant-numeric: tabular-nums;
+  }
+  .stat__star { font-size: 0.82em; margin-left: 2px; }
+  .stat__label { font-size: 13px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: #fff; }
+  .stat__text { margin-top: 8px; font-size: 15px; line-height: 1.55; color: var(--char-dim); }
+
+  @media (max-width: 1024px) {
+    .stats__grid { grid-template-columns: 1fr 1fr; }
+  }
+  /* Phones: number on the left, words on the right, as in the client's reference. */
+  @media (max-width: 600px) {
+    .stats__grid { grid-template-columns: 1fr; gap: 12px; }
+    /* Fixed number column so the words line up from box to box. */
+    .stat { grid-template-columns: 118px 1fr; gap: 16px; align-items: start; padding: 24px 20px; }
+    .stat__value { font-size: 40px; }
+  }
+</style>

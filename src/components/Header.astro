@@ -119,24 +119,24 @@ const isCurrent = (href: string) => path === href || path.startsWith(`${href}/`)
   .has-mega:hover .mega, .has-mega:focus-within .mega { opacity: 1; visibility: visible; transform: none; }
   .mega__panel {
     width: min(920px, 100%); display: grid; grid-template-columns: repeat(4, 1fr); gap: 4px 28px;
-    padding: 26px 28px 20px; background: #fff; color: #000;
-    border-top: 3px solid var(--brand); border-radius: 0 0 12px 12px;
+    padding: 26px 28px 20px; background: #0b0c0e; color: #fff;
+    border: 1px solid var(--rule); border-top: 3px solid var(--brand); border-radius: 0 0 12px 12px;
     box-shadow: 0 30px 80px -20px rgba(0, 0, 0, 0.55);
   }
   .mega__heading {
-    font-size: 12px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--char-faint);
+    font-size: 12px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--brand-tint);
     padding-bottom: 10px; margin-bottom: 6px; border-bottom: 1px solid var(--rule);
   }
   .mega__col ul { display: grid; gap: 1px; margin: 0; padding: 0; }
   .mega__col a, .nav__list .mega__col a {
     display: block; padding: 8px 10px; margin: 0 -10px; border-radius: 6px;
-    font-size: 14.5px; font-weight: 500; color: #111;
+    font-size: 14.5px; font-weight: 500; color: var(--paper-dim);
   }
   .mega a::after { display: none; }
-  .nav__list .mega__col a:hover, .nav__list .mega__col a:focus-visible { background: var(--sand-2); color: var(--brand); }
+  .nav__list .mega__col a:hover, .nav__list .mega__col a:focus-visible { background: rgba(255, 255, 255, 0.06); color: var(--brand-tint); }
   .nav__list .mega__all {
     grid-column: 1 / -1; justify-self: start; margin-top: 12px; padding-top: 14px; width: 100%;
-    border-top: 1px solid var(--rule); font-size: 14.5px; font-weight: 700; color: var(--brand);
+    border-top: 1px solid var(--rule); font-size: 14.5px; font-weight: 700; color: var(--brand-tint);
   }
   .nav__list .mega__all:hover { color: var(--brand-deep); }
 

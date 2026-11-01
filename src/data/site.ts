@@ -18,6 +18,14 @@ export const site = {
   },
 } as const;
 
+// Figures for the stats strip that only the client can supply. Each stays null, and its box stays hidden,
+// until the client gives the real number from their Google Business profile or confirms the opening hours.
+export const proof = {
+  googleRating: null as number | null, // e.g. 4.8
+  googleReviewCount: null as number | null, // e.g. 17
+  alwaysOpen: false, // true only if the phone is genuinely answered 24/7
+};
+
 export const nav = [
   { label: 'Services', href: '/services' },
   { label: 'Gallery', href: '/#work' },

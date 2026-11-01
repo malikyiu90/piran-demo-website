@@ -13,13 +13,14 @@
   --line: rgba(255, 255, 255, 0.22);
   --line-soft: rgba(255, 255, 255, 0.1);
 
-  /* Light sections */
-  --sand: #ffffff;
-  --sand-2: #f2f6fc;
-  --char: #000000;
-  --char-dim: #4b5059;
-  --char-faint: #7c818a;
-  --rule: rgba(0, 0, 0, 0.1);
+  /* Content sections. The client asked for black backgrounds with white and blue text throughout,
+     so these "light section" tokens now hold the dark values; components keep using them unchanged. */
+  --sand: #000000;
+  --sand-2: #0e0f11;
+  --char: #ffffff;
+  --char-dim: rgba(255, 255, 255, 0.72);
+  --char-faint: rgba(255, 255, 255, 0.5);
+  --rule: rgba(255, 255, 255, 0.12);
 
   --brand: #0876f4;
   --brand-hover: #2a8bff;
@@ -80,7 +81,6 @@ ul[role="list"], ol[role="list"] { list-style: none; padding: 0; }
 .skip-link:focus-visible { transform: none; }
 
 :focus-visible { outline: 2px solid var(--brand-tint); outline-offset: 3px; border-radius: 6px; }
-.on-light :focus-visible { outline-color: var(--brand); }
 
 /* ---------- Layout ---------- */
 
@@ -110,11 +110,9 @@ ul[role="list"], ol[role="list"] { list-style: none; padding: 0; }
 .eyebrow {
   display: inline-flex; align-items: baseline; gap: 8px;
   font-size: 12.5px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase;
-  color: var(--paper-dim);
+  color: var(--brand-tint);
 }
-.on-light .eyebrow { color: var(--char); }
 .eyebrow b { font-weight: 700; color: var(--brand-tint); letter-spacing: 0.06em; }
-.on-light .eyebrow b { color: var(--brand); }
 
 .lede { font-size: clamp(17px, 1.3vw, 19px); line-height: 1.6; color: var(--paper-dim); max-width: 42ch; }
 .on-light .lede { color: var(--char-dim); }
@@ -145,11 +143,11 @@ ul[role="list"], ol[role="list"] { list-style: none; padding: 0; }
 .btn--ghost { color: #fff; border-color: rgba(255, 255, 255, 0.7); background: transparent; }
 .btn--ghost:hover { background: #fff; color: #000; border-color: #fff; }
 
-.btn--dark { background: var(--char); color: var(--sand); }
-.btn--dark:hover { background: #000; }
+.btn--dark { background: var(--brand); color: #fff; }
+.btn--dark:hover { background: var(--brand-deep); }
 
 .btn--outline-dark { color: var(--char); border-color: var(--rule); background: transparent; }
-.btn--outline-dark:hover { border-color: var(--char); }
+.btn--outline-dark:hover { border-color: var(--brand-tint); color: var(--brand-tint); }
 
 .btn--sm { --h: 42px; padding: 0 18px; font-size: 14px; box-shadow: none; }
 
