@@ -7,7 +7,7 @@ const isCurrent = (href: string) => path === href || path.startsWith(`${href}/`)
 ---
 <header class="site-header" data-header>
   <a class="brand" href="/" aria-label={`${site.name} home`}>
-    <img class="brand__logo" src="/logo.png" alt={site.name} width="461" height="248" fetchpriority="high" />
+    <img class="brand__logo" src="/logo.png" alt={site.name} width="461" height="226" fetchpriority="high" />
   </a>
 
   <nav class="nav" aria-label="Primary">
@@ -81,15 +81,15 @@ const isCurrent = (href: string) => path === href || path.startsWith(`${href}/`)
     border-bottom-color: transparent;
   }
 
-  /* The logo is drawn for dark backgrounds (white "LIMITED" and rules), which every header state uses. */
+  /* The logo is drawn for dark backgrounds, which every header state uses. */
   .brand { flex: none; display: flex; align-items: center; text-decoration: none; }
   .brand__logo {
-    --logo-h: 76px;
+    --logo-h: 70px;
     width: auto; height: var(--logo-h);
     transition: height 0.4s var(--ease-out);
     filter: drop-shadow(0 2px 12px rgba(0, 0, 0, 0.35));
   }
-  :global(.site-header.is-scrolled) .brand__logo { --logo-h: 60px; }
+  :global(.site-header.is-scrolled) .brand__logo { --logo-h: 55px; }
 
   .nav { align-self: stretch; display: flex; }
   .nav__list { display: flex; align-items: center; gap: 34px; height: 100%; margin: 0; padding: 0; }
@@ -193,18 +193,18 @@ const isCurrent = (href: string) => path === href || path.startsWith(`${href}/`)
   @media (max-width: 1024px) {
     .site-header { --header-h: 76px; }
     :global(.site-header.is-scrolled) { --header-h: 68px; }
-    .brand__logo { --logo-h: 62px; }
-    :global(.site-header.is-scrolled) .brand__logo { --logo-h: 54px; }
+    .brand__logo { --logo-h: 57px; }
+    :global(.site-header.is-scrolled) .brand__logo { --logo-h: 50px; }
   }
 
   @media (max-width: 560px) {
     .header-cta { display: none; }
-    .brand__logo { --logo-h: 58px; }
-    :global(.site-header.is-scrolled) .brand__logo { --logo-h: 52px; }
+    .brand__logo { --logo-h: 53px; }
+    :global(.site-header.is-scrolled) .brand__logo { --logo-h: 48px; }
   }
 
   @media (max-height: 560px) and (orientation: landscape) {
     .site-header, :global(.site-header.is-scrolled) { --header-h: 64px; }
-    .brand__logo, :global(.site-header.is-scrolled) .brand__logo { --logo-h: 54px; }
+    .brand__logo, :global(.site-header.is-scrolled) .brand__logo { --logo-h: 50px; }
   }
 </style>
