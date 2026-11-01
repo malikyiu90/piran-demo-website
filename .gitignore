@@ -1,0 +1,11 @@
+node_modules/
+dist/
+.astro/
+.env
+.env.*
+!.env.example
+.playwright-mcp/
+*.mp4
+.vercel/
+# Internal research notes about the client's old site; not part of the website.
+pirantrading-research.md

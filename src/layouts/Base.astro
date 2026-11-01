@@ -1,0 +1,71 @@
+---
+import '@fontsource-variable/archivo/wght.css';
+import '@fontsource-variable/archivo/wght-italic.css';
+import '../styles/global.css';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { site } from '../data/site';
+
+interface Props {
+  title: string;
+  description: string;
+  image?: string;
+  preload?: string;
+  /** Hide the footer's closing call-to-action, e.g. on the contact page where the form is already present. */
+  hideFooterCta?: boolean;
+  noindex?: boolean;
+}
+
+const { title, description, image = '/frames/poster.jpg', preload, hideFooterCta = false, noindex = false } = Astro.props;
+const canonical = new URL(Astro.url.pathname, Astro.site);
+const ogImage = new URL(image, Astro.site);
+const fullTitle = title === site.name ? title : `${title} | ${site.name}`;
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'GeneralContractor',
+  name: site.name,
+  url: site.url,
+  telephone: site.phone,
+  email: site.email,
+  image: new URL('/frames/poster.jpg', Astro.site).href,
+  address: { '@type': 'PostalAddress', addressLocality: site.locality, addressCountry: site.country },
+  areaServed: site.locality,
+};
+---
+<!doctype html>
+<html lang="en-GB">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <meta name="theme-color" content="#0b0f14" />
+    {noindex && <meta name="robots" content="noindex" />}
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={site.name} />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    {preload && <link rel="preload" as="image" href={preload} fetchpriority="high" />}
+    <script is:inline>document.documentElement.classList.add('js');</script>
+    <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <Header />
+    <main id="main">
+      <slot />
+    </main>
+    <Footer showCta={!hideFooterCta} />
+    <script>
+      import '../scripts/site';
+    </script>
+  </body>
+</html>

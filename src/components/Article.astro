@@ -1,0 +1,28 @@
+---
+// Long-form text pages (privacy, terms).
+interface Props {
+  updated?: string;
+}
+const { updated } = Astro.props;
+---
+<section class="article section on-light">
+  <div class="container article__wrap">
+    {updated && <p class="article__updated">{updated}</p>}
+    <div class="article__body">
+      <slot />
+    </div>
+  </div>
+</section>
+
+<style>
+  .article__wrap { max-width: 860px; }
+  .article__updated { font-size: 13px; color: var(--char-faint); margin-bottom: 40px; }
+  .article__body { font-size: 17px; line-height: 1.75; color: var(--char-dim); }
+  .article__body :global(h2) { font: 650 clamp(30px, 3vw, 40px)/1.1 var(--font-display); color: var(--char); margin: 56px 0 18px; }
+  .article__body :global(h2:first-child) { margin-top: 0; }
+  .article__body :global(p + p) { margin-top: 1em; }
+  .article__body :global(ol), .article__body :global(ul) { padding-left: 1.3em; display: grid; gap: 14px; }
+  .article__body :global(li::marker) { color: var(--brand); }
+  .article__body :global(a) { color: var(--char); }
+  .article__body :global(.note) { margin-top: 32px; padding: 18px 20px; border-left: 3px solid var(--brand); background: #fff; border-radius: 0 12px 12px 0; font-size: 15px; }
+</style>

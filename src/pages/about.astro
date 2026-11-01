@@ -1,0 +1,56 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import TrustStrip from '../components/TrustStrip.astro';
+import Values from '../components/Values.astro';
+import Process from '../components/Process.astro';
+import { site } from '../data/site';
+---
+<Base title="About us" description={`${site.name} is a construction and renovation company based in ${site.locality}, offering everything from window work to double-storey extensions.`}>
+  <PageHero
+    eyebrow="About Piran"
+    title="Quality meets affordability."
+    lede={`A ${site.locality} construction and renovation company with the trades to take a project from bare ground to finished home.`}
+    image="/frames/lg/0045.webp"
+    crumbs={[{ label: 'About' }]}
+  />
+
+  <section class="story section on-light">
+    <div class="container story__grid">
+      <h2 class="h2" data-reveal>Your partner for construction and renovation.</h2>
+      <div class="prose" data-reveal>
+        <p>{site.name} offers a comprehensive range of construction and renovation services, from window work, plastering and tiling to kitchens, bathrooms, loft conversions and double-storey extensions.</p>
+        <p>We pride ourselves on top-quality craftsmanship at competitive prices, and on turning our customers’ ideas into finished spaces they are proud of.</p>
+        <p>Based in {site.locality}, our team is ready to bring your project to life. Every job starts the same way: a conversation about what you want, followed by a proposal of work and a written quotation.</p>
+      </div>
+    </div>
+  </section>
+
+  <TrustStrip />
+  <Values heading={false} />
+  <Process />
+
+  <section class="hiring section on-ink" aria-labelledby="hiring-title">
+    <div class="container hiring__grid">
+      <div>
+        <p class="eyebrow" data-reveal>Careers</p>
+        <h2 class="h2" id="hiring-title" data-reveal>We’re hiring.</h2>
+      </div>
+      <div class="hiring__body" data-reveal>
+        <p class="lede">{site.name} is a growing company looking for talented builders, designers and consultants to join the team.</p>
+        <a class="btn btn--primary" href={`mailto:${site.email}?subject=Joining%20the%20team`}>Email us about joining</a>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .story__grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(40px, 7vw, 120px); align-items: start; }
+  .story .prose { font-size: 18px; }
+  .hiring__grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: end; }
+  .hiring .eyebrow { margin-bottom: 22px; }
+  .hiring__body { display: grid; gap: 28px; justify-items: start; }
+  @media (max-width: 900px) {
+    .story__grid, .hiring__grid { grid-template-columns: 1fr; }
+  }
+</style>

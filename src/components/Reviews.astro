@@ -1,0 +1,71 @@
+---
+import { reviewProfileUrl, reviews } from '../data/reviews';
+
+const initials = (name: string) => name.split(/\s+/).map((p) => p[0]).join('').replace(/[^A-Za-z]/g, '').slice(0, 2).toUpperCase();
+// Enough cards to fill a wide screen before the loop repeats.
+const loop = reviews.length < 6 ? [...reviews, ...reviews] : reviews;
+---
+{reviews.length > 0 && (
+  <section class="reviews section on-light" id="reviews" aria-labelledby="reviews-title">
+    <div class="container reviews__head">
+      <div>
+        <p class="eyebrow" data-reveal>Reviews</p>
+        <h2 class="h2" id="reviews-title" data-reveal>What our customers say.</h2>
+      </div>
+      {reviewProfileUrl && <a class="btn btn--outline-dark" href={reviewProfileUrl} target="_blank" rel="noopener" data-reveal>Read all reviews</a>}
+    </div>
+
+    <div class="reviews__viewport" data-reveal>
+      <div class="reviews__track">
+        {[loop, loop].map((set, copy) => (
+          <ul class="reviews__set" role="list" aria-hidden={copy === 1 ? 'true' : undefined}>
+            {set.map((r, i) => (
+              <li class="card">
+                <div class="card__head">
+                  <span class={`card__avatar card__avatar--${i % 2 ? 'dark' : 'blue'}`} aria-hidden="true">{initials(r.name)}</span>
+                  <div>
+                    <p class="card__name">{r.name}</p>
+                    {r.context && <p class="card__context">{r.context}</p>}
+                  </div>
+                  <svg class="card__mark" aria-hidden="true" viewBox="0 0 32 24" width="34" height="26"><path fill="currentColor" d="M0 24V14C0 6 4 1.5 12 0l1.5 3C9 4.5 7 7.5 7 11h6v13H0zm19 0V14c0-8 4-12.5 12-14l1.5 3C28 4.5 26 7.5 26 11h6v13H19z"/></svg>
+                </div>
+                <blockquote class="card__quote">{r.quote}</blockquote>
+              </li>
+            ))}
+          </ul>
+        ))}
+      </div>
+    </div>
+  </section>
+)}
+
+<style>
+  .reviews__head { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 24px; margin-bottom: clamp(40px, 5vw, 64px); }
+  .reviews__head .eyebrow { margin-bottom: 20px; }
+
+  .reviews__viewport {
+    overflow: hidden;
+    -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 12%, #000 88%, transparent 100%);
+    mask-image: linear-gradient(90deg, transparent 0, #000 12%, #000 88%, transparent 100%);
+  }
+  .reviews__track { display: flex; width: max-content; animation: reviews-scroll 70s linear infinite; }
+  .reviews__viewport:hover .reviews__track, .reviews__viewport:focus-within .reviews__track { animation-play-state: paused; }
+  .reviews__set { display: flex; gap: 20px; padding: 0 10px; margin: 0; }
+  @keyframes reviews-scroll { to { transform: translateX(-50%); } }
+
+  .card { width: clamp(300px, 30vw, 400px); padding: 32px; background: var(--sand-2); display: grid; gap: 22px; align-content: start; }
+  .card__head { display: grid; grid-template-columns: 46px 1fr auto; gap: 14px; align-items: center; }
+  .card__avatar { display: grid; place-items: center; width: 46px; height: 46px; border-radius: 50%; color: #fff; font-size: 14px; font-weight: 700; letter-spacing: 0.02em; }
+  .card__avatar--blue { background: var(--brand); }
+  .card__avatar--dark { background: var(--char); }
+  .card__name { font-weight: 700; font-size: 15px; }
+  .card__context { font-size: 13px; color: var(--char-faint); margin-top: 2px; }
+  .card__mark { color: rgba(8, 118, 244, 0.18); align-self: start; }
+  .card__quote { margin: 0; font-size: 17px; line-height: 1.6; color: var(--char); }
+
+  @media (prefers-reduced-motion: reduce) {
+    .reviews__viewport { overflow-x: auto; -webkit-mask-image: none; mask-image: none; padding-inline: var(--gutter); }
+    .reviews__track { animation: none; }
+    .reviews__set[aria-hidden] { display: none; }
+  }
+</style>

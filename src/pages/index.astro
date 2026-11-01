@@ -1,0 +1,32 @@
+---
+import Base from '../layouts/Base.astro';
+import Hero from '../components/Hero.astro';
+import TrustStrip from '../components/TrustStrip.astro';
+import Values from '../components/Values.astro';
+import ServiceList from '../components/ServiceList.astro';
+import Process from '../components/Process.astro';
+import Gallery from '../components/Gallery.astro';
+import LandlordsBand from '../components/LandlordsBand.astro';
+import Reviews from '../components/Reviews.astro';
+import FaqSection from '../components/FaqSection.astro';
+import QuoteSection from '../components/QuoteSection.astro';
+import { site } from '../data/site';
+
+---
+<Base
+  title={site.name}
+  description="Extensions, loft conversions, kitchens, bathrooms and full builds across Coventry. Book a free consultation."
+  preload="/frames/poster.jpg"
+  hideFooterCta
+>
+  <Hero />
+  <TrustStrip />
+  <Values />
+  <ServiceList />
+  <Process />
+  <Gallery />
+  <LandlordsBand />
+  <Reviews />
+  <FaqSection />
+  <QuoteSection />
+</Base>

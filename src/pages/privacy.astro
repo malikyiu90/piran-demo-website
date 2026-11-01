@@ -1,0 +1,31 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import Article from '../components/Article.astro';
+import { site } from '../data/site';
+---
+<Base title="Privacy notice" description={`How ${site.name} uses the personal information you share through this website.`}>
+  <PageHero eyebrow="Legal" title="Privacy notice." image="/frames/lg/0040.webp" crumbs={[{ label: 'Privacy' }]} />
+  <Article>
+    <h2>Who we are</h2>
+    <p>This website is run by {site.name}, based in {site.location}. You can contact us at <a href={`mailto:${site.email}`}>{site.email}</a> or on <a href={site.phoneHref}>{site.phone}</a>.</p>
+
+    <h2>What we collect</h2>
+    <p>When you send a quote request we collect the details you enter: your name, email address, phone number, the service you are interested in and your message. We do not ask for or want any other personal information through the form.</p>
+
+    <h2>How we use it</h2>
+    <p>We use these details only to respond to your enquiry: to call you about your requirements, send you a proposal and quotation, and keep in touch about that project. Our lawful basis is your consent, given when you tick the box on the form, and our legitimate interest in responding to enquiries.</p>
+
+    <h2>Who we share it with</h2>
+    <p>Quote requests are delivered to our inbox by an email delivery provider acting on our behalf. We do not sell your information or share it for marketing.</p>
+
+    <h2>How long we keep it</h2>
+    <p>We keep enquiry details for as long as needed to handle your enquiry and any resulting work, and to meet our legal and accounting obligations.</p>
+
+    <h2>Your rights</h2>
+    <p>You can ask to see, correct or delete the information we hold about you, or withdraw your consent, by emailing <a href={`mailto:${site.email}`}>{site.email}</a>. If you are unhappy with how we handle your information you can complain to the Information Commissioner’s Office (ico.org.uk).</p>
+
+    <h2>Cookies</h2>
+    <p>This website does not use advertising or analytics cookies.</p>
+  </Article>
+</Base>

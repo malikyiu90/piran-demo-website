@@ -1,0 +1,125 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageHero from '../../components/PageHero.astro';
+import Faq from '../../components/Faq.astro';
+import QuoteSection from '../../components/QuoteSection.astro';
+import { categoryOf, guaranteeFor, photoFor, services, servicesIn, type Service } from '../../data/services';
+import { site } from '../../data/site';
+
+export function getStaticPaths() {
+  return services.map((service) => ({ params: { slug: service.slug }, props: { service } }));
+}
+
+interface Props {
+  service: Service;
+}
+const { service } = Astro.props;
+const category = categoryOf(service);
+const related = servicesIn(service.category).filter((s) => s.slug !== service.slug);
+const guarantee = guaranteeFor(service);
+const heroImage = photoFor(service).hero ?? category.image;
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: service.faqs.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+};
+---
+<Base title={`${service.name} in ${site.locality}`} description={service.summary} image={heroImage} hideFooterCta>
+  <PageHero
+    eyebrow={category.name}
+    title={service.name}
+    lede={service.summary}
+    image={heroImage}
+    crumbs={[{ label: 'Services', href: '/services' }, { label: service.name }]}
+  >
+    <div class="hero-actions">
+      <a class="btn btn--primary" href={`/contact?service=${service.slug}#quote`}>
+        Get a quote
+        <svg aria-hidden="true" viewBox="0 0 24 24" width="18" height="18"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </a>
+      <a class="btn btn--ghost" href={site.phoneHref}>{site.phone}</a>
+    </div>
+  </PageHero>
+
+  <section class="detail section on-light">
+    <div class="container detail__grid">
+      <div class="detail__main">
+        <div class="prose detail__intro" data-reveal>
+          {service.intro.map((p) => <p>{p}</p>)}
+        </div>
+
+        <h2 class="h3 detail__heading" data-reveal>What’s included</h2>
+        <ul class="includes" role="list">
+          {service.includes.map((item) => (
+            <li data-reveal>
+              <svg aria-hidden="true" viewBox="0 0 24 24" width="18" height="18"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M5 12.5l4.5 4.5L19 7.5"/></svg>
+              {item}
+            </li>
+          ))}
+        </ul>
+
+        <h2 class="h3 detail__heading" data-reveal>Questions</h2>
+        <Faq items={service.faqs} />
+      </div>
+
+      <aside class="aside" aria-label={`More in ${category.name}`}>
+        <div class="aside__card" data-reveal>
+          <p class="aside__label">Every job includes</p>
+          <ul role="list" class="aside__facts">
+            <li>A written quotation</li>
+            <li>Extras confirmed in writing first</li>
+            {guarantee && <li>{guarantee}*</li>}
+            <li>£1m public &amp; employers’ liability</li>
+          </ul>
+          <p class="aside__small">{guarantee ? '*On new work and materials. ' : ''}See our <a href="/terms">terms</a> for details.</p>
+          <a class="btn btn--dark aside__cta" href={`/contact?service=${service.slug}#quote`}>Request a quote</a>
+        </div>
+        {related.length > 0 && (
+          <div class="aside__related" data-reveal>
+            <p class="aside__label">Also in {category.name}</p>
+            <ul role="list">
+              {related.map((r) => <li><a href={`/services/${r.slug}`}>{r.name}<span aria-hidden="true">→</span></a></li>)}
+            </ul>
+          </div>
+        )}
+      </aside>
+    </div>
+  </section>
+
+  <QuoteSection service={service.slug} />
+  <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+</Base>
+
+<style>
+  .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 12px; }
+
+  .detail__grid { display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: clamp(40px, 7vw, 120px); align-items: start; }
+  .detail__intro { font-size: clamp(18px, 1.5vw, 21px); color: var(--char); }
+  .detail__heading { margin: clamp(56px, 7vw, 88px) 0 28px; }
+
+  .includes { display: grid; grid-template-columns: 1fr 1fr; gap: 0 32px; margin: 0; padding: 0; border-top: 1px solid var(--rule); }
+  .includes li { display: flex; gap: 14px; align-items: flex-start; padding: 18px 0; border-bottom: 1px solid var(--rule); font-size: 16px; }
+  .includes svg { flex: none; margin-top: 3px; color: var(--brand); }
+
+  .aside { position: sticky; top: 100px; display: grid; gap: 20px; }
+  .aside__card { padding: 30px; border-radius: 22px; background: #fff; box-shadow: 0 30px 80px -40px rgba(0, 0, 0, 0.3); }
+  .aside__label { font-size: 13px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: var(--char-faint); margin-bottom: 16px; }
+  .aside__facts { display: grid; gap: 12px; margin: 0; padding: 0; }
+  .aside__facts li { position: relative; padding-left: 20px; font-size: 15px; }
+  .aside__facts li::before { content: ""; position: absolute; left: 0; top: 0.6em; width: 7px; height: 7px; border-radius: 50%; background: var(--brand); }
+  .aside__small { margin-top: 16px; font-size: 12.5px; color: var(--char-faint); }
+  .aside__small a { color: var(--char-dim); }
+  .aside__cta { width: 100%; margin-top: 22px; }
+  .aside__related { padding: 4px 6px; }
+  .aside__related ul { margin: 0; padding: 0; border-top: 1px solid var(--rule); }
+  .aside__related a { display: flex; justify-content: space-between; padding: 14px 0; border-bottom: 1px solid var(--rule); text-decoration: none; font: 650 22px/1.2 var(--font-display); transition: color 0.2s ease, padding 0.3s var(--ease-out); }
+  .aside__related a:hover { color: var(--brand); padding-left: 6px; }
+
+  @media (max-width: 980px) {
+    .detail__grid { grid-template-columns: 1fr; }
+    .aside { position: static; }
+  }
+  @media (max-width: 600px) {
+    .includes { grid-template-columns: 1fr; }
+  }
+</style>

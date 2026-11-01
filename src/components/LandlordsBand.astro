@@ -1,0 +1,33 @@
+---
+---
+<section class="band" aria-labelledby="band-title">
+  <div class="band__media" aria-hidden="true">
+    <img src="/frames/lg/0090.webp" alt="" loading="lazy" decoding="async" width="1600" height="900" data-parallax="14" />
+  </div>
+  <div class="band__inner container">
+    <p class="eyebrow" data-reveal>Landlords &amp; investors</p>
+    <h2 class="h2" id="band-title" data-reveal>Refurbishments for landlords and property investors.</h2>
+    <p class="lede" data-reveal>Upgrades, conversions and turnarounds between tenancies, planned around your timeline and quoted in writing up front.</p>
+    <div data-reveal>
+      <a class="btn btn--primary" href="/landlords">
+        Landlord services
+        <svg aria-hidden="true" viewBox="0 0 24 24" width="18" height="18"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .band { position: relative; isolation: isolate; overflow: hidden; background: var(--ink); color: var(--paper); padding-block: clamp(110px, 14vw, 200px); }
+  .band__media { position: absolute; inset: -12% 0; z-index: -2; }
+  .band__media img { width: 100%; height: 100%; object-fit: cover; }
+  .band::before {
+    content: ""; position: absolute; inset: 0; z-index: -1;
+    background: linear-gradient(90deg, rgba(0, 0, 0, 0.88) 0%, rgba(0, 0, 0, 0.6) 50%, rgba(0, 0, 0, 0.15) 100%);
+  }
+  .band__inner { display: grid; gap: 22px; justify-items: start; }
+  .band .h2 { max-width: 16ch; }
+  @media (max-width: 700px) {
+    .band::before { background: linear-gradient(0deg, rgba(0, 0, 0, 0.9) 10%, rgba(0, 0, 0, 0.55) 100%); }
+  }
+</style>

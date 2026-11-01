@@ -1,0 +1,81 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import Process from '../components/Process.astro';
+import QuoteSection from '../components/QuoteSection.astro';
+
+const work = [
+  { title: 'Refurbishments', text: 'Full or partial refurbishments to bring a property up to standard and lift its value.' },
+  { title: 'Kitchens & bathrooms', text: 'Hard-wearing kitchens and bathrooms that tenants like and that are easy to maintain.' },
+  { title: 'Extensions & lofts', text: 'Add bedrooms and living space with extensions and loft conversions.' },
+  { title: 'Turnarounds', text: 'Plastering, decorating and flooring between tenancies, scheduled around your timeline.' },
+  { title: 'Exterior & repairs', text: 'Roofing, windows, brickwork and rendering to keep the building sound.' },
+];
+const terms = [
+  'A proposal of work and a written quotation before anything starts',
+  'Any extra work confirmed in writing, with its cost, first',
+  'A payment plan agreed before work begins',
+  'A 12-month guarantee on new workmanship',
+  '£1m public and employers’ liability insurance',
+];
+---
+<Base title="Landlords & property investors" description="Refurbishments, kitchens, bathrooms, extensions and turnarounds for landlords and property investors in Coventry.">
+  <PageHero
+    eyebrow="Landlords & investors"
+    title="Refurbishments that get properties ready to let."
+    lede="We work with landlords and property investors on refurbishments, conversions and turnarounds, quoted clearly and planned around your timeline."
+    image="/frames/lg/0088.webp"
+    crumbs={[{ label: 'Landlords' }]}
+  />
+
+  <section class="section on-light">
+    <div class="container">
+      <div class="ll__head">
+        <h2 class="h2" data-reveal>Uplift your property value.</h2>
+        <p class="lede" data-reveal>Whether you are refreshing a single let or improving a portfolio, we bring the trades you need under one roof.</p>
+      </div>
+      <ol class="ll__work" role="list">
+        {work.map((w, i) => (
+          <li data-reveal>
+            <span class="ll__num">{String(i + 1).padStart(2, '0')}</span>
+            <h3 class="ll__title">{w.title}</h3>
+            <p>{w.text}</p>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <section class="section on-ink" aria-labelledby="ll-terms">
+    <div class="container ll__terms">
+      <h2 class="h2" id="ll-terms" data-reveal>What you can count on.</h2>
+      <ul role="list" class="ll__list">
+        {terms.map((t) => <li data-reveal>{t}</li>)}
+      </ul>
+      <p class="ll__note">As set out in our <a href="/terms">terms &amp; conditions</a>.</p>
+    </div>
+  </section>
+
+  <Process />
+  <QuoteSection service="other" />
+</Base>
+
+<style>
+  .ll__head { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: end; margin-bottom: clamp(48px, 6vw, 88px); }
+  .ll__work { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 0; margin: 0; padding: 0; border-top: 1px solid var(--rule); }
+  .ll__work li { padding: 32px 24px 32px 0; border-bottom: 1px solid var(--rule); }
+  .ll__num { font: 600 20px/1 var(--font-display); color: var(--brand); }
+  .ll__title { margin: 28px 0 12px; font: 650 28px/1.1 var(--font-display); }
+  .ll__work p { color: var(--char-dim); font-size: 15.5px; max-width: 28ch; }
+
+  .ll__terms { display: grid; grid-template-columns: 1fr 1fr; gap: 40px 80px; }
+  .ll__list { margin: 0; padding: 0; border-top: 1px solid var(--line); }
+  .ll__list li { position: relative; padding: 20px 0 20px 34px; border-bottom: 1px solid var(--line); font-size: 17px; color: var(--paper-dim); }
+  .ll__list li::before { content: ""; position: absolute; left: 0; top: 50%; width: 18px; height: 1px; background: var(--brand-tint); }
+  .ll__note { grid-column: 2; font-size: 13px; color: var(--paper-faint); }
+  .ll__note a { color: var(--paper-dim); }
+  @media (max-width: 900px) {
+    .ll__head, .ll__terms { grid-template-columns: 1fr; }
+    .ll__note { grid-column: auto; }
+  }
+</style>

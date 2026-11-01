@@ -1,0 +1,23 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import Article from '../components/Article.astro';
+import oldSite from '../../content/old-site.json';
+import { site } from '../data/site';
+
+// Terms are carried over word for word from the previous website (content/old-site.json).
+// Only the numbered clauses are used; the old page's signature form fields are left out.
+const blocks: { tag: string; t: string }[] = oldSite.pages['/terms-conditions/'].blocks;
+const SKIP = new Set(['Home', 'Terms & Conditions', 'Full name', 'Address', 'Phone number', 'Email address', 'Date of birth']);
+const clauses = blocks.filter((b) => b.tag === 'li' && !SKIP.has(b.t)).map((b) => b.t);
+---
+<Base title="Terms & conditions" description={`Terms and conditions for work carried out by ${site.name}.`}>
+  <PageHero eyebrow="Legal" title="Terms &amp; conditions." image="/frames/lg/0040.webp" crumbs={[{ label: 'Terms' }]} />
+  <Article>
+    <h2>Our terms</h2>
+    <ol>
+      {clauses.map((c) => <li>{c}</li>)}
+    </ol>
+    <p class="note">Questions about these terms? Email <a href={`mailto:${site.email}`}>{site.email}</a> or call <a href={site.phoneHref}>{site.phone}</a>.</p>
+  </Article>
+</Base>

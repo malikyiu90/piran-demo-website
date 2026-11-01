@@ -1,0 +1,88 @@
+---
+import { categories } from '../data/services';
+import { galleryIsPublishable, projects } from '../data/projects';
+
+const used = categories.filter((c) => projects.some((p) => p.category === c.id));
+const show = galleryIsPublishable || import.meta.env.DEV;
+---
+{show && (
+  <section class="gallery section on-ink" id="work" aria-labelledby="gallery-title">
+    <div class="container">
+      <div class="gallery__head">
+        <div>
+          <p class="eyebrow" data-reveal>Our work</p>
+          <h2 class="h2" id="gallery-title" data-reveal>Recent projects.</h2>
+        </div>
+        <p class="lede" data-reveal>A look at the quality, detail and finish we deliver on every job.</p>
+      </div>
+
+      <div class="filters" role="group" aria-label="Filter projects" data-reveal>
+        <button type="button" class="filter" aria-pressed="true" data-filter="all">All work</button>
+        {used.map((c) => <button type="button" class="filter" aria-pressed="false" data-filter={c.id}>{c.name}</button>)}
+      </div>
+
+      <ul class="grid" role="list" data-gallery>
+        {projects.map((p) => (
+          <li class="tile" data-category={p.category}>
+            <img src={p.src} alt={p.alt} loading="lazy" decoding="async" width="1600" height="1067" />
+            <span class="tile__label">{p.alt}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+)}
+
+<script>
+  document.querySelectorAll<HTMLElement>('.gallery').forEach((section) => {
+    const buttons = [...section.querySelectorAll<HTMLButtonElement>('[data-filter]')];
+    const tiles = [...section.querySelectorAll<HTMLElement>('.tile')];
+    buttons.forEach((btn) => btn.addEventListener('click', () => {
+      const value = btn.dataset.filter;
+      buttons.forEach((b) => b.setAttribute('aria-pressed', String(b === btn)));
+      tiles.forEach((t) => { t.hidden = value !== 'all' && t.dataset.category !== value; });
+      section.querySelector('[data-gallery]')?.classList.toggle('is-filtered', value !== 'all');
+    }));
+  });
+</script>
+
+<style>
+  .gallery__head { display: grid; grid-template-columns: 1fr minmax(260px, 380px); gap: 24px 64px; align-items: end; margin-bottom: 40px; }
+  .gallery__head .eyebrow { margin-bottom: 20px; }
+
+  .filters { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 32px; }
+  .filter {
+    height: 44px; padding: 0 18px; border: 1px solid rgba(255, 255, 255, 0.35); background: transparent; color: #fff;
+    font-size: 14px; font-weight: 600; cursor: pointer; transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+  }
+  .filter:hover { border-color: #fff; }
+  .filter[aria-pressed="true"] { background: #fff; color: #000; border-color: #fff; }
+
+  .grid { display: grid; grid-template-columns: 2fr 1fr 1fr; grid-auto-rows: clamp(200px, 22vw, 300px); gap: 16px; margin: 0; padding: 0; }
+  .grid:not(.is-filtered) .tile:first-child { grid-row: span 2; }
+  .tile { position: relative; overflow: hidden; background: var(--ink-3); }
+  .tile[hidden] { display: none; }
+  .tile img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.9s var(--ease-out); }
+  .tile:hover img { transform: scale(1.05); }
+  .tile__label {
+    position: absolute; left: 0; right: 0; bottom: 0; padding: 40px 18px 16px;
+    background: linear-gradient(0deg, rgba(0, 0, 0, 0.75), transparent);
+    font-size: 14px; font-weight: 600; opacity: 0; transform: translateY(6px); transition: opacity 0.3s ease, transform 0.3s ease;
+  }
+  .tile:hover .tile__label { opacity: 1; transform: none; }
+
+  @media (max-width: 900px) {
+    .gallery__head { grid-template-columns: 1fr; }
+    /* One swipeable row of filters instead of several wrapped lines. */
+    .filters {
+      flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none;
+      margin-inline: calc(-1 * var(--gutter)); padding-inline: var(--gutter);
+      scroll-padding-inline: var(--gutter);
+    }
+    .filters::-webkit-scrollbar { display: none; }
+    .filter { flex: none; }
+    .grid { grid-template-columns: 1fr 1fr; grid-auto-rows: clamp(150px, 30vw, 220px); gap: 10px; }
+    .grid:not(.is-filtered) .tile:first-child { grid-column: 1 / -1; grid-row: span 1; }
+    .tile__label { opacity: 1; transform: none; padding: 28px 12px 10px; font-size: 13px; }
+  }
+</style>

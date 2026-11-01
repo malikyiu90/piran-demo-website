@@ -1,0 +1,16 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageHero from '../../components/PageHero.astro';
+import QuoteSection from '../../components/QuoteSection.astro';
+import { site } from '../../data/site';
+---
+<Base title="Contact & free quote" description={`Get a free consultation and quotation from ${site.name}. Call ${site.phone}, WhatsApp us or send your project details online.`} hideFooterCta>
+  <PageHero
+    eyebrow="Contact"
+    title="Let’s talk about your project."
+    lede="Send us a few details, call or WhatsApp. We’ll arrange a call to discuss your requirements and follow up with a proposal and quotation."
+    image="/frames/lg/0094.webp"
+    crumbs={[{ label: 'Contact' }]}
+  />
+  <QuoteSection />
+</Base>

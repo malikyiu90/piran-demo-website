@@ -1,0 +1,111 @@
+---
+import { featuredServices, photoFor, services, type Service } from '../data/services';
+
+interface Props {
+  /** `featured` for the home page (8 services + link to all), `all` for the services page. */
+  variant?: 'featured' | 'all';
+}
+const { variant = 'featured' } = Astro.props;
+const list: Service[] = variant === 'all' ? services : featuredServices();
+---
+<section class="svc section on-light" id={variant === 'featured' ? 'services' : undefined} aria-labelledby="svc-title">
+  <div class="container">
+    <header class="svc__head">
+      <div>
+        <p class="svc__eyebrow" data-reveal>Services</p>
+        <h2 class="svc__title" id="svc-title" data-reveal>
+          Everything your home needs,<br />
+          <em>one local team.</em>
+        </h2>
+      </div>
+      <p class="svc__lede" data-reveal>From small repairs to full extensions, every trade handled with care and precision.</p>
+    </header>
+
+    <ol class="svc__list" role="list">
+      {list.map((s) => (
+        <li class="row" data-reveal>
+          <div class="row__thumb">
+            <img src={photoFor(s).thumb} alt="" width="640" height="480" loading="lazy" decoding="async" />
+          </div>
+          <h3 class="row__name"><a href={`/services/${s.slug}`}>{s.name}</a></h3>
+          <p class="row__desc">{s.summary}</p>
+          <span class="row__btn" aria-hidden="true">
+            View service
+            <svg viewBox="0 0 24 24" width="16" height="16"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </span>
+        </li>
+      ))}
+    </ol>
+
+    {variant === 'featured' && (
+      <div class="svc__more" data-reveal>
+        <a class="btn btn--dark" href="/services">
+          View all {services.length} services
+          <svg aria-hidden="true" viewBox="0 0 24 24" width="18" height="18"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+      </div>
+    )}
+  </div>
+</section>
+
+<style>
+  .svc__head { display: grid; grid-template-columns: 1fr minmax(260px, 340px); gap: 32px 48px; align-items: end; margin-bottom: clamp(48px, 6vw, 80px); }
+  .svc__eyebrow { font-size: 13px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--char); margin-bottom: 22px; }
+  .svc__title { font: 650 clamp(44px, 6vw, 92px)/0.98 var(--font-display); letter-spacing: -0.015em; }
+  .svc__title em { font-style: italic; color: var(--brand); }
+  .svc__lede { font-size: 17px; line-height: 1.6; color: var(--char-dim); padding-bottom: 8px; }
+
+  .svc__list { margin: 0; padding: 0; border-top: 1px solid var(--rule); }
+  .row {
+    position: relative;
+    display: grid; grid-template-columns: 168px minmax(0, 1fr) minmax(0, 1fr) auto; gap: 32px; align-items: center;
+    padding: 22px 16px 22px 0;
+    border-bottom: 1px solid var(--rule);
+    transition: background-color 0.35s ease, padding 0.45s var(--ease-out);
+  }
+  .row:hover, .row:focus-within { background: var(--sand-2); padding-left: 16px; }
+
+  .row__thumb { aspect-ratio: 4 / 3; overflow: hidden; border-radius: 10px; background: var(--sand-2); }
+  .row__thumb img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.8s var(--ease-out); }
+  .row:hover .row__thumb img { transform: scale(1.07); }
+
+  .row__name { font: 650 clamp(34px, 3.4vw, 54px)/1 var(--font-display); letter-spacing: -0.01em; }
+  .row__name a { text-decoration: none; color: var(--char); }
+  /* The whole row is one click target; the heading link carries the accessible name. */
+  .row__name a::after { content: ""; position: absolute; inset: 0; }
+  .row__name a:focus-visible { outline: none; }
+  .row:has(.row__name a:focus-visible) { outline: 2px solid var(--brand); outline-offset: -2px; }
+
+  .row__desc { font-size: 15.5px; line-height: 1.6; color: var(--char-dim); max-width: 40ch; }
+
+  .row__btn {
+    display: inline-flex; align-items: center; gap: 10px; height: 46px; padding: 0 18px;
+    border: 1px solid var(--char); border-radius: 4px;
+    font-size: 14px; font-weight: 600; white-space: nowrap; color: var(--char);
+    transition: background-color 0.25s ease, color 0.25s ease, border-color 0.25s ease;
+  }
+  .row__btn svg { transition: transform 0.3s var(--ease-out); }
+  .row:hover .row__btn { background: var(--brand); border-color: var(--brand); color: #fff; }
+  .row:hover .row__btn svg { transform: translateX(3px); }
+
+  .svc__more { display: flex; justify-content: center; margin-top: clamp(40px, 5vw, 64px); }
+
+  @media (max-width: 1100px) {
+    .row { grid-template-columns: 140px minmax(0, 1fr) auto; row-gap: 6px; }
+    .row__name { grid-column: 2; align-self: end; }
+    .row__desc { grid-column: 2; grid-row: 2; align-self: start; }
+    .row__btn { grid-column: 3; grid-row: 1 / span 2; }
+    .row__thumb { grid-row: 1 / span 2; }
+  }
+
+  @media (max-width: 700px) {
+    .svc__head { grid-template-columns: 1fr; }
+    .row { grid-template-columns: 96px minmax(0, 1fr); gap: 6px 18px; align-items: start; padding: 20px 0; }
+    .row:hover, .row:focus-within { padding-left: 0; background: none; }
+    .row__thumb { grid-row: 1 / span 2; border-radius: 8px; }
+    .row__name { grid-column: 2; }
+    .row__name { font-size: 30px; }
+    .row__desc { grid-column: 2; grid-row: auto; margin-top: 4px; font-size: 14.5px; }
+    .row__btn { display: none; }
+  }
+</style>

@@ -1,0 +1,21 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+---
+<Base title="Page not found" description="The page you were looking for could not be found." noindex>
+  <PageHero
+    eyebrow="Error 404"
+    title="Nothing built here yet."
+    lede="The page you were looking for has moved or no longer exists."
+    image="/frames/lg/0001.webp"
+  >
+    <div class="actions">
+      <a class="btn btn--primary" href="/">Back to home</a>
+      <a class="btn btn--ghost" href="/services">Browse services</a>
+    </div>
+  </PageHero>
+</Base>
+
+<style>
+  .actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 12px; }
+</style>

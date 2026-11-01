@@ -1,0 +1,30 @@
+{
+  "name": "piran-website",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "check": "astro check",
+    "test": "vitest run",
+    "frames": "node scripts/extract-frames.mjs hero-v2.mp4"
+  },
+  "dependencies": {
+    "@astrojs/vercel": "^11.0.17",
+    "@fontsource-variable/archivo": "^5.3.0",
+    "astro": "^7.4.4",
+    "gsap": "^3.15.0",
+    "lenis": "^1.3.27"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.12",
+    "@types/node": "^26.6.6",
+    "typescript": "^6.0.3",
+    "vitest": "^5.0.5"
+  },
+  "optionalDependencies": {
+    "ffmpeg-static": "^5.2.0"
+  }
+}

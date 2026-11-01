@@ -1,0 +1,22 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageHero from '../../components/PageHero.astro';
+import { site } from '../../data/site';
+---
+<Base title="Thank you" description="Your quote request has been received." hideFooterCta noindex>
+  <PageHero
+    eyebrow="Request received"
+    title="Thank you, we’ve got it."
+    lede="We’ll call you to discuss your requirements, then follow up with a proposal of work and a quotation."
+    image="/frames/lg/0095.webp"
+  >
+    <div class="actions">
+      <a class="btn btn--primary" href="/">Back to home</a>
+      <a class="btn btn--ghost" href={site.phoneHref}>Call {site.phone}</a>
+    </div>
+  </PageHero>
+</Base>
+
+<style>
+  .actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 12px; }
+</style>

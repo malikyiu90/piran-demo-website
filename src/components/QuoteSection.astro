@@ -1,0 +1,42 @@
+---
+import QuoteForm from './QuoteForm.astro';
+import { site } from '../data/site';
+
+interface Props {
+  service?: string;
+}
+const { service } = Astro.props;
+---
+<section class="quote section on-light" id="quote" aria-labelledby="quote-title">
+  <div class="container quote__grid">
+    <div class="quote__intro">
+      <p class="eyebrow" data-reveal>Free consultation</p>
+      <h2 class="h2" id="quote-title" data-reveal>Tell us about your project.</h2>
+      <p class="lede" data-reveal>Share a few details and we’ll call you to discuss your requirements, then follow up with a proposal of work and a written quotation.</p>
+
+      <ul class="quote__contact" role="list" data-reveal>
+        <li><span class="quote__label">Call</span><a href={site.phoneHref}>{site.phone}</a></li>
+        <li><span class="quote__label">WhatsApp</span><a href={site.whatsappHref} target="_blank" rel="noopener">Message us</a></li>
+        <li><span class="quote__label">Email</span><a href={`mailto:${site.email}`}>{site.email}</a></li>
+        <li><span class="quote__label">Based in</span><span>{site.location}</span></li>
+      </ul>
+    </div>
+    <div data-reveal>
+      <QuoteForm service={service} />
+    </div>
+  </div>
+</section>
+
+<style>
+  .quote__grid { display: grid; grid-template-columns: 0.9fr 1.1fr; gap: clamp(40px, 6vw, 100px); align-items: start; }
+  .quote__intro { display: grid; gap: 22px; position: sticky; top: 120px; }
+  .quote__contact { display: grid; margin: 16px 0 0; padding: 0; border-top: 1px solid var(--rule); }
+  .quote__contact li { display: flex; justify-content: space-between; gap: 16px; padding: 16px 0; border-bottom: 1px solid var(--rule); font-size: 15px; }
+  .quote__label { font-size: 13px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--char-faint); padding-top: 2px; }
+  .quote__contact a { padding: 10px 0; margin: -10px 0; color: var(--char); font-weight: 600; text-decoration: none; overflow-wrap: anywhere; text-align: right; }
+  .quote__contact a:hover { color: var(--brand); }
+  @media (max-width: 960px) {
+    .quote__grid { grid-template-columns: 1fr; }
+    .quote__intro { position: static; }
+  }
+</style>
