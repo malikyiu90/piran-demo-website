@@ -5,11 +5,13 @@ import Article from '../components/Article.astro';
 import oldSite from '../../content/old-site.json';
 import { site } from '../data/site';
 
-// Terms are carried over word for word from the previous website (content/old-site.json).
+// Terms are carried over word for word from the previous website (content/old-site.json), except that the
+// old company name ("piran trading ltd" in various spellings) is replaced with the current one, at the client's request.
 // Only the numbered clauses are used; the old page's signature form fields are left out.
 const blocks: { tag: string; t: string }[] = oldSite.pages['/terms-conditions/'].blocks;
 const SKIP = new Set(['Home', 'Terms & Conditions', 'Full name', 'Address', 'Phone number', 'Email address', 'Date of birth']);
-const clauses = blocks.filter((b) => b.tag === 'li' && !SKIP.has(b.t)).map((b) => b.t);
+const OLD_NAME = /piran\s+trading(\s+(ltd|limited)\b\.?)?/gi;
+const clauses = blocks.filter((b) => b.tag === 'li' && !SKIP.has(b.t)).map((b) => b.t.replace(OLD_NAME, site.name));
 ---
 <Base title="Terms & conditions" description={`Terms and conditions for work carried out by ${site.name}.`}>
   <PageHero eyebrow="Legal" title="Terms &amp; conditions." image="/frames/lg/0040.webp" crumbs={[{ label: 'Terms' }]} />

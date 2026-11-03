@@ -3,7 +3,7 @@ import vercel from '@astrojs/vercel';
 import { legacyRedirects } from './src/data/services';
 
 export default defineConfig({
-  site: 'https://pirantrading.com',
+  site: 'https://piranbuilders.co.uk',
   output: 'static',
   // Pages are prerendered; only /api/quote runs as a Vercel serverless function.
   adapter: vercel(),
@@ -12,6 +12,9 @@ export default defineConfig({
   // check for form posts compares against this host, so without it plain form submissions are rejected.
   security: {
     allowedDomains: [
+      { hostname: 'piranbuilders.co.uk', protocol: 'https' },
+      { hostname: 'www.piranbuilders.co.uk', protocol: 'https' },
+      // The previous domain, in case it is pointed at this site too.
       { hostname: 'pirantrading.com', protocol: 'https' },
       { hostname: 'www.pirantrading.com', protocol: 'https' },
       // Vercel production and preview URLs.
