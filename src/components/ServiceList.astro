@@ -85,7 +85,7 @@ const list: Service[] = variant === 'all' ? services : featuredServices();
     transition: background-color 0.25s ease, color 0.25s ease, border-color 0.25s ease;
   }
   .row__btn svg { transition: transform 0.3s var(--ease-out); }
-  .row:hover .row__btn { background: var(--brand); border-color: var(--brand); color: #fff; }
+  .row:hover .row__btn { background: var(--brand); border-color: var(--brand); color: var(--on-brand); }
   .row:hover .row__btn svg { transform: translateX(3px); }
 
   .svc__more { display: flex; justify-content: center; margin-top: clamp(40px, 5vw, 64px); }

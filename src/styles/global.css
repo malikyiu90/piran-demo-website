@@ -2,7 +2,7 @@
    Piran — global tokens, base and shared primitives
    ========================================================================== */
 
-/* Brand palette (from the client): #0876F4 blue, #000000 black, #FFFFFF white. */
+/* Brand palette, taken from the Piran Builders logo: black, gold and white. */
 :root {
   --ink: #000000;
   --ink-2: #0b0b0b;
@@ -22,11 +22,15 @@
   --char-faint: rgba(255, 255, 255, 0.5);
   --rule: rgba(255, 255, 255, 0.12);
 
-  --brand: #0876f4;
-  --brand-hover: #2a8bff;
-  /* Brand blue lifted slightly for small text on black, where #0876F4 is too dark to read comfortably. */
-  --brand-tint: #3d94ff;
-  --brand-deep: #0058c2;
+  --brand: #d9a92e;
+  --brand-hover: #e8bd4a;
+  /* Lighter gold for small text on black. */
+  --brand-tint: #f0c75a;
+  --brand-deep: #b5861f;
+  /* Brushed-gold fill for buttons and accents, matching the logo's metal finish. */
+  --gold-fill: linear-gradient(135deg, #f7dc85 0%, #e3b23c 42%, #c4922a 100%);
+  /* Text on gold is near-black: white on gold is too low in contrast to read. */
+  --on-brand: #0a0a0a;
 
   /* One family throughout; hierarchy comes from weight and size, not from mixing typefaces. */
   --font-display: "Archivo Variable", "Archivo", system-ui, -apple-system, "Segoe UI", sans-serif;
@@ -67,7 +71,7 @@ button, input, select, textarea { font: inherit; color: inherit; }
 h1, h2, h3, h4, p, ul, ol, figure { margin: 0; }
 ul[role="list"], ol[role="list"] { list-style: none; padding: 0; }
 
-::selection { background: var(--brand); color: #fff; }
+::selection { background: var(--brand); color: var(--on-brand); }
 
 .sr-only {
   position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
@@ -92,8 +96,8 @@ ul[role="list"], ol[role="list"] { list-style: none; padding: 0; }
 /* Back-to-back light sections share one gap instead of two. */
 .section.on-light + .section.on-light { padding-top: 0; }
 .on-ink { background: var(--ink); color: var(--paper); }
-.on-blue { background: var(--brand); color: #fff; }
-.on-blue .eyebrow { color: rgba(255, 255, 255, 0.85); }
+.on-brand { background: var(--gold-fill); color: var(--on-brand); }
+.on-brand .eyebrow { color: rgba(0, 0, 0, 0.7); }
 
 /* ---------- Type ---------- */
 
@@ -139,14 +143,14 @@ ul[role="list"], ol[role="list"] { list-style: none; padding: 0; }
 .btn:active { transform: scale(0.98); }
 .btn[disabled], .btn[aria-disabled="true"] { opacity: 0.6; cursor: progress; }
 
-.btn--primary { background: var(--brand); color: #fff; }
-.btn--primary:hover { background: var(--brand-deep); }
+.btn--primary { background: var(--gold-fill); color: var(--on-brand); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.35); }
+.btn--primary:hover { background: var(--brand-hover); }
 
 .btn--ghost { color: #fff; border-color: rgba(255, 255, 255, 0.7); background: transparent; }
 .btn--ghost:hover { background: #fff; color: #000; border-color: #fff; }
 
-.btn--dark { background: var(--brand); color: #fff; }
-.btn--dark:hover { background: var(--brand-deep); }
+.btn--dark { background: var(--gold-fill); color: var(--on-brand); }
+.btn--dark:hover { background: var(--brand-hover); }
 
 .btn--outline-dark { color: var(--char); border-color: var(--rule); background: transparent; }
 .btn--outline-dark:hover { border-color: var(--brand-tint); color: var(--brand-tint); }

@@ -28,7 +28,7 @@ const { items } = Astro.props;
   .faq__icon { position: relative; flex: none; width: 36px; height: 36px; border: 1px solid var(--rule); border-radius: 50%; transition: background-color 0.3s ease, transform 0.4s var(--ease-out); }
   .faq__icon::before, .faq__icon::after { content: ""; position: absolute; left: 50%; top: 50%; width: 12px; height: 1.5px; margin: -0.75px 0 0 -6px; background: currentColor; transition: transform 0.4s var(--ease-out); }
   .faq__icon::after { transform: rotate(90deg); }
-  .faq__item[open] .faq__icon { background: var(--brand); color: #fff; border-color: var(--brand); }
+  .faq__item[open] .faq__icon { background: var(--brand); color: var(--on-brand); border-color: var(--brand); }
   .faq__item[open] .faq__icon::after { transform: rotate(0deg); }
   .faq__item summary:hover .faq__icon { border-color: var(--brand-tint); }
   .faq__item p { padding: 0 56px 26px 0; color: var(--char-dim); font-size: 16px; line-height: 1.65; max-width: 64ch; }

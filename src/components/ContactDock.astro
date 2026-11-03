@@ -82,15 +82,15 @@ const actions = [
     border: 1px solid rgba(255, 255, 255, 0.14);
     transition: background-color 0.2s ease;
   }
-  .dock__action:hover .dock__icon, .dock__action:focus-visible .dock__icon { background: var(--brand); }
+  .dock__action:hover .dock__icon, .dock__action:focus-visible .dock__icon { background: var(--brand); color: var(--on-brand); }
 
   .dock__toggle {
     position: relative; display: grid; place-items: center; width: 60px; height: 60px; padding: 0;
-    border: 3px solid #fff; border-radius: 50%; background: var(--brand); color: #fff; cursor: pointer;
-    box-shadow: 0 12px 30px -10px rgba(8, 118, 244, 0.8), 0 2px 8px rgba(0, 0, 0, 0.25);
+    border: 3px solid #fff; border-radius: 50%; background: var(--gold-fill); color: var(--on-brand); cursor: pointer;
+    box-shadow: 0 12px 30px -10px rgba(217, 169, 46, 0.7), 0 2px 8px rgba(0, 0, 0, 0.25);
     transition: transform 0.3s var(--ease-out), background-color 0.2s ease;
   }
-  .dock__toggle:hover { background: var(--brand-deep); }
+  .dock__toggle:hover { background: var(--brand-hover); }
   .dock__toggle svg { position: absolute; transition: opacity 0.2s ease, transform 0.3s var(--ease-out); }
   .dock__close-icon { opacity: 0; transform: rotate(-90deg); }
   .dock.is-open .dock__open-icon { opacity: 0; transform: rotate(90deg); }

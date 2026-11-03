@@ -1,6 +1,6 @@
 // Business details shown across the site. Only facts taken from the client's existing site live here.
 export const site = {
-  name: 'Piran Trading',
+  name: 'Piran Builders',
   shortName: 'Piran',
   tagline: 'Construction & renovation in Coventry',
   url: 'https://pirantrading.com',

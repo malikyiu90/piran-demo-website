@@ -18,7 +18,7 @@ export const faqs = [
   },
   {
     q: 'Are you insured?',
-    a: 'Yes. Piran Trading holds public liability and employers’ liability insurance to the sum of £1,000,000.',
+    a: 'Yes. Piran Builders holds public liability and employers’ liability insurance to the sum of £1,000,000.',
   },
   {
     q: 'Is the work guaranteed?',

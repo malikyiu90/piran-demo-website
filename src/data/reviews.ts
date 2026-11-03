@@ -5,30 +5,30 @@ export interface Review {
   source: string;
 }
 
-// ⚠ These four testimonials are copied from the client's previous website (company name shortened to "Piran Trading" at the client's request)
+// ⚠ These four testimonials are copied from the client's previous website (company name changed to "Piran Builders" at the client's request)
 // (pirantrading.com home page, 2024). Before launch, the client must confirm they come from
 // real customers, or replace them with reviews from a verifiable source (e.g. Google Business).
 export const reviews: Review[] = [
   {
-    quote: 'Outstanding service and attention to detail! Highly recommend Piran Trading for any renovation project.',
+    quote: 'Outstanding service and attention to detail! Highly recommend Piran Builders for any renovation project.',
     name: 'Sarah M.',
     context: 'Customer',
     source: 'Previously published on pirantrading.com',
   },
   {
-    quote: 'Piran Trading exceeded our expectations! Professional, reliable, and skilled. Couldn’t be happier with the results.',
+    quote: 'Piran Builders exceeded our expectations! Professional, reliable, and skilled. Couldn’t be happier with the results.',
     name: 'John D.',
     context: 'Customer',
     source: 'Previously published on pirantrading.com',
   },
   {
-    quote: 'Impressed by the efficiency and quality of work provided by Piran Trading. A seamless experience from start to finish.',
+    quote: 'Impressed by the efficiency and quality of work provided by Piran Builders. A seamless experience from start to finish.',
     name: 'Emily R.',
     context: 'Customer',
     source: 'Previously published on pirantrading.com',
   },
   {
-    quote: 'Exceptional craftsmanship and excellent communication throughout the project. Piran Trading is our go-to for all future renovations.',
+    quote: 'Exceptional craftsmanship and excellent communication throughout the project. Piran Builders is our go-to for all future renovations.',
     name: 'David S.',
     context: 'Customer',
     source: 'Previously published on pirantrading.com',
