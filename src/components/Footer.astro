@@ -81,6 +81,7 @@ const year = new Date().getFullYear();
   <div class="footer-bottom on-brand">
     <div class="container footer-bottom__inner">
       <p>© {year} {site.name}. All rights reserved.</p>
+      <p>Powered by <a href="https://www.growyourbusiness.uk" target="_blank" rel="noopener">Grow Your Business</a></p>
       <a href="#main" data-to-top>Back to top ↑</a>
     </div>
   </div>
@@ -131,7 +132,10 @@ const year = new Date().getFullYear();
   .footer-col a:hover { color: #fff; }
   .footer-contact li { overflow-wrap: anywhere; }
 
-  .footer-bottom__inner { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; padding-block: 20px; font-size: 14px; }
+  .footer-bottom__inner { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 24px; padding-block: 20px; font-size: 14px; }
+  @media (max-width: 640px) {
+    .footer-bottom__inner { flex-direction: column; align-items: flex-start; padding-right: 88px; }
+  }
   .footer-bottom a { color: var(--on-brand); font-weight: 600; text-decoration: none; }
   .footer-bottom a:hover { text-decoration: underline; }
 
