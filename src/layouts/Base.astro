@@ -30,6 +30,7 @@ const schema = {
   telephone: site.phone,
   email: site.email,
   image: new URL('/frames/poster.jpg', Astro.site).href,
+  logo: new URL('/icon-512.png', Astro.site).href,
   address: { '@type': 'PostalAddress', addressLocality: site.locality, addressCountry: site.country },
   areaServed: site.locality,
   sameAs: Object.values(site.social).filter(Boolean),
@@ -45,8 +46,12 @@ const schema = {
     <link rel="canonical" href={canonical} />
     <meta name="theme-color" content="#000000" />
     {noindex && <meta name="robots" content="noindex" />}
-    <link rel="icon" href="/favicon.png" type="image/png" />
+    <!-- Google search shows a square favicon whose size is a multiple of 48px. -->
+    <link rel="icon" href="/favicon.ico" sizes="48x48" />
+    <link rel="icon" href="/favicon-96.png" type="image/png" sizes="96x96" />
+    <link rel="icon" href="/favicon.png" type="image/png" sizes="192x192" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
 
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content={site.name} />
