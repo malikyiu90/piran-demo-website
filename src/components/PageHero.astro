@@ -12,6 +12,19 @@ interface Props {
   crumbs?: Crumb[];
 }
 const { eyebrow, title, lede, image = '/frames/lg/0095.webp', crumbs = [] } = Astro.props;
+
+// The same trail as structured data, so search results can show it. The last crumb is the current page.
+const here = new URL(Astro.url.pathname.replace(/\/+$/, '') || '/', Astro.site).href;
+const breadcrumbSchema = crumbs.length > 0 && {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [{ label: 'Home', href: '/' }, ...crumbs].map((c, i) => ({
+    '@type': 'ListItem',
+    position: i + 1,
+    name: c.label,
+    item: c.href ? new URL(c.href, Astro.site).href : here,
+  })),
+};
 ---
 <section class="page-hero">
   <div class="page-hero__media" aria-hidden="true">
@@ -31,6 +44,7 @@ const { eyebrow, title, lede, image = '/frames/lg/0095.webp', crumbs = [] } = As
     {lede && <p class="lede page-hero__lede">{lede}</p>}
     <slot />
   </div>
+  {breadcrumbSchema && <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />}
 </section>
 
 <script>

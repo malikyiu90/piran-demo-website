@@ -24,13 +24,27 @@ const heroImage = photoFor(service).hero ?? category.image;
 const photos = photosFor(service);
 const details = detailsFor(service.slug);
 const faqs = faqsFor(service);
+// Short summaries make thin search snippets, so they get the offer added (search results show about 155 characters).
+const metaDescription = service.summary.length < 90
+  ? `${service.summary} Free consultation and written quotation from ${site.name} in ${site.locality}.`
+  : service.summary;
+const serviceSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  name: `${service.name} in ${site.locality}`,
+  serviceType: service.name,
+  description: service.summary,
+  url: new URL(`/services/${service.slug}`, Astro.site).href,
+  areaServed: { '@type': 'City', name: site.locality },
+  provider: { '@id': new URL('/#business', Astro.site).href },
+};
 const faqSchema = {
   '@context': 'https://schema.org',
   '@type': 'FAQPage',
   mainEntity: faqs.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
 };
 ---
-<Base title={`${service.name} in ${site.locality}`} description={service.summary} image={heroImage} hideFooterCta>
+<Base title={`${service.name} in ${site.locality}`} description={metaDescription} image={heroImage} hideFooterCta>
   <PageHero
     eyebrow={category.name}
     title={`${service.name} in ${site.locality}`}
@@ -135,6 +149,7 @@ const faqSchema = {
   </section>
 
   <QuoteSection service={service.slug} />
+  <script type="application/ld+json" set:html={JSON.stringify(serviceSchema)} />
   <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
 </Base>
 

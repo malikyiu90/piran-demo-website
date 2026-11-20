@@ -18,14 +18,17 @@ interface Props {
 }
 
 const { title, description, image = '/frames/poster.jpg', preload, hideFooterCta = false, noindex = false } = Astro.props;
-const canonical = new URL(Astro.url.pathname, Astro.site);
+// Canonical URLs match the site's internal links and the sitemap: no trailing slash except on the home page.
+const canonical = new URL(Astro.url.pathname.replace(/\/+$/, '') || '/', Astro.site);
 const ogImage = new URL(image, Astro.site);
 const fullTitle = title === site.name ? title : `${title} | ${site.name}`;
 
 const schema = {
   '@context': 'https://schema.org',
   '@type': 'GeneralContractor',
+  '@id': new URL('/#business', Astro.site).href,
   name: site.name,
+  legalName: site.legalName,
   url: site.url,
   telephone: site.phone,
   email: site.email,
@@ -46,6 +49,7 @@ const schema = {
     <link rel="canonical" href={canonical} />
     <meta name="theme-color" content="#000000" />
     {noindex && <meta name="robots" content="noindex" />}
+    {site.googleSiteVerification && <meta name="google-site-verification" content={site.googleSiteVerification} />}
     <!-- Google search shows a square favicon whose size is a multiple of 48px. -->
     <link rel="icon" href="/favicon.ico" sizes="48x48" />
     <link rel="icon" href="/favicon-96.png" type="image/png" sizes="96x96" />
@@ -54,6 +58,7 @@ const schema = {
     <link rel="manifest" href="/site.webmanifest" />
 
     <meta property="og:type" content="website" />
+    <meta property="og:locale" content="en_GB" />
     <meta property="og:site_name" content={site.name} />
     <meta property="og:title" content={fullTitle} />
     <meta property="og:description" content={description} />

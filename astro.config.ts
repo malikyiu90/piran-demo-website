@@ -3,7 +3,7 @@ import vercel from '@astrojs/vercel';
 import { legacyRedirects } from './src/data/services';
 
 export default defineConfig({
-  site: 'https://piranbuilders.co.uk',
+  site: 'https://www.piranbuilders.co.uk',
   output: 'static',
   // Pages are prerendered; only /api/quote runs as a Vercel serverless function.
   adapter: vercel(),

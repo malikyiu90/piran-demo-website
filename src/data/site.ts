@@ -7,7 +7,7 @@ export const site = {
   registeredOffice: 'Maximax, 37 Hamlet Court Road, Westcliff-on-Sea, England, SS0 7EY',
   shortName: 'Piran',
   tagline: 'Construction & renovation in Coventry',
-  url: 'https://piranbuilders.co.uk',
+  url: 'https://www.piranbuilders.co.uk',
   phone: '+44 7405 308436',
   phoneHref: 'tel:+447405308436',
   whatsappHref: 'https://wa.me/447405308436',
@@ -15,6 +15,9 @@ export const site = {
   location: 'Coventry, United Kingdom',
   locality: 'Coventry',
   country: 'GB',
+  // The content="..." code from Google Search Console's "HTML tag" verification method; null leaves the tag out.
+  // Not needed when the domain is verified through a DNS record instead.
+  googleSiteVerification: null as string | null,
   social: {
     facebook: 'https://www.facebook.com/3piran/' as string | null,
     instagram: null as string | null,
