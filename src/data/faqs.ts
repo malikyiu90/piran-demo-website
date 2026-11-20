@@ -18,7 +18,7 @@ export const faqs = [
   },
   {
     q: 'Are you insured?',
-    a: 'Yes. Piran Builders holds public liability and employers’ liability insurance to the sum of £1,000,000.',
+    a: 'Yes. Piran Builders holds public liability insurance up to £1,000,000 and employers’ liability insurance of at least £5,000,000. Certificates are available on request.',
   },
   {
     q: 'Is the work guaranteed?',

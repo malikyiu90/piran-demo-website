@@ -2,24 +2,189 @@
 import Base from '../layouts/Base.astro';
 import PageHero from '../components/PageHero.astro';
 import Article from '../components/Article.astro';
-import oldSite from '../../content/old-site.json';
 import { site } from '../data/site';
 
-// Terms are carried over word for word from the previous website (content/old-site.json), except that the
-// old company name ("piran trading ltd" in various spellings) is replaced with the current one, at the client's request.
-// Only the numbered clauses are used; the old page's signature form fields are left out.
-const blocks: { tag: string; t: string }[] = oldSite.pages['/terms-conditions/'].blocks;
-const SKIP = new Set(['Home', 'Terms & Conditions', 'Full name', 'Address', 'Phone number', 'Email address', 'Date of birth']);
-const OLD_NAME = /piran\s+trading(\s+(ltd|limited)\b\.?)?/gi;
-const clauses = blocks.filter((b) => b.tag === 'li' && !SKIP.has(b.t)).map((b) => b.t.replace(OLD_NAME, site.name));
+// Text supplied by the client: "Piran_Builders_Website_Terms_and_Conditions.pdf", effective 12 November 2026.
+// Keep it word for word; when the client sends a new version, replace the text and the effective date together.
+const mail = `mailto:${site.email}`;
 ---
-<Base title="Terms & conditions" description={`Terms and conditions for work carried out by ${site.name}.`}>
-  <PageHero eyebrow="Legal" title="Terms &amp; conditions." image="/frames/lg/0040.webp" crumbs={[{ label: 'Terms' }]} />
-  <Article>
-    <h2>Our terms</h2>
-    <ol>
-      {clauses.map((c) => <li>{c}</li>)}
-    </ol>
-    <p class="note">Questions about these terms? Email <a href={`mailto:${site.email}`}>{site.email}</a> or call <a href={site.phoneHref}>{site.phone}</a>.</p>
+<Base title="Terms & conditions" description={`Standard terms and conditions of business for ${site.legalName}: website use, all-trades construction, renovations, extensions and property maintenance services.`}>
+  <PageHero eyebrow="Legal" title="Terms &amp; conditions." lede="Standard Terms and Conditions of Business: website use, all-trades construction, renovations, extensions and property maintenance services." image="/frames/lg/0040.webp" crumbs={[{ label: 'Terms' }]} />
+  <Article updated="Effective date: 12 November 2026">
+    <div class="legal">
+      <dl class="legal-facts">
+        <div><dt>Company Name</dt><dd>{site.legalName} (England &amp; Wales)</dd></div>
+        <div><dt>Company Reg. No.</dt><dd>{site.companyNumber}</dd></div>
+        <div><dt>Registered Office</dt><dd>{site.registeredOffice}</dd></div>
+        <div><dt>Operational Base</dt><dd>Coventry, United Kingdom (serving Coventry &amp; West Midlands)</dd></div>
+        <div><dt>Contact Email</dt><dd><a href={mail}>{site.email}</a></dd></div>
+        <div><dt>Phone / WhatsApp</dt><dd><a href={site.phoneHref}>{site.phone}</a> | piranbuilders.co.uk</dd></div>
+        <div><dt>Effective Date</dt><dd>12 November 2026</dd></div>
+        <div><dt>Governing Law</dt><dd>Laws of England and Wales</dd></div>
+      </dl>
+
+      <p class="legal-intro">Welcome to <strong>Piran Builders Ltd</strong> (“we,” “our,” or “us”). These Terms and Conditions govern your access to and use of our website (<strong>piranbuilders.co.uk</strong>) as well as any construction, renovation, all-trades maintenance, landscaping, or landlord property services provided by us. By accessing our website or engaging our services, you agree to be bound by these Terms and Conditions.</p>
+
+      <h2>1. Company Information &amp; Insurance Cover</h2>
+      <ul>
+        <li><strong>Legal Entity:</strong> Piran Builders Ltd is a private limited company registered in England and Wales under Company Registration Number <strong>13484930</strong>.</li>
+        <li><strong>Insurance Protection:</strong> We maintain active <strong>Employers’ Liability Insurance of at least £5,000,000</strong> (in compliance with the Employers’ Liability (Compulsory Insurance) Act 1969) and <strong>Public Liability Insurance up to £1,000,000</strong> (or higher project-specific cover where agreed) on every job. Copies of our current insurance certificates are available for inspection upon request.</li>
+      </ul>
+
+      <h2>2. Comprehensive Scope of All-Trades &amp; Building Services</h2>
+      <p>Piran Builders Ltd delivers end-to-end, multi-trade construction, structural alteration, refurbishment, and property maintenance services managed by one coordinated team across Coventry and the West Midlands:</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th scope="col">Trade / Service Discipline</th><th scope="col">Detailed Scope of Works &amp; Technical Deliverables</th></tr></thead>
+          <tbody>
+            <tr>
+              <td>Structural Building, Extensions &amp; Loft Conversions</td>
+              <td>
+                <p><strong>Extensions &amp; New Builds:</strong> Single-storey and double-storey rear, side-return, and wrap-around extensions, porch builds, and garage conversions.</p>
+                <p><strong>Loft Conversions:</strong> Dormer, hip-to-gable, mansard, and Velux/rooflight loft conversions including structural floor strengthening, dormer framing, insulation, and staircase installation.</p>
+                <p><strong>Structural Alterations &amp; Groundworks:</strong> Load-bearing wall removals, RSJ/universal steel beam installations, padstones, underpinning, trench and raft foundations, concrete oversites, and damp-proof courses (DPC).</p>
+              </td>
+            </tr>
+            <tr>
+              <td>Kitchens, Bathrooms &amp; Wet Rooms</td>
+              <td>
+                <p><strong>Full Kitchen Renovations:</strong> Strip-out of existing units, structural knock-throughs, first-fix plumbing and electrics, base/wall cabinetry fitting, worktop installation (laminate, solid wood, quartz/granite templating coordination), splashbacks, extractor ducting, and integrated appliance installation.</p>
+                <p><strong>Complete Bathroom &amp; Wet Room Refits:</strong> Full suite removal, concealed pipework and waste alterations, waterproof tanking membranes, walk-in shower enclosures, wet-room formers, baths, wall-hung vanity units, heated towel rails, and mechanical extraction.</p>
+              </td>
+            </tr>
+            <tr>
+              <td>Carpentry, Joinery &amp; Glazing</td>
+              <td>
+                <p><strong>First-Fix &amp; Second-Fix Carpentry:</strong> Timber stud partitioning, floor joists, roof trusses and cut roofs, internal/external door hanging (including FD30/FD60 fire doors), skirting boards, architraves, window boards, staircases, handrails, and bespoke fitted storage.</p>
+                <p><strong>Windows, Doors &amp; Double Glazing:</strong> Supply and installation of uPVC, aluminium, and timber casement/sash windows, composite front doors, French doors, bi-fold and sliding patio doors, and replacement double-glazed sealed units.</p>
+              </td>
+            </tr>
+            <tr>
+              <td>Plastering, Drylining &amp; Ceilings</td>
+              <td>
+                <p><strong>Internal Plastering &amp; Rendering:</strong> Full room re-skims, two-coat hardwall/bonding and multi-finish plastering, lime plaster repairs, coving, and safe overboarding/skimming of textured ceilings (subject to pre-work asbestos verification on pre-2000 coatings).</p>
+                <p><strong>Drylining &amp; Acoustic/Thermal Systems:</strong> Plasterboard dot-and-dab, metal stud (MF) suspended ceilings, moisture-resistant/fire-rated boarding, insulated plasterboard lining, and soundproofing systems.</p>
+              </td>
+            </tr>
+            <tr>
+              <td>Electrical &amp; Plumbing Installations</td>
+              <td>
+                <p><strong>Electrical Works (Part P Compliant):</strong> Full and partial property rewires, consumer unit (fuse board) upgrades, additional sockets and lighting circuits, LED downlights, outdoor power/security lighting, smoke/heat interlinked alarms, and EV charger preparation (tested and certified via qualified Part P registered electricians).</p>
+                <p><strong>Plumbing &amp; Heating Works:</strong> Hot and cold water supply pipework, radiator installations and relocations, unvented/vented cylinder upgrades, underfloor heating manifolds, kitchen/utility appliance plumbing, and boiler/gas works executed by Gas Safe registered engineers.</p>
+              </td>
+            </tr>
+            <tr>
+              <td>Tiling, Flooring &amp; Interior Finishes</td>
+              <td>
+                <p><strong>Wall &amp; Floor Tiling:</strong> Surface preparation, self-levelling screeds, anti-fracture decoupling membranes, ceramic, porcelain, natural stone, and mosaic tiling for kitchens, bathrooms, hallways, and conservatories, including grouting and silicone sealing.</p>
+                <p><strong>Flooring Installation:</strong> Engineered wood, solid hardwood, laminate, luxury vinyl tile (LVT/herringbone), subfloor ply boarding, and threshold trims.</p>
+                <p><strong>Painting &amp; Decorating:</strong> Surface preparation, filling, caulking, mist-coating new plaster, internal emulsion/eggshell/gloss painting, feature wallpapering, and exterior masonry/woodwork weatherproof coatings.</p>
+              </td>
+            </tr>
+            <tr>
+              <td>Brickwork, Roofing &amp; Exterior Envelope</td>
+              <td>
+                <p><strong>Brickwork &amp; Exterior Rendering:</strong> Face brickwork, blockwork, garden and retaining walls, structural repointing, lintel replacements, sand-and-cement rendering, monocouche/silicone thin-coat render, and pebbledash repairs.</p>
+                <p><strong>Roofing &amp; Rainwater Goods:</strong> Pitched roof tiling and slating, EPDM rubber and GRP fibreglass flat roofs, ridge tile re-bedding, lead flashing, chimney repairs/repointing, uPVC fascias, soffits, bargeboards, and guttering/downpipe replacements.</p>
+              </td>
+            </tr>
+            <tr>
+              <td>Driveways, Landscaping &amp; Drainage</td>
+              <td>
+                <p><strong>Driveways &amp; Paving:</strong> Excavation, MOT Type 1 sub-base compaction, block paving, porcelain and natural sandstone patios, tarmacadam, resin-bound surfaces, kerbing, and dropped-kerb access preparation.</p>
+                <p><strong>Fencing, Grounds &amp; Drainage:</strong> Closeboard/lap panel fencing, concrete/timber posts, timber and composite decking, turfing, artificial grass, foul and surface water drainage runs, inspection chambers, and ACO channel drains.</p>
+              </td>
+            </tr>
+            <tr>
+              <td>Landlord, HMO &amp; Commercial Maintenance</td>
+              <td>
+                <p><strong>End-of-Tenancy &amp; HMO Turnarounds:</strong> Rapid between-tenancy refurbishments, fire-door and emergency lighting compliance upgrades for HMO licensing, void property clearances, reactive multi-trade repairs, and preventative maintenance contracts.</p>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2>3. Website Use &amp; Intellectual Property</h2>
+      <ul>
+        <li><strong>General Information:</strong> Content on <strong>piranbuilders.co.uk</strong> is provided for general information purposes. While we aim to keep all details accurate, project specifications and pricing depend on individual property assessments.</li>
+        <li><strong>Intellectual Property:</strong> All text, project galleries, logos, graphics, and design elements on <strong>piranbuilders.co.uk</strong> are the property of Piran Builders Ltd and are protected by UK copyright laws. Reproduction without prior written consent is prohibited.</li>
+        <li><strong>Acceptable Use:</strong> You agree not to misuse our website, submit false enquiries, or attempt any activity that impairs site availability or security.</li>
+      </ul>
+
+      <h2>4. Free Consultations, Quotations &amp; Variations</h2>
+      <ul>
+        <li><strong>Free Consultation:</strong> Your initial consultation call to discuss your project scope, timescale, and budget is free and carries no obligation.</li>
+        <li><strong>Written Quotations:</strong> Following our assessment, we issue an itemised written proposal and quotation stating scope, materials, exclusions, provisional sums, and VAT status. Quotations remain valid for <strong>30 days</strong> from the date of issue unless stated otherwise.</li>
+        <li><strong>Variations &amp; Unforeseen Issues:</strong> Any changes, additions, or unforeseen structural or hazardous issues discovered once work begins (such as hidden damp, rot, faulty wiring, or suspected asbestos-containing materials in pre-2000 buildings) will be discussed with you immediately. No extra work will proceed until both the revised scope and cost are confirmed with you in writing.</li>
+      </ul>
+
+      <h2>5. Bookings, Variable Deposits &amp; Payments</h2>
+      <ul>
+        <li><strong>Contract Formation:</strong> Your booking is confirmed once you accept our written quotation in writing (including via email) and pay the required booking deposit.</li>
+        <li><strong>Deposit Percentage:</strong> The required deposit percentage depends on the nature, scale, and material requirements of the proposed work and will be clearly specified in your written quotation prior to commencement.</li>
+        <li><strong>Payment Schedule:</strong> A clear payment schedule is agreed with you before work begins. Larger projects (such as extensions, loft conversions, or full renovations) are billed in agreed stage payments tied to verifiable milestones, with the final balance due upon practical completion and joint snagging walkthrough.</li>
+        <li><strong>Late Payments:</strong> For commercial/business clients (including corporate landlords and commercial premises), overdue balances incur statutory interest and recovery costs under the <strong>Late Payment of Commercial Debts (Interest) Act 1998</strong>. For residential consumer clients, overdue balances exceeding 14 days past the due date may incur contractual interest at <strong>3% per annum above the Bank of England base rate</strong>.</li>
+      </ul>
+
+      <h2>6. Site Access, Home Protection &amp; Permissions</h2>
+      <ul>
+        <li><strong>Site Access &amp; Utilities:</strong> You agree to provide safe, clear access to the property during agreed working hours, along with reasonable access to electricity and water supplies.</li>
+        <li><strong>Home Protection:</strong> We protect floors and surfaces using dust sheets and protective sheeting and maintain a tidy, safe work environment throughout the project.</li>
+        <li><strong>Planning, Building Control &amp; Asbestos Surveys:</strong> Unless expressly agreed in writing as part of our proposal, obtaining planning permission, building regulations approval, party wall agreements, or landlord consents is the customer’s responsibility. For refurbishment or demolition works on properties built before the year 2000, a Refurbishment &amp; Demolition (R&amp;D) Asbestos Survey may be required under the <strong>Control of Asbestos Regulations 2012</strong> before intrusive work commences.</li>
+        <li><strong>Valuables:</strong> Please remove fragile, valuable, or personal items from work areas prior to the start date.</li>
+      </ul>
+
+      <h2>7. Cancellation &amp; Statutory 14-Day Cooling-Off Period</h2>
+      <ul>
+        <li><strong>14-Day Cooling-Off Right:</strong> Under the <strong>Consumer Contracts (Information, Cancellation and Additional Charges) Regulations 2013</strong>, residential consumers who enter into a contract at home or remotely (by email, phone, or online) have a <strong>14-calendar-day cooling-off period</strong> from the day after the contract is formed to cancel without penalty.</li>
+        <li><strong>Early Commencement:</strong> We will not commence work or order bespoke materials during the 14-day cooling-off period unless you provide an explicit written request. If you request an early start and subsequently cancel within the 14 days, you remain liable for the reasonable cost of work carried out and non-refundable bespoke materials ordered up to the date of cancellation.</li>
+        <li><strong>Post-Cooling-Off Cancellations:</strong> Cancellations made after the 14-day period may incur charges covering materials already purchased, administrative expenses, and allocated labour.</li>
+        <li><strong>How to Cancel:</strong> To exercise your right to cancel, notify us in writing via email to <a href={mail}><strong>{site.email}</strong></a> or by post to our Registered Office. You may use the statutory model form below, though it is not obligatory:</li>
+      </ul>
+      <div class="model-form">
+        <p><strong>MODEL CANCELLATION FORM (CONSUMER CONTRACTS REGULATIONS 2013)</strong></p>
+        <p><strong>To:</strong> Piran Builders Ltd, Maximax, 37 Hamlet Court Road, Westcliff-on-Sea, SS0 7EY | Email: {site.email}</p>
+        <p>I/We [*] hereby give notice that I/we [*] cancel my/our [*] contract for the supply of the following building/renovation service: ______________________________</p>
+        <p>Quotation / Order Reference: ______________________ | Ordered on [*] / Accepted on [*]: ______________________</p>
+        <p>Name of consumer(s): ______________________________</p>
+        <p>Address of consumer(s): ______________________________</p>
+        <p>Signature of consumer(s) (only if notified on paper): ______________________ | Date: ______________</p>
+      </div>
+
+      <h2>8. Workmanship Guarantees &amp; Statutory Consumer Rights</h2>
+      <ul>
+        <li><strong>General Workmanship Guarantee:</strong> All new structural and building workmanship carried out by Piran Builders Ltd is backed by a written <strong>12-month guarantee</strong> from the date of practical completion.</li>
+        <li><strong>Plastering Work:</strong> Plastering work carries a <strong>6-month guarantee</strong> to allow for natural building drying and settling.</li>
+        <li><strong>Decorating Work:</strong> Painting and decorating works are inspected and signed off with you upon completion. Because painted surfaces are exposed to ongoing household wear and environmental conditions, they do not carry a separate extended warranty period beyond completion sign-off; however, this does not affect your statutory rights under the <strong>Consumer Rights Act 2015</strong> requiring services to be performed with reasonable care and skill.</li>
+        <li><strong>Materials &amp; Exclusions:</strong> Supplied materials, appliances, windows, boilers, and fixtures are covered by their respective manufacturer warranties. Our guarantee applies strictly to new work and new materials installed by us and excludes pre-existing structures, fair wear and tear, accidental or third-party damage, or lack of routine maintenance.</li>
+      </ul>
+
+      <h2>9. Project Photography &amp; Advertising Consent (Opt-In)</h2>
+      <ul>
+        <li><strong>Explicit Written Opt-In:</strong> We take pride in showcasing completed projects on <strong>piranbuilders.co.uk</strong> and our official social media channels. However, we will <strong>only</strong> capture or publish photographs or videos of your property for portfolio, marketing, or advertising purposes if you give your <strong>explicit written opt-in permission</strong> (such as ticking the consent box on your quotation acceptance or confirming via email).</li>
+        <li><strong>Privacy &amp; Security Protection:</strong> Even where you grant permission, all project photography focuses strictly on our building and finishing workmanship. We will never capture or disclose your full name, house number, street name, vehicle registration numbers, security alarm panels, or personal identifying information without separate written consent.</li>
+        <li><strong>Right to Withdraw Consent:</strong> You may withdraw your photography consent at any time by emailing <a href={mail}><strong>{site.email}</strong></a>, and we will promptly remove the relevant images from our website and active social media feeds.</li>
+      </ul>
+
+      <h2>10. Landlord &amp; Property Investor Services</h2>
+      <ul>
+        <li>Refurbishments, HMO compliance upgrades, conversions, and between-tenancy turnarounds for landlords and property investors are scheduled around agreed timelines and quoted in writing upfront.</li>
+        <li>Any general project guidance provided is for construction and refurbishment planning only and does not constitute regulated financial, tax, or legal advice.</li>
+      </ul>
+
+      <h2>11. Complaints Resolution &amp; Alternative Dispute Resolution (ADR)</h2>
+      <ul>
+        <li><strong>Internal Complaints Procedure:</strong> If you are dissatisfied with any aspect of our service, please contact us in writing at <a href={mail}><strong>{site.email}</strong></a>. We will acknowledge your complaint in writing within <strong>3 working days</strong> and provide a full written response from a Company Director with proposed corrective action within <strong>10 working days</strong>.</li>
+        <li><strong>Alternative Dispute Resolution (ADR):</strong> In accordance with the <em>Alternative Dispute Resolution for Consumer Disputes (Competent Authorities and Information) Regulations 2015</em>, if a residential consumer complaint cannot be resolved through our internal procedure, we will provide details of a certified ADR provider—such as <strong>Consumer Dispute Resolution Limited (CDRL)</strong> (<em>cdrl.org.uk</em>) or an applicable trade body dispute scheme—and confirm whether we agree to submit the dispute to ADR.</li>
+      </ul>
+
+      <h2>12. Limitation of Liability &amp; Governing Law</h2>
+      <ul>
+        <li><strong>Statutory Liability Preserved:</strong> Nothing in these Terms limits or excludes our liability for death or personal injury caused by our negligence, fraud, fraudulent misrepresentation, or any statutory rights that cannot be excluded under the Consumer Rights Act 2015.</li>
+        <li><strong>Events Beyond Our Control:</strong> Piran Builders Ltd is not liable for indirect or consequential losses (including loss of rental income) or delays caused by events beyond our reasonable control, such as severe weather, national supply chain shortages, or third-party utility providers.</li>
+        <li><strong>Governing Law:</strong> These Terms and Conditions are governed by the laws of <strong>England and Wales</strong>, and any disputes shall be subject to the exclusive jurisdiction of the courts of England and Wales.</li>
+      </ul>
+    </div>
   </Article>
 </Base>

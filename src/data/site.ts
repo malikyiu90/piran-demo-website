@@ -1,6 +1,10 @@
 // Business details shown across the site. Only facts taken from the client's existing site live here.
 export const site = {
   name: 'Piran Builders',
+  // Registered company details, from the client's terms and privacy policy (November 2026).
+  legalName: 'Piran Builders Ltd',
+  companyNumber: '13484930',
+  registeredOffice: 'Maximax, 37 Hamlet Court Road, Westcliff-on-Sea, England, SS0 7EY',
   shortName: 'Piran',
   tagline: 'Construction & renovation in Coventry',
   url: 'https://piranbuilders.co.uk',

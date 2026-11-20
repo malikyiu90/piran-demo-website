@@ -47,6 +47,7 @@ const year = new Date().getFullYear();
           <span>Follow us on Facebook</span>
         </a>
       )}
+      <p class="footer-legal">{site.legalName}, registered in England &amp; Wales, company no. {site.companyNumber}. Registered office: {site.registeredOffice}.</p>
     </div>
 
     <nav class="footer-col" aria-label="Services">
@@ -81,7 +82,7 @@ const year = new Date().getFullYear();
   <div class="footer-bottom on-brand">
     <div class="container footer-bottom__inner">
       <p>© {year} {site.name}. All rights reserved.</p>
-      <p>Powered by <a href="https://www.growyourbusiness.uk" target="_blank" rel="noopener">Grow Your Business</a></p>
+      <p>Powered by <a href="https://growyourbusiness.uk" target="_blank" rel="noopener">Grow Your Business</a></p>
       <a href="#main" data-to-top>Back to top ↑</a>
     </div>
   </div>
@@ -119,6 +120,8 @@ const year = new Date().getFullYear();
   .footer-social svg { flex: none; width: 34px; height: 34px; color: #0866ff; background: #fff; border-radius: 50%; }
   .footer-col .footer-social:hover { color: #fff; }
   .footer-text { margin-top: 18px; max-width: 38ch; color: var(--paper-faint); font-size: 15px; }
+  /* Registered company details, which UK trading-disclosure rules require on the website. */
+  .footer-legal { margin-top: 20px; max-width: 42ch; color: var(--paper-faint); font-size: 12.5px; line-height: 1.55; }
 
   .footer-heading { font-size: 16px; font-weight: 700; color: #fff; padding-bottom: 14px; margin-bottom: 18px; position: relative; }
   .footer-heading::after { content: ""; position: absolute; left: 0; bottom: 0; width: 48px; height: 3px; background: var(--gold-fill); }

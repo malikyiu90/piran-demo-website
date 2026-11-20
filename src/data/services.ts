@@ -549,7 +549,7 @@ export function faqsFor(service: Service): { q: string; a: string }[] {
     },
     { q: 'What if the job changes once work has started?', a: 'Any extra work is confirmed with you in writing, including the cost, before it goes ahead.' },
     { q: 'Is the work guaranteed?', a: guaranteeAnswer },
-    { q: 'Are you insured?', a: 'Yes. We hold public liability and employers’ liability insurance to the sum of £1,000,000.' },
+    { q: 'Are you insured?', a: 'Yes. We hold public liability insurance up to £1,000,000 and employers’ liability insurance of at least £5,000,000. Certificates are available on request.' },
     { q: 'How does payment work?', a: 'Work is confirmed once you accept the quotation and pay the deposit. We agree a payment plan with you before work begins.' },
   ];
 }

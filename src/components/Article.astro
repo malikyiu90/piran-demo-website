@@ -25,4 +25,38 @@ const { updated } = Astro.props;
   .article__body :global(li::marker) { color: var(--brand); }
   .article__body :global(a) { color: var(--brand-tint); }
   .article__body :global(.note) { margin-top: 32px; padding: 18px 20px; border-left: 3px solid var(--brand); background: var(--sand-2); border-radius: 0 12px 12px 0; font-size: 15px; }
+  .article__body :global(strong) { color: var(--char); font-weight: 650; }
+
+  /* Legal documents: numbered sections, detail grid, tables, callouts and the model form. */
+  .article__body :global(.legal h2) { font-size: clamp(24px, 2.4vw, 30px); margin: 52px 0 16px; }
+  .article__body :global(.legal ul) { list-style: disc; }
+  .article__body :global(.legal-intro) { margin-top: 32px; }
+  .article__body :global(.legal-facts) { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); margin: 0; border: 1px solid var(--rule); border-radius: 12px; overflow: hidden; font-size: 15px; }
+  .article__body :global(.legal-facts div) { display: grid; grid-template-columns: 124px 1fr; gap: 12px; padding: 14px 18px; border-bottom: 1px solid var(--rule); background: var(--sand-2); }
+  .article__body :global(.legal-facts dt) { font-weight: 650; color: var(--char); }
+  .article__body :global(.legal-facts dd) { margin: 0; overflow-wrap: break-word; }
+  .article__body :global(.table-wrap) { overflow-x: auto; margin: 20px 0; border: 1px solid var(--rule); border-radius: 12px; }
+  .article__body :global(table) { width: 100%; min-width: 560px; border-collapse: collapse; font-size: 15px; line-height: 1.6; }
+  .article__body :global(th) { padding: 14px 18px; text-align: left; background: var(--gold-fill); color: var(--on-brand); font-weight: 700; }
+  .article__body :global(td) { padding: 16px 18px; vertical-align: top; border-top: 1px solid var(--rule); }
+  .article__body :global(td:first-child) { color: var(--char); font-weight: 600; width: 30%; }
+  .article__body :global(td p + p) { margin-top: 0.6em; }
+  .article__body :global(.callout) { margin-top: 28px; padding: 20px 22px; border-left: 3px solid var(--brand); background: var(--sand-2); border-radius: 0 12px 12px 0; font-size: 15.5px; }
+  .article__body :global(.callout-title) { margin-bottom: 8px; font-size: 13px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--brand-tint); }
+  .article__body :global(.model-form) { margin-top: 24px; padding: 22px; border: 1.5px dashed var(--rule); border-radius: 12px; font-size: 15px; }
+  .article__body :global(.model-form p + p) { margin-top: 0.8em; }
+
+  @media (max-width: 700px) {
+    .article__body :global(.legal-facts) { grid-template-columns: 1fr; }
+    .article__body :global(.legal-facts div) { grid-template-columns: 1fr; gap: 2px; }
+    /* Phones: each table row becomes a card; columns after the first are labelled from data-label. */
+    .article__body :global(table) { min-width: 0; }
+    .article__body :global(thead) { display: none; }
+    .article__body :global(tr), .article__body :global(td) { display: block; }
+    .article__body :global(tr + tr) { border-top: 1px solid var(--rule); }
+    .article__body :global(td) { width: auto !important; border-top: 0; padding: 12px 18px 0; }
+    .article__body :global(td:last-child) { padding-bottom: 16px; }
+    .article__body :global(td:first-child) { padding-top: 16px; }
+    .article__body :global(td[data-label])::before { content: attr(data-label); display: block; margin-bottom: 2px; font-size: 12px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--brand-tint); }
+  }
 </style>
