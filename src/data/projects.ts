@@ -1,4 +1,7 @@
-import { photosFor, serviceUrl, services, type CategoryId } from './services';
+import projectPhotos from './projectPhotos.json';
+import { photosFor, serviceUrl, services, type CategoryId, type Service } from './services';
+
+interface PhotoEntry { name: string; alt: string; category: CategoryId; href: string; town?: string; w: number; h: number; smW: number }
 
 export interface Project {
   src: string;
@@ -14,31 +17,21 @@ export interface Project {
   placeholder: boolean;
 }
 
-// Real Piran projects. Save the photo as public/gallery/project-<name>.webp (up to 2000px) plus a 960px copy in
-// public/gallery/sm/, and add it here; add `town` when it is known and the tile reads "Kitchen renovation · Nuneaton".
-// Only photos of work Piran did belong here. Real projects come first; once there are any, the heading becomes
-// "Our Completed Projects".
+// Real Piran projects, listed in src/data/projectPhotos.json with each photo's real size. Photos live at
+// public/gallery/project-<name>.webp (up to 2000px) with a 960px copy in public/gallery/sm/. Add `town` to an entry
+// when it is known and the tile reads "Kitchen renovation · Nuneaton". Only photos of work Piran did belong here.
+// Real projects come first; once there are any, the heading becomes "Our Completed Projects".
 //
 // From the client's own Facebook page (facebook.com/3piran), November 2026. Towns were not given, so none are shown.
-// Facebook serves 2000x924 landscape or 924x2000 portrait photos; the 960px copies are 960 or 444 wide to match.
-const real = (name: string, alt: string, category: CategoryId, href: string, portrait = false): Project => ({
-  src: `/gallery/project-${name}.webp`,
-  srcset: `/gallery/sm/project-${name}.webp ${portrait ? 444 : 960}w, /gallery/project-${name}.webp ${portrait ? 924 : 2000}w`,
-  alt, category, href, placeholder: false,
-});
-const completed: Project[] = [
-  real('open-plan-kitchen-1', 'Open-plan kitchen', 'kitchens-bathrooms', '/services/kitchen-renovation'),
-  real('flat-roof-1', 'Flat roof', 'exterior', '/services/roof-work'),
-  real('downstairs-wc-1', 'Downstairs WC', 'kitchens-bathrooms', '/services/bathrooms', true),
-  real('hallway-stairs-1', 'Hallway & staircase', 'interiors', '/services/decorating', true),
-  real('open-plan-kitchen-2', 'Open-plan kitchen', 'kitchens-bathrooms', '/services/kitchen-renovation', true),
-  real('flat-roof-2', 'Flat roof', 'exterior', '/services/roof-work'),
-  real('stairs-flooring-1', 'Stair flooring', 'interiors', '/services/tile-and-flooring', true),
-  real('open-plan-kitchen-3', 'Open-plan kitchen', 'kitchens-bathrooms', '/services/kitchen-renovation'),
-  real('downstairs-wc-2', 'Downstairs WC', 'kitchens-bathrooms', '/services/bathrooms', true),
-  real('flat-roof-3', 'Flat roof', 'exterior', '/services/roof-work', true),
-  real('open-plan-kitchen-4', 'Open-plan kitchen', 'kitchens-bathrooms', '/services/kitchen-renovation', true),
-];
+const completed: Project[] = (projectPhotos as PhotoEntry[]).map((p) => ({
+  src: `/gallery/project-${p.name}.webp`,
+  srcset: `/gallery/sm/project-${p.name}.webp ${p.smW}w, /gallery/project-${p.name}.webp ${p.w}w`,
+  alt: p.alt,
+  category: p.category,
+  town: p.town,
+  href: p.href,
+  placeholder: false,
+}));
 
 // Stock photos (Pexels, Unsplash and Pixabay; see content/stock/pixabay.txt) fill the gallery until there are
 // enough real projects. They carry no town, because they are not Piran's work.
@@ -66,8 +59,12 @@ const stock: Project[] = PICKS.flatMap(([slug, index]) => {
     : [];
 });
 
-const GRID = 11;
-export const projects: Project[] = [...completed, ...stock].slice(0, Math.max(GRID, completed.length));
+/** Tiles on the home page; the /gallery page shows every project. Eleven fill the grid: one large and ten small. */
+export const HOME_TILES = 11;
+export const projects: Project[] = [...completed, ...stock].slice(0, Math.max(HOME_TILES, completed.length));
+
+/** Real project photos for a service page, matched by the service the project links to. */
+export const realPhotosFor = (service: Service) => completed.filter((p) => p.href === serviceUrl(service));
 
 const realCount = projects.filter((p) => !p.placeholder).length;
 
