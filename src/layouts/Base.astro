@@ -6,7 +6,8 @@ import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import ContactDock from '../components/ContactDock.astro';
 import CallBar from '../components/CallBar.astro';
-import { site } from '../data/site';
+import { proof, site } from '../data/site';
+import { areas } from '../data/areas';
 
 interface Props {
   title: string;
@@ -26,18 +27,24 @@ const fullTitle = title === site.name ? title : `${title} | ${site.name}`;
 
 const schema = {
   '@context': 'https://schema.org',
-  '@type': 'GeneralContractor',
+  // HomeAndConstructionBusiness, plus its more specific subtype GeneralContractor.
+  '@type': ['HomeAndConstructionBusiness', 'GeneralContractor'],
   '@id': new URL('/#business', Astro.site).href,
   name: site.name,
   legalName: site.legalName,
   url: site.url,
   telephone: site.phone,
   email: site.email,
+  contactPoint: [
+    { '@type': 'ContactPoint', contactType: 'customer service', telephone: site.phone, areaServed: 'GB', availableLanguage: 'English' },
+    { '@type': 'ContactPoint', contactType: 'customer service', telephone: site.mobile, areaServed: 'GB', availableLanguage: 'English' },
+  ],
   image: new URL('/frames/poster.jpg', Astro.site).href,
   logo: new URL('/icon-512.png', Astro.site).href,
-  address: { '@type': 'PostalAddress', addressLocality: site.locality, addressCountry: site.country },
-  areaServed: site.locality,
-  sameAs: Object.values(site.social).filter(Boolean),
+  address: { '@type': 'PostalAddress', addressLocality: site.locality, addressRegion: 'West Midlands', addressCountry: site.country },
+  ...(proof.googleReviewsUrl ? { hasMap: proof.googleReviewsUrl } : {}),
+  areaServed: areas.map((a) => ({ '@type': 'City', name: a.name })),
+  sameAs: [...Object.values(site.social), proof.googleReviewsUrl].filter(Boolean),
 };
 ---
 <!doctype html>

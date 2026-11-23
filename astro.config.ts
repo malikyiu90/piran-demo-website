@@ -24,6 +24,8 @@ export default defineConfig({
   // Old WordPress URLs keep working (and keep their search ranking) after the move.
   redirects: {
     '/about-us': '/about',
+    // HMO renovations lives at its own address; the /services/ form people may guess points there too.
+    '/services/hmo-renovations': '/hmo-renovations-coventry',
     '/contact-us': '/contact',
     '/our-services': '/services',
     '/terms-conditions': '/terms',

@@ -1,4 +1,4 @@
-import { services } from '../data/services';
+import { serviceUrl, services } from '../data/services';
 
 /**
  * Every indexable page, written the way the site links to it (no trailing slash), which is also the canonical URL.
@@ -8,7 +8,9 @@ export function sitemapPaths(): string[] {
   return [
     '/',
     '/services',
-    ...services.map((s) => `/services/${s.slug}`),
+    ...services.map(serviceUrl),
+    '/gallery',
+    '/areas-we-cover',
     '/about',
     '/landlords',
     '/contact',

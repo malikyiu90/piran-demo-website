@@ -1,3 +1,5 @@
+import { areaList } from './areas';
+
 // General questions for the home page. Answers follow the client's published terms (/terms) and process.
 export const faqs = [
   {
@@ -30,6 +32,6 @@ export const faqs = [
   },
   {
     q: 'Which areas do you cover?',
-    a: 'We are based in Coventry. Get in touch with your location and we will let you know if we can help.',
+    a: `We are based in Coventry and cover ${areaList}. Our Areas we cover page has details for each town. If you are nearby but not listed, get in touch and we will let you know if we can help.`,
   },
 ];

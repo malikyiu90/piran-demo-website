@@ -1,9 +1,10 @@
-// Service catalogue: one page per service offered on the client's previous website (22 in total).
+// Service catalogue: one page per service offered on the client's previous website (22), plus HMO renovations
+// (added November 2026, at /hmo-renovations-coventry).
 // Each old WordPress URL redirects to its page here (see `legacySlugs` and `legacyRedirects`).
 // Summaries marked "client" are the client's own wording from the old home page.
 import servicePhotos from './servicePhotos.json';
 
-export type CategoryId = 'extensions' | 'kitchens-bathrooms' | 'interiors' | 'exterior';
+export type CategoryId = 'extensions' | 'kitchens-bathrooms' | 'interiors' | 'exterior' | 'landlords';
 
 export interface Category {
   id: CategoryId;
@@ -22,6 +23,8 @@ export interface Service {
   includes: string[];
   faqs: { q: string; a: string }[];
   legacySlugs: string[];
+  /** Own address instead of /services/<slug>, e.g. "/hmo-renovations-coventry". Use serviceUrl() for links. */
+  path?: string;
   /** Guarantee as stated in the client's terms. Defaults to the 12-month workmanship guarantee; null = not covered. */
   guarantee?: string | null;
 }
@@ -62,6 +65,12 @@ export const categories: Category[] = [
     name: 'Exterior',
     blurb: 'Roofs, windows, render, brick, driveways and gardens that protect the house and lift the street view.',
     image: '/frames/lg/0080.webp',
+  },
+  {
+    id: 'landlords',
+    name: 'Landlords & HMOs',
+    blurb: 'Conversions, licensing upgrades and turnarounds for landlords and property investors.',
+    image: '/frames/lg/0088.webp',
   },
 ];
 
@@ -510,6 +519,38 @@ export const services: Service[] = [
     ],
     legacySlugs: ['landscaping'],
   },
+
+  // ---------------------------------------------------------------- Landlords & HMOs
+  {
+    slug: 'hmo-renovations',
+    path: '/hmo-renovations-coventry',
+    name: 'HMO renovations',
+    category: 'landlords',
+    summary: 'HMO conversions, licensing upgrades and between-tenancy turnarounds for landlords and property investors, from fire doors and alarms to kitchens and bathrooms.',
+    intro: [
+      'A house in multiple occupation needs more than a standard refurbishment. Rooms, shared kitchens and bathrooms have to stand up to heavy use, and the fire safety has to meet what the council expects for licensing.',
+      'We convert and refurbish HMOs for landlords and property investors across Coventry and Warwickshire, and turn properties round between tenancies, with all the trades under one team.',
+    ],
+    includes: [
+      'Fire doors (FD30) and fire separation',
+      'Interlinked smoke and heat alarms and emergency lighting',
+      'Shared kitchens and extra bathrooms or en-suites',
+      'Room layouts, partitions and loft rooms',
+      'Electrics, plumbing and heating upgrades',
+      'End-of-tenancy and void turnarounds',
+    ],
+    faqs: [
+      {
+        q: 'Can you get a property ready for an HMO licence?',
+        a: 'We carry out the building work the council asks for, such as fire doors, alarms, emergency lighting and kitchen or bathroom upgrades. The licence application itself is made by the landlord to the council.',
+      },
+      {
+        q: 'Can you work between tenancies?',
+        a: 'Yes. Turnarounds and void refurbishments are planned around your timeline and quoted in writing up front.',
+      },
+    ],
+    legacySlugs: [],
+  },
 ];
 
 export function servicesIn(category: CategoryId): Service[] {
@@ -523,6 +564,11 @@ export function categoryOf(service: Service): Category {
 }
 
 export const serviceSlugs = services.map((s) => s.slug);
+
+/** Address of a service page: its own path if it has one, otherwise /services/<slug>. */
+export function serviceUrl(service: Service): string {
+  return service.path ?? `/services/${service.slug}`;
+}
 
 /** Four stock photos per service (see content/stock/pixabay.txt and scripts/fetch-stock.mjs). */
 export function photosFor(service: Service): Photo[] {
@@ -564,9 +610,9 @@ export function photoFor(service: Service): { thumb: string; hero: string | null
   return { thumb: first ? thumbOf(first) : categoryOf(service).image, hero: first };
 }
 
-/** Shown on the home page: the same eight services the client featured on the old home page. */
+/** Shown on the home page: HMO renovations, then the eight services the client featured on the old home page. */
 export const featuredSlugs = [
-  'window-work', 'plastering', 'tiling', 'bathrooms',
+  'hmo-renovations', 'window-work', 'plastering', 'tiling', 'bathrooms',
   'kitchen-renovation', 'landscaping', 'driveways', 'loft-extension',
 ];
 
@@ -582,7 +628,7 @@ export function featuredServices(): Service[] {
 export function legacyRedirects(): Record<string, string> {
   const map: Record<string, string> = {};
   for (const service of services) {
-    for (const old of service.legacySlugs) map[`/our-services/${old}`] = `/services/${service.slug}`;
+    for (const old of service.legacySlugs) map[`/our-services/${old}`] = serviceUrl(service);
   }
   return map;
 }

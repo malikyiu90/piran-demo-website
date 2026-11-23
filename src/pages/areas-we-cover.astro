@@ -1,0 +1,97 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import QuoteSection from '../components/QuoteSection.astro';
+import { areaList, areas } from '../data/areas';
+import { services, serviceUrl } from '../data/services';
+import { site } from '../data/site';
+
+const others = areas.filter((a) => a.id !== 'coventry').map((a) => a.name).join(', ').replace(/, ([^,]+)$/, ' and $1');
+const servicesFor = (slugs: string[]) => slugs.flatMap((slug) => services.filter((s) => s.slug === slug));
+---
+<Base
+  title="Areas we cover"
+  description={`${site.name} builds and renovates homes in ${areaList}. Extensions, loft conversions, HMO renovations, kitchens and bathrooms. Free consultation.`}
+>
+  <PageHero
+    eyebrow="Areas we cover"
+    title="Builders across Coventry &amp; Warwickshire."
+    lede={`Based in Coventry, we also work across ${others}, with the same team and the same written quotations wherever you are.`}
+    image="/frames/lg/0080.webp"
+    crumbs={[{ label: 'Areas we cover' }]}
+  >
+    <nav class="towns" aria-label="Jump to a town">
+      {areas.map((a) => <a class="towns__link" href={`#${a.id}`}>{a.name}</a>)}
+    </nav>
+  </PageHero>
+
+  {areas.map((a, i) => (
+    <section class={`area section ${i % 2 ? 'on-ink' : 'on-light'}`} id={a.id} aria-labelledby={`${a.id}-title`}>
+      <div class="container area__grid">
+        <div>
+          <p class="eyebrow" data-reveal>{a.county}</p>
+          <h2 class="h2" id={`${a.id}-title`} data-reveal>Builders in {a.name}.</h2>
+          <div class="prose area__intro" data-reveal>
+            {a.intro.map((p) => <p>{p}</p>)}
+          </div>
+          <div class="area__actions" data-reveal>
+            <a class="btn btn--primary" href="/contact#quote">Get a free quote in {a.name}</a>
+            <a class="btn btn--ghost" href={site.phoneHref}>{site.phone}</a>
+          </div>
+        </div>
+
+        <aside class="area__card" data-reveal>
+          <dl class="area__facts">
+            <div><dt>Distance</dt><dd>{a.distance}</dd></div>
+            <div><dt>Postcodes</dt><dd>{a.postcodes}</dd></div>
+            <div><dt>Planning &amp; Building Control</dt><dd>{a.council}</dd></div>
+          </dl>
+          <p class="area__label">Services in {a.name}</p>
+          <ul class="area__services" role="list">
+            {servicesFor(a.services).map((s) => <li><a href={serviceUrl(s)}>{s.name}<span aria-hidden="true">→</span></a></li>)}
+          </ul>
+          <a class="area__all" href="/services">All services →</a>
+        </aside>
+      </div>
+    </section>
+  ))}
+
+  <QuoteSection />
+</Base>
+
+<style>
+  .towns { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 8px; }
+  .towns__link {
+    display: inline-flex; align-items: center; height: 42px; padding: 0 16px;
+    border: 1px solid var(--line); border-radius: 999px; color: var(--paper); text-decoration: none; font-size: 14.5px; font-weight: 600;
+    transition: border-color 0.2s ease, color 0.2s ease;
+  }
+  .towns__link:hover { border-color: var(--brand-tint); color: var(--brand-tint); }
+
+  .area { scroll-margin-top: 90px; }
+  .area__grid { display: grid; grid-template-columns: minmax(0, 1fr) 380px; gap: clamp(40px, 6vw, 96px); align-items: start; }
+  .area__intro { margin-top: 24px; }
+  .area__actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 32px; }
+
+  .area__card { padding: 28px; border: 1px solid var(--rule); border-radius: 18px; background: var(--sand-2); }
+  .on-ink .area__card { border-color: var(--line-soft); background: var(--ink-3); }
+  .area__facts { display: grid; gap: 14px; margin: 0 0 24px; }
+  .area__facts div { display: grid; gap: 2px; }
+  .area__facts dt { font-size: 12px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--brand-tint); }
+  .area__facts dd { margin: 0; font-size: 15.5px; }
+  .area__label { font-size: 12px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--brand-tint); margin-bottom: 6px; }
+  .area__services { margin: 0; padding: 0; border-top: 1px solid var(--rule); }
+  .area__services a {
+    display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid var(--rule);
+    color: inherit; text-decoration: none; font-weight: 600; transition: color 0.2s ease, padding 0.3s var(--ease-out);
+  }
+  .area__services a:hover { color: var(--brand-tint); padding-left: 6px; }
+  .area__all { display: inline-block; margin-top: 16px; font-size: 14px; font-weight: 650; color: var(--brand-tint); text-decoration: none; }
+
+  @media (max-width: 980px) {
+    .area__grid { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 560px) {
+    .area__actions .btn { flex: 1 1 auto; }
+  }
+</style>

@@ -1,15 +1,10 @@
 ---
 import { categories, thumbOf } from '../data/services';
-import { projects, realWork } from '../data/projects';
+import { galleryCopy as copy, projectLabel, projects } from '../data/projects';
 
 const used = categories.filter((c) => projects.some((p) => p.category === c.id));
-// The heading only claims "our work" for as much of the gallery as really is Piran's work.
-const COPY = {
-  none: { eyebrow: 'Gallery', title: 'Ideas for your project.', lede: 'A few ideas to get you started. Ask us for photos of our recent work in your area.' },
-  some: { eyebrow: 'Gallery', title: 'Ideas and our recent work.', lede: 'Ideas to get you started, alongside a look at some of the projects we have finished.' },
-  all: { eyebrow: 'Our work', title: 'Our recent work.', lede: 'A look at the quality, detail and finish we deliver on every job.' },
-};
-const copy = COPY[realWork];
+// Shorter filter names where the category name is long or means something more specific here.
+const FILTER_LABELS: Partial<Record<string, string>> = { landlords: 'HMO renovations' };
 // Small tiles get the 960px copy; the large first tile can use the 2560px original on sharp screens.
 const srcset = (src: string) => `${thumbOf(src)} 960w, ${src} 2560w`;
 const sizes = (i: number) => (i === 0 ? '(max-width: 900px) 100vw, 60vw' : '(max-width: 900px) 50vw, 30vw');
@@ -27,7 +22,7 @@ const sizes = (i: number) => (i === 0 ? '(max-width: 900px) 100vw, 60vw' : '(max
 
       <div class="filters" role="group" aria-label="Filter projects" data-reveal>
         <button type="button" class="filter" aria-pressed="true" data-filter="all">All work</button>
-        {used.map((c) => <button type="button" class="filter" aria-pressed="false" data-filter={c.id}>{c.name}</button>)}
+        {used.map((c) => <button type="button" class="filter" aria-pressed="false" data-filter={c.id}>{FILTER_LABELS[c.id] ?? c.name}</button>)}
       </div>
 
       <ul class="grid" role="list" data-gallery>
@@ -36,12 +31,12 @@ const sizes = (i: number) => (i === 0 ? '(max-width: 900px) 100vw, 60vw' : '(max
             {p.href ? (
               <a class="tile__link" href={p.href}>
                 <img src={p.src} srcset={srcset(p.src)} sizes={sizes(i)} alt="" loading="lazy" decoding="async" width="1280" height="853" />
-                <span class="tile__label">{p.alt} <span aria-hidden="true">→</span></span>
+                <span class="tile__label">{projectLabel(p)} <span aria-hidden="true">→</span></span>
               </a>
             ) : (
               <>
-                <img src={p.src} srcset={srcset(p.src)} sizes={sizes(i)} alt={p.alt} loading="lazy" decoding="async" width="1280" height="853" />
-                <span class="tile__label">{p.alt}</span>
+                <img src={p.src} srcset={srcset(p.src)} sizes={sizes(i)} alt={projectLabel(p)} loading="lazy" decoding="async" width="1280" height="853" />
+                <span class="tile__label">{projectLabel(p)}</span>
               </>
             )}
           </li>

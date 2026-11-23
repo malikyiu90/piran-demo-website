@@ -89,3 +89,7 @@ window-work|https://images.pexels.com/photos/5982764/pexels-photo-5982764.jpeg|h
 window-work|https://images.pexels.com/photos/6580232/pexels-photo-6580232.jpeg|https://www.pexels.com/photo/6580232/
 window-work|2023/08/18/16/35/shutters-8198905_1280.jpg|shutters-wall-window-facade-door-8198905
 window-work|2023/04/14/08/47/window-7924525_1280.jpg|window-wall-brick-wall-building-7924525
+hmo-renovations|https://images.pexels.com/photos/34672503/pexels-photo-34672503.jpeg|https://www.pexels.com/photo/34672503/
+hmo-renovations|https://images.pexels.com/photos/8031899/pexels-photo-8031899.jpeg|https://www.pexels.com/photo/8031899/
+hmo-renovations|https://images.pexels.com/photos/7534550/pexels-photo-7534550.jpeg|https://www.pexels.com/photo/7534550/
+hmo-renovations|https://images.pexels.com/photos/6587855/pexels-photo-6587855.jpeg|https://www.pexels.com/photo/6587855/

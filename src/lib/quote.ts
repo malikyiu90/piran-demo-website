@@ -5,7 +5,20 @@ import { services, serviceSlugs } from '../data/services';
 import { site } from '../data/site';
 
 export const SERVICE_OPTIONS = [...serviceSlugs, 'other'] as const;
-const FIELDS = ['name', 'email', 'phone', 'service', 'message', 'consent', 'submissionId', 'startedAt', 'website'] as const;
+const FIELDS = ['name', 'email', 'phone', 'service', 'message', 'postcode', 'budget', 'startDate', 'consent', 'submissionId', 'startedAt', 'website'] as const;
+
+/** Budget bands for the optional budget question (the customer's own estimate, not a price). */
+export const BUDGET_OPTIONS = {
+  'under-10k': 'Under £10,000',
+  '10k-25k': '£10,000 to £25,000',
+  '25k-50k': '£25,000 to £50,000',
+  '50k-100k': '£50,000 to £100,000',
+  'over-100k': 'Over £100,000',
+  'not-sure': 'Not sure yet',
+} as const;
+
+// Optional fields: an empty box arrives as an empty string, which counts as not answered.
+const optional = <T extends z.ZodType>(schema: T) => z.preprocess((v) => (v === '' ? undefined : v), schema.optional());
 
 /** Minimum time between rendering the form and submitting it; faster than this is almost certainly a bot. */
 export const MIN_FILL_MS = 3000;
@@ -16,6 +29,10 @@ export const quoteSchema = z.object({
   phone: z.string({ error: 'Please enter your phone number.' }).trim().regex(/^\+?[0-9][0-9 ()-]{6,19}$/, { error: 'Please enter a valid phone number.' }),
   service: z.enum(SERVICE_OPTIONS, { error: 'Please choose a service.' }),
   message: z.string({ error: 'Please tell us about your project.' }).trim().min(10, { error: 'Please tell us a little more (at least 10 characters).' }).max(2000, { error: 'Please keep your message under 2000 characters.' }),
+  // A full UK postcode or just its first half (e.g. CV5).
+  postcode: optional(z.string().trim().toUpperCase().regex(/^[A-Z]{1,2}[0-9][0-9A-Z]?( ?[0-9][A-Z]{2})?$/, { error: 'Please enter a UK postcode, e.g. CV5 6AB.' })),
+  budget: optional(z.enum(Object.keys(BUDGET_OPTIONS) as [keyof typeof BUDGET_OPTIONS], { error: 'Please choose a budget from the list.' })),
+  startDate: optional(z.string().regex(/^20[2-9][0-9]-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/, { error: 'Please choose a date.' })),
   consent: z.literal('yes', { error: 'Please confirm we can contact you about your enquiry.' }),
   // Both are set by the form script. Plain (no-JS) posts omit them: the server then assigns an id and skips the timing check.
   submissionId: z.string().regex(/^[A-Za-z0-9-]{8,64}$/, { error: 'Invalid submission. Please reload the page and try again.' }).optional(),
@@ -120,6 +137,9 @@ export function formatEmail(q: QuoteRequest): OutgoingEmail {
     ['Phone', q.phone],
     ['Service', service],
   ];
+  if (q.postcode) rows.push(['Postcode', q.postcode]);
+  if (q.budget) rows.push(['Budget', BUDGET_OPTIONS[q.budget]]);
+  if (q.startDate) rows.push(['Target start', q.startDate]);
   const text = `${rows.map(([k, v]) => `${k}: ${v}`).join('\n')}\n\nMessage:\n${q.message}\n`;
   const html = `<h2 style="font-family:Georgia,serif;font-weight:400">New quote request</h2>
 <table cellpadding="6" style="border-collapse:collapse;font-family:Arial,sans-serif;font-size:14px">

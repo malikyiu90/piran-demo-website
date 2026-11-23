@@ -12,7 +12,7 @@ import {
   type OutgoingEmail,
   type QuoteDeps,
 } from '../src/lib/quote';
-import { faqsFor, legacyRedirects, services } from '../src/data/services';
+import { faqsFor, legacyRedirects, serviceUrl, services } from '../src/data/services';
 
 const NOW = 1_800_000_000_000;
 
@@ -141,6 +141,34 @@ describe('handleQuote', () => {
     expect(out.body).toMatchObject({ code: 'not_configured' });
   });
 
+  it('accepts the optional postcode, budget and start date and puts them in the email', async () => {
+    const { d, sent } = deps();
+    const out = await handleQuote(valid({ postcode: 'cv5 6ab', budget: '25k-50k', startDate: '2027-03-01' }), 'ip', d);
+    expect(out.status).toBe(200);
+    expect(sent[0].text).toContain('Postcode: CV5 6AB');
+    expect(sent[0].text).toContain('Budget: £25,000 to £50,000');
+    expect(sent[0].text).toContain('Target start: 2027-03-01');
+  });
+
+  it('treats empty optional fields as unanswered', async () => {
+    const { d, sent } = deps();
+    const out = await handleQuote(valid({ postcode: '', budget: '', startDate: '' }), 'ip', d);
+    expect(out.status).toBe(200);
+    expect(sent[0].text).not.toContain('Postcode');
+  });
+
+  it('rejects a bad postcode, an unknown budget and a malformed date', async () => {
+    const { d } = deps();
+    const out = await handleQuote(valid({ postcode: 'NOT A CODE', budget: '1-million', startDate: 'next week' }), 'ip', d);
+    if (out.body.ok || out.body.code !== 'invalid') throw new Error('expected invalid');
+    expect(Object.keys(out.body.errors).sort()).toEqual(['budget', 'postcode', 'startDate']);
+  });
+
+  it('accepts the first half of a postcode on its own', async () => {
+    const { d } = deps();
+    expect((await handleQuote(valid({ postcode: 'CV5' }), 'ip', d)).status).toBe(200);
+  });
+
   it('points people to both phone numbers when sending fails', async () => {
     const { d } = deps({ send: async () => { throw new Error('down'); } });
     const out = await handleQuote(valid(), 'ip', d);
@@ -205,7 +233,7 @@ describe('service catalogue', () => {
     const redirects = legacyRedirects();
     expect(Object.keys(redirects)).toHaveLength(22);
     for (const target of Object.values(redirects)) {
-      expect(services.some((s) => `/services/${s.slug}` === target)).toBe(true);
+      expect(services.some((s) => serviceUrl(s) === target)).toBe(true);
     }
   });
 });

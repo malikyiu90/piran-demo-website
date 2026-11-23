@@ -1,6 +1,6 @@
 ---
 import { nav, site } from '../data/site';
-import { categories, servicesIn } from '../data/services';
+import { categories, serviceUrl, servicesIn } from '../data/services';
 
 const path = Astro.url.pathname.replace(/\/$/, '') || '/';
 const isCurrent = (href: string) => path === href || path.startsWith(`${href}/`);
@@ -25,7 +25,7 @@ const isCurrent = (href: string) => path === href || path.startsWith(`${href}/`)
                 <div class="mega__col">
                   <p class="mega__heading">{c.name}</p>
                   <ul role="list">
-                    {servicesIn(c.id).map((s) => <li><a href={`/services/${s.slug}`}>{s.name}</a></li>)}
+                    {servicesIn(c.id).map((s) => <li><a href={serviceUrl(s)}>{s.name}</a></li>)}
                   </ul>
                 </div>
               ))}
@@ -122,13 +122,13 @@ const isCurrent = (href: string) => path === href || path.startsWith(`${href}/`)
   }
   .has-mega:hover .mega, .has-mega:focus-within .mega { opacity: 1; visibility: visible; transform: none; }
   .mega__panel {
-    width: min(920px, 100%); display: grid; grid-template-columns: repeat(4, 1fr); gap: 4px 28px;
+    width: min(1100px, 100%); display: grid; grid-template-columns: repeat(5, 1fr); gap: 4px 24px;
     padding: 26px 28px 20px; background: #0b0c0e; color: #fff;
     border: 1px solid var(--rule); border-top: 3px solid var(--brand); border-radius: 0 0 12px 12px;
     box-shadow: 0 30px 80px -20px rgba(0, 0, 0, 0.55);
   }
   .mega__heading {
-    font-size: 12px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--brand-tint);
+    font-size: 12px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; white-space: nowrap; color: var(--brand-tint);
     padding-bottom: 10px; margin-bottom: 6px; border-bottom: 1px solid var(--rule);
   }
   .mega__col ul { display: grid; gap: 1px; margin: 0; padding: 0; }

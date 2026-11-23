@@ -1,0 +1,8 @@
+---
+import ServicePage from '../components/ServicePage.astro';
+import { services } from '../data/services';
+
+const service = services.find((s) => s.path === '/hmo-renovations-coventry');
+if (!service) throw new Error('HMO renovations service is missing from src/data/services.ts');
+---
+<ServicePage service={service} />

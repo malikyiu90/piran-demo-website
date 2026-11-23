@@ -394,5 +394,23 @@
       "src": "/gallery/window-work-4.webp",
       "source": "https://pixabay.com/photos/window-wall-brick-wall-building-7924525/"
     }
+  ],
+  "hmo-renovations": [
+    {
+      "src": "/gallery/hmo-renovations-1.webp",
+      "source": "https://www.pexels.com/photo/34672503/"
+    },
+    {
+      "src": "/gallery/hmo-renovations-2.webp",
+      "source": "https://www.pexels.com/photo/8031899/"
+    },
+    {
+      "src": "/gallery/hmo-renovations-3.webp",
+      "source": "https://www.pexels.com/photo/7534550/"
+    },
+    {
+      "src": "/gallery/hmo-renovations-4.webp",
+      "source": "https://www.pexels.com/photo/6587855/"
+    }
   ]
 }

@@ -1,0 +1,22 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import Gallery from '../components/Gallery.astro';
+import QuoteSection from '../components/QuoteSection.astro';
+import { galleryCopy } from '../data/projects';
+import { site } from '../data/site';
+---
+<Base
+  title={galleryCopy.title.replace(/\.$/, '')}
+  description={`Extensions, lofts, kitchens, bathrooms, HMO renovations and exterior work by ${site.name} across Coventry and Warwickshire.`}
+>
+  <PageHero
+    eyebrow={galleryCopy.eyebrow}
+    title={galleryCopy.title}
+    lede={galleryCopy.lede}
+    image="/frames/lg/0090.webp"
+    crumbs={[{ label: 'Gallery' }]}
+  />
+  <Gallery />
+  <QuoteSection />
+</Base>

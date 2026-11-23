@@ -187,6 +187,14 @@ export const serviceDetails: Record<string, ServiceDetails> = {
     ],
     planning: 'Most garden landscaping does not need planning permission. Raised decking and patios, and paving a front garden with an impermeable surface, can do.',
   },
+  'hmo-renovations': {
+    options: [
+      { name: 'Full HMO conversion', text: 'Turning a family house into a shared house, from layout and fire separation to kitchens and bathrooms.' },
+      { name: 'Licensing upgrades', text: 'Fire doors, alarms, emergency lighting and the other works the council asks for.' },
+      { name: 'Turnarounds', text: 'Refurbishment and repairs between tenancies, scheduled around your timeline.' },
+    ],
+    planning: 'In England, an HMO with five or more people forming more than one household needs a mandatory licence from the council, and councils can run additional licensing schemes for smaller HMOs. Turning a family house into a small HMO (three to six people) is often permitted development, but some councils remove that right with an Article 4 direction, and larger HMOs need planning permission. Fire safety and structural work also need Building Regulations approval. Check with your local council before you buy or convert.',
+  },
 };
 
 export function detailsFor(slug: string): ServiceDetails | undefined {

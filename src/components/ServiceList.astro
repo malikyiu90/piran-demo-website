@@ -1,5 +1,5 @@
 ---
-import { featuredServices, photoFor, services, type Service } from '../data/services';
+import { featuredServices, photoFor, serviceUrl, services, type Service } from '../data/services';
 
 interface Props {
   /** `featured` for the home page (8 services + link to all), `all` for the services page. */
@@ -27,7 +27,7 @@ const list: Service[] = variant === 'all' ? services : featuredServices();
           <div class="row__thumb">
             <img src={photoFor(s).thumb} alt="" width="640" height="480" loading="lazy" decoding="async" />
           </div>
-          <h3 class="row__name"><a href={`/services/${s.slug}`}>{s.name}</a></h3>
+          <h3 class="row__name"><a href={serviceUrl(s)}>{s.name}</a></h3>
           <p class="row__desc">{s.summary}</p>
           <span class="row__btn" aria-hidden="true">
             View service

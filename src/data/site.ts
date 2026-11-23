@@ -24,7 +24,9 @@ export const site = {
   googleSiteVerification: null as string | null,
   social: {
     facebook: 'https://www.facebook.com/3piran/' as string | null,
+    // Add the client's Instagram and TikTok profile links here; their footer icons appear once set.
     instagram: null as string | null,
+    tiktok: null as string | null,
     youtube: null as string | null,
   },
 } as const;
@@ -42,7 +44,7 @@ export const proof = {
 
 export const nav = [
   { label: 'Services', href: '/services' },
-  { label: 'Gallery', href: '/#work' },
+  { label: 'Gallery', href: '/gallery' },
   { label: 'Landlords', href: '/landlords' },
   { label: 'About', href: '/about' },
   { label: 'FAQs', href: '/#faq' },

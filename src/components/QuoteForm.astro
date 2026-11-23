@@ -1,6 +1,7 @@
 ---
 import { categories, servicesIn } from '../data/services';
 import { site } from '../data/site';
+import { BUDGET_OPTIONS } from '../lib/quote';
 
 interface Props {
   /** Pre-selects a service, e.g. on a service page. */
@@ -59,14 +60,39 @@ const { service } = Astro.props;
       <p class="field__error" id="q-message-err" data-error-for="message"></p>
     </div>
 
+    <!-- Optional details that help us prepare for the first call. -->
+    <div class="field-row field-row--3">
+      <div class="field">
+        <label for="q-postcode">Property postcode <span class="field__optional">(optional)</span></label>
+        <input id="q-postcode" name="postcode" type="text" autocomplete="postal-code" maxlength="8" autocapitalize="characters" placeholder="e.g. CV5 6AB" aria-describedby="q-postcode-err" />
+        <p class="field__error" id="q-postcode-err" data-error-for="postcode"></p>
+      </div>
+      <div class="field">
+        <label for="q-budget">Estimated budget <span class="field__optional">(optional)</span></label>
+        <div class="select">
+          <select id="q-budget" name="budget" aria-describedby="q-budget-err">
+            <option value="">Choose a range</option>
+            {Object.entries(BUDGET_OPTIONS).map(([value, label]) => <option value={value}>{label}</option>)}
+          </select>
+        </div>
+        <p class="field__error" id="q-budget-err" data-error-for="budget"></p>
+      </div>
+      <div class="field">
+        <label for="q-start">Target start date <span class="field__optional">(optional)</span></label>
+        <input id="q-start" name="startDate" type="date" aria-describedby="q-start-err" data-min-today />
+        <p class="field__error" id="q-start-err" data-error-for="startDate"></p>
+      </div>
+    </div>
+
     <div class="field field--check">
       <input id="q-consent" name="consent" type="checkbox" value="yes" required aria-describedby="q-consent-err" />
       <label for="q-consent">You can contact me about this enquiry. See our <a href="/privacy">privacy notice</a>.</label>
       <p class="field__error" id="q-consent-err" data-error-for="consent"></p>
     </div>
 
-    <!-- Honeypot: hidden from people, tempting to bots. -->
-    <div class="hp" aria-hidden="true">
+    <!-- Honeypot: hidden from people, tempting to bots. Hidden with an inline style as well as the class, so it
+         stays out of sight even where page styles do not load (some audit tools and text views). -->
+    <div class="hp" aria-hidden="true" style="position:absolute;left:-10000px;top:auto;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);opacity:0">
       <label for="q-website">Website</label>
       <input id="q-website" name="website" type="text" tabindex="-1" autocomplete="off" />
     </div>
@@ -129,6 +155,8 @@ const { service } = Astro.props;
     const newId = () => (crypto.randomUUID ? crypto.randomUUID() : `${Date.now()}-${Math.random().toString(36).slice(2, 10)}`);
     idField.value = newId();
     startedField.value = String(Date.now());
+    // The start date picker opens on today and does not offer past days.
+    root.querySelector<HTMLInputElement>('[data-min-today]')?.setAttribute('min', new Date().toISOString().slice(0, 10));
 
     const params = new URLSearchParams(window.location.search);
     const preset = params.get('service');
@@ -226,6 +254,9 @@ const { service } = Astro.props;
   }
   .quote-form { display: grid; gap: 20px; }
   .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .field-row--3 { grid-template-columns: 1fr 1fr 1fr; }
+  .field__optional { font-weight: 400; color: var(--char-faint); }
+  .field input[type="date"] { color-scheme: dark; }
   .field { display: grid; gap: 8px; align-content: start; }
   .field label { font-size: 13px; font-weight: 600; letter-spacing: 0.02em; color: var(--char); }
   .field input:not([type="checkbox"]), .field select, .field textarea {

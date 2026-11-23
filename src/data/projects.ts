@@ -1,23 +1,33 @@
-import { photosFor, services, type CategoryId } from './services';
+import { photosFor, serviceUrl, services, type CategoryId } from './services';
 
 export interface Project {
   src: string;
+  /** Project type, shown on the tile, e.g. "Kitchen renovation". */
   alt: string;
   category: CategoryId;
+  /** Town the work was done in, shown after the project type. Real projects only. */
+  town?: string;
   href?: string;
   /** True for stand-in images that are not Piran’s own work. The gallery heading reflects how many are real. */
   placeholder: boolean;
 }
 
-// Stock photos (Pexels, Unsplash and Pixabay; see content/stock/pixabay.txt) stand in until the client supplies photos of real Piran projects. Add real
-// project photos with `placeholder: false`; the heading then changes from "Ideas for your project" to
-// "Ideas and our recent work" (some real) and "Our recent work" (all real).
+// Real Piran projects. Put the photo in public/projects/ (about 2000px wide, .webp or .jpg) and add it here:
+//   { src: '/projects/nuneaton-kitchen.webp', alt: 'Kitchen renovation', town: 'Nuneaton', category: 'kitchens-bathrooms',
+//     href: '/services/kitchen-renovation', placeholder: false },
+// Only photos of work Piran did belong here; the tile reads "Kitchen renovation · Nuneaton".
+// Real projects come first. Once there are any, the heading becomes "Our completed projects".
+const completed: Project[] = [];
+
+// Stock photos (Pexels, Unsplash and Pixabay; see content/stock/pixabay.txt) fill the gallery until there are
+// enough real projects. They carry no town, because they are not Piran's work.
 // Eleven tiles fill the grid exactly: one large tile plus ten small ones over four rows.
 // Each pick is [service, photo index]; the first is the large tile, so it gets the strongest photo.
 const PICKS: [string, number][] = [
   ['kitchen-renovation', 3],
   ['loft-extension', 1],
   ['bathrooms', 1],
+  ['hmo-renovations', 0],
   ['landscaping', 1],
   ['double-storey-extensions', 1],
   ['tiling', 1],
@@ -25,18 +35,30 @@ const PICKS: [string, number][] = [
   ['window-work', 1],
   ['plastering', 1],
   ['kitchen-refits', 1],
-  ['block-paving', 1],
 ];
 
-export const projects: Project[] = PICKS.flatMap(([slug, index]) => {
+const stock: Project[] = PICKS.flatMap(([slug, index]) => {
   const service = services.find((s) => s.slug === slug);
   const photo = service && (photosFor(service)[index] ?? photosFor(service)[0]);
   return service && photo
-    ? [{ src: photo.src, alt: service.name, category: service.category, href: `/services/${service.slug}`, placeholder: true }]
+    ? [{ src: photo.src, alt: service.name, category: service.category, href: serviceUrl(service), placeholder: true }]
     : [];
 });
+
+const GRID = 11;
+export const projects: Project[] = [...completed, ...stock].slice(0, Math.max(GRID, completed.length));
 
 const realCount = projects.filter((p) => !p.placeholder).length;
 
 /** 'none' while every photo is a stand-in, 'some' once real work is mixed in, 'all' when every photo is real. */
 export const realWork: 'none' | 'some' | 'all' = realCount === 0 ? 'none' : realCount === projects.length ? 'all' : 'some';
+
+// Gallery wording: it only says "completed projects" for as much of the gallery as really is Piran's work.
+export const galleryCopy = {
+  none: { eyebrow: 'Gallery', title: 'Ideas for your project.', lede: 'A few ideas to get you started. Ask us for photos of our recent work in your area.' },
+  some: { eyebrow: 'Our work', title: 'Our completed projects.', lede: 'Projects we have finished across Coventry and Warwickshire, alongside a few ideas to get you started.' },
+  all: { eyebrow: 'Our work', title: 'Our completed projects.', lede: 'Projects we have finished across Coventry and Warwickshire.' },
+}[realWork];
+
+/** Tile caption: project type, plus the town for real projects. */
+export const projectLabel = (p: Project) => (p.town ? `${p.alt} · ${p.town}` : p.alt);

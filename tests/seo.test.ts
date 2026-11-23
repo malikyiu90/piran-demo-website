@@ -1,7 +1,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { describe, expect, it } from 'vitest';
-import { services } from '../src/data/services';
+import { serviceUrl, services } from '../src/data/services';
 import { sitemapPaths, sitemapXml } from '../src/lib/sitemap';
 
 // Routes of the .astro pages in src/pages, skipping dynamic routes (covered by the services list) and noindex pages.
@@ -27,7 +27,7 @@ describe('sitemap', () => {
 
   it('lists every service page once', () => {
     const paths = sitemapPaths();
-    for (const s of services) expect(paths.filter((p) => p === `/services/${s.slug}`)).toHaveLength(1);
+    for (const s of services) expect(paths.filter((p) => p === serviceUrl(s))).toHaveLength(1);
     expect(new Set(paths).size).toBe(paths.length);
   });
 
