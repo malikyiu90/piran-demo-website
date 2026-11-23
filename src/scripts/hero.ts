@@ -217,7 +217,31 @@ function initHero(hero: HTMLElement) {
     } else {
       delete hero.dataset.stack;
     }
+    placeIntro(bandBottom);
   }
+
+  // Phones: the intro starts over the lower part of the image (about 70% of the way down it) rather than
+  // hanging from the bottom of the screen, but moves up if needed so its buttons stay clear of the
+  // floating contact button. Cleared on wider screens, where the CSS positions it.
+  const introEl = hero.querySelector<HTMLElement>('.chapter--intro');
+  let lastBand = 0;
+  function placeIntro(bandBottom: number) {
+    lastBand = bandBottom;
+    if (!introEl) return;
+    if (window.innerWidth > 560 || hero.dataset.stack === 'true') {
+      introEl.style.removeProperty('top');
+      introEl.style.removeProperty('bottom');
+      return;
+    }
+    const height = canvas.clientHeight;
+    const minTop = 96;
+    const maxTop = height - introEl.offsetHeight - 92;
+    const top = Math.max(minTop, Math.min(bandBottom * 0.7, maxTop));
+    introEl.style.top = `${Math.round(top)}px`;
+    introEl.style.bottom = 'auto';
+  }
+  // Web fonts change the intro's height once they load.
+  document.fonts?.ready.then(() => { if (lastBand) placeIntro(lastBand); });
 
   function sizeCanvas() {
     const dpr = Math.min(window.devicePixelRatio || 1, 2);

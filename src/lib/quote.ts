@@ -2,6 +2,7 @@
 // Pure and dependency-injected so it can be unit tested without a server or network.
 import { z } from 'astro/zod';
 import { services, serviceSlugs } from '../data/services';
+import { site } from '../data/site';
 
 export const SERVICE_OPTIONS = [...serviceSlugs, 'other'] as const;
 const FIELDS = ['name', 'email', 'phone', 'service', 'message', 'consent', 'submissionId', 'startedAt', 'website'] as const;
@@ -58,7 +59,7 @@ export type QuoteOutcome =
   | { status: 429; body: { ok: false; code: 'rate_limited'; message: string } }
   | { status: 502 | 503; body: { ok: false; code: 'send_failed' | 'not_configured'; message: string } };
 
-const FALLBACK = 'Please call or WhatsApp us on +44 7405 308436 instead.';
+const FALLBACK = `Please call us on ${site.phone} or WhatsApp ${site.mobile} instead.`;
 
 export function createRateLimiter({ limit, windowMs }: { limit: number; windowMs: number }): RateLimiter {
   const hits = new Map<string, { count: number; resetAt: number }>();

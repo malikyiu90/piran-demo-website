@@ -8,8 +8,12 @@ export const site = {
   shortName: 'Piran',
   tagline: 'Construction & renovation in Coventry',
   url: 'https://www.piranbuilders.co.uk',
-  phone: '+44 7405 308436',
-  phoneHref: 'tel:+447405308436',
+  // Office number (Coventry landline), shown alongside the mobile, which is also the WhatsApp number.
+  // Display formats are the client's own.
+  phone: '02475 105455',
+  phoneHref: 'tel:+442475105455',
+  mobile: '+44 7405 308436',
+  mobileHref: 'tel:+447405308436',
   whatsappHref: 'https://wa.me/447405308436',
   email: 'info@piranbuilders.co.uk',
   location: 'Coventry, United Kingdom',
@@ -31,7 +35,8 @@ export const site = {
 export const proof = {
   googleRating: 4.8 as number | null,
   googleReviewCount: 17 as number | null,
-  alwaysOpen: true, // client confirms the phone is answered 24/7
+  // Client's stated response time for free site visits and quotes.
+  fastResponse: true,
 };
 
 export const nav = [

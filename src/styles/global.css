@@ -40,6 +40,8 @@
   --max: 1360px;
   --section-y: clamp(88px, 12vw, 176px);
   --header-h: 96px;
+  /* Height of the phones-only call bar (CallBar.astro). */
+  --callbar-h: 60px;
   --radius: 18px;
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
 }

@@ -1,0 +1,43 @@
+---
+import { site } from '../data/site';
+---
+<!-- Phones only: office and mobile numbers one tap away, plus the quote form. It slides away while the
+     homepage hero is pinned (html.over-hero) so it never covers the hero's own buttons. -->
+<nav class="callbar" aria-label="Call us or get a quote">
+  <a class="callbar__call" href={site.phoneHref}>
+    <span class="callbar__label">Office</span>
+    <span class="callbar__num">{site.phone}</span>
+  </a>
+  <a class="callbar__call" href={site.mobileHref}>
+    <span class="callbar__label">Mobile</span>
+    <span class="callbar__num">{site.mobile}</span>
+  </a>
+  <a class="callbar__quote" href="/contact#quote">Get quote</a>
+</nav>
+
+<style>
+  .callbar { display: none; }
+
+  @media (max-width: 760px) {
+    :global(body) { padding-bottom: calc(var(--callbar-h) + env(safe-area-inset-bottom)); }
+    .callbar {
+      position: fixed; z-index: 55; left: 0; right: 0; bottom: 0;
+      display: grid; grid-template-columns: 1fr 1fr auto;
+      height: calc(var(--callbar-h) + env(safe-area-inset-bottom)); padding-bottom: env(safe-area-inset-bottom);
+      background: rgba(0, 0, 0, 0.94); border-top: 1px solid var(--rule);
+      -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
+      transition: transform 0.35s var(--ease-out);
+    }
+    :global(.over-hero) .callbar { transform: translateY(100%); }
+    .callbar__call {
+      display: grid; align-content: center; gap: 2px; min-width: 0; padding: 0 10px;
+      border-right: 1px solid var(--rule); color: var(--paper); text-decoration: none;
+    }
+    .callbar__label { font-size: 10.5px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--brand-tint); }
+    .callbar__num { font-size: clamp(12.5px, 3.6vw, 14.5px); font-weight: 650; font-variant-numeric: tabular-nums; white-space: nowrap; }
+    .callbar__quote {
+      display: grid; place-items: center; padding: 0 16px;
+      background: var(--gold-fill); color: var(--on-brand); font-size: 14px; font-weight: 700; text-decoration: none; white-space: nowrap;
+    }
+  }
+</style>

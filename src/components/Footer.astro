@@ -71,8 +71,9 @@ const year = new Date().getFullYear();
     <div class="footer-col">
       <h2 class="footer-heading">Contact</h2>
       <ul role="list" class="footer-contact">
-        <li><a href={site.phoneHref}>{site.phone}</a></li>
-        <li><a href={site.whatsappHref} target="_blank" rel="noopener">WhatsApp</a></li>
+        <li>Office: <a href={site.phoneHref}>{site.phone}</a></li>
+        <li>Mobile: <a href={site.mobileHref}>{site.mobile}</a></li>
+        <li><a href={site.whatsappHref} target="_blank" rel="noopener">WhatsApp {site.mobile}</a></li>
         <li><a href={`mailto:${site.email}`}>{site.email}</a></li>
         <li>{site.location}</li>
       </ul>

@@ -2,7 +2,8 @@
 import { site } from '../data/site';
 
 const actions = [
-  { label: 'Phone', href: site.phoneHref, external: false, icon: 'M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1z', fill: true },
+  { label: 'Office', href: site.phoneHref, external: false, icon: 'M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1z', fill: true },
+  { label: 'Mobile', href: site.mobileHref, external: false, icon: 'M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1z', fill: true },
   { label: 'Email', href: `mailto:${site.email}`, external: false, icon: 'M3 6h18v12H3V6zm0 0l9 7 9-7', fill: false },
   { label: 'WhatsApp', href: site.whatsappHref, external: true, icon: 'M3.5 20.5l1.3-4.2A8.5 8.5 0 1 1 8 19.4l-4.5 1.1zM9 8.5c.2 2.6 2.7 5.4 5.7 6.2l1.3-1.4-1.8-1-1 .8c-1-.4-2-1.4-2.4-2.4l.8-1-1-1.8L9 8.5z', fill: false },
   { label: 'Book a quote', href: '/contact#quote', external: false, icon: 'M7 3h7l4 4v14H7V3zM14 3v4h4M10 12h5M10 15.5h5', fill: false },
@@ -102,5 +103,10 @@ const actions = [
   }
   @media (prefers-reduced-motion: reduce) {
     .dock__menu li, .dock__toggle svg { transition: none; }
+  }
+  /* Phones: sit above the call bar, and drop back down while the bar is hidden over the hero. */
+  @media (max-width: 760px) {
+    .dock { bottom: calc(var(--callbar-h) + 12px + env(safe-area-inset-bottom)); transition: bottom 0.35s var(--ease-out); }
+    :global(.over-hero) .dock { bottom: max(18px, env(safe-area-inset-bottom)); }
   }
 </style>

@@ -36,16 +36,20 @@ const isCurrent = (href: string) => path === href || path.startsWith(`${href}/`)
       ) : (
         <li><a href={item.href} aria-current={isCurrent(item.href) ? 'page' : undefined}>{item.label}</a></li>
       ))}
-      <li class="nav__mobile-only"><a href={site.phoneHref}>Call {site.phone}</a></li>
+      <li class="nav__mobile-only"><a href={site.phoneHref}>Office {site.phone}</a></li>
+      <li class="nav__mobile-only"><a href={site.mobileHref}>Mobile {site.mobile}</a></li>
       <li class="nav__mobile-only"><a href="/contact#quote" class="nav__mobile-cta">Get a free quote</a></li>
     </ul>
   </nav>
 
   <div class="header-actions">
-    <a class="header-phone" href={site.phoneHref}>
+    <div class="header-phones">
       <svg aria-hidden="true" viewBox="0 0 24 24" width="16" height="16"><path fill="currentColor" d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1z"/></svg>
-      <span>{site.phone}</span>
-    </a>
+      <div class="header-phones__list">
+        <a href={site.phoneHref}><span class="header-phones__label">Office</span> {site.phone}</a>
+        <a href={site.mobileHref}><span class="header-phones__label">Mobile</span> {site.mobile}</a>
+      </div>
+    </div>
     <a class="btn btn--primary btn--sm header-cta" href="/contact#quote">Free consultation</a>
     <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="nav-menu" data-menu-toggle>
       <span class="sr-only" data-menu-label>Open menu</span>
@@ -141,8 +145,12 @@ const isCurrent = (href: string) => path === href || path.startsWith(`${href}/`)
   .nav__list .mega__all:hover { color: var(--brand-deep); }
 
   .header-actions { display: flex; align-items: center; gap: 20px; }
-  .header-phone { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-width: 44px; min-height: 44px; font-size: 14px; font-weight: 600; text-decoration: none; color: var(--paper-dim); font-variant-numeric: tabular-nums; }
-  .header-phone:hover { color: var(--paper); }
+  /* Office and mobile numbers stacked; desktop only (phones get the sticky call bar). */
+  .header-phones { display: flex; align-items: center; gap: 10px; color: var(--brand-tint); }
+  .header-phones__list { display: grid; gap: 2px; }
+  .header-phones__list a { font-size: 14px; font-weight: 600; line-height: 1.25; text-decoration: none; color: var(--paper-dim); font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .header-phones__list a:hover { color: var(--paper); }
+  .header-phones__label { display: inline-block; min-width: 5.4em; margin-right: 6px; font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--brand-tint); }
 
   .menu-toggle {
     display: none; position: relative; width: 44px; height: 44px; padding: 0;
@@ -154,13 +162,16 @@ const isCurrent = (href: string) => path === href || path.startsWith(`${href}/`)
   .menu-toggle[aria-expanded="true"] .menu-toggle__bar:nth-of-type(2) { transform: rotate(45deg); }
   .menu-toggle[aria-expanded="true"] .menu-toggle__bar:nth-of-type(3) { transform: rotate(-45deg); }
 
+  @media (max-width: 1280px) {
+    .header-phones__label { display: none; }
+    .header-phones svg { display: none; }
+  }
   @media (max-width: 1100px) {
-    .header-phone span { display: none; }
     .nav__list { gap: 24px; }
   }
 
   @media (max-width: 1024px) {
-    .header-phone { display: none; }
+    .header-phones { display: none; }
     .menu-toggle { display: block; }
     .nav__list {
       position: fixed; inset: 0 0 auto 0; z-index: -1;

@@ -140,6 +140,14 @@ describe('handleQuote', () => {
     expect(out.status).toBe(503);
     expect(out.body).toMatchObject({ code: 'not_configured' });
   });
+
+  it('points people to both phone numbers when sending fails', async () => {
+    const { d } = deps({ send: async () => { throw new Error('down'); } });
+    const out = await handleQuote(valid(), 'ip', d);
+    if (out.body.ok || !('message' in out.body)) throw new Error('expected a message');
+    expect(out.body.message).toContain('02475 105455');
+    expect(out.body.message).toContain('+44 7405 308436');
+  });
 });
 
 describe('formatEmail', () => {
