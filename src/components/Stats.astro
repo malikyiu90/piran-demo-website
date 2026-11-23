@@ -7,13 +7,15 @@ interface Stat {
   star?: boolean;
   label: string;
   text: string;
+  /** Where the figure can be checked, e.g. the Google Business profile. */
+  href?: string | null;
 }
 
 // Client-supplied figures first, then facts the site already states (service count, insurance in the terms,
 // guarantee in the terms, free consultation in the process). The first four available are shown, so the grid never has a gap.
 const stats = [
-  proof.googleRating && { value: proof.googleRating.toFixed(1), star: true, label: 'Google rating', text: 'Consistently 5-star rated by homeowners across Coventry.' },
-  proof.googleReviewCount && { value: `${proof.googleReviewCount}+`, label: 'Verified reviews', text: 'Every review is from a real client who trusted us with their home.' },
+  proof.googleRating && { value: proof.googleRating.toFixed(1), star: true, label: 'Google rating', text: `Rated ${proof.googleRating.toFixed(1)} out of 5 by our customers on Google.`, href: proof.googleReviewsUrl },
+  proof.googleReviewCount && { value: `${proof.googleReviewCount}+`, label: 'Google reviews', text: 'Read what homeowners say about working with us.', href: proof.googleReviewsUrl },
   proof.fastResponse && { value: '24–48h', label: 'Fast response', text: 'Free site visits & quotes within 24–48 hours.' },
   { value: `${services.length}`, label: 'Services offered', text: 'From foundations to finishing, every trade under one roof.' },
   { value: '£1m', label: 'Fully insured', text: 'Public liability cover on every job, plus at least £5m employers’ liability.' },
@@ -30,6 +32,7 @@ const stats = [
           <div>
             <h2 class="stat__label">{s.label}</h2>
             <p class="stat__text">{s.text}</p>
+            {s.href && <a class="stat__link" href={s.href} target="_blank" rel="noopener">Read all reviews on Google <span aria-hidden="true">→</span></a>}
           </div>
         </li>
       ))}
@@ -53,6 +56,8 @@ const stats = [
   }
   .stat__star { font-size: 0.82em; margin-left: 2px; }
   .stat__label { font-size: 13px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: #fff; }
+  .stat__link { display: inline-block; margin-top: 12px; font-size: 14px; font-weight: 650; color: var(--brand-tint); text-decoration: none; }
+  .stat__link:hover { text-decoration: underline; }
   .stat__text { margin-top: 8px; font-size: 15px; line-height: 1.55; color: var(--char-dim); }
 
   @media (max-width: 1024px) {

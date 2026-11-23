@@ -29,12 +29,13 @@ export const site = {
   },
 } as const;
 
-// Figures for the stats strip that only the client can supply (null / false hides the box).
-// Supplied by the client from their own Google Business profile, which they share with Mazzy Construction Ltd,
-// November 2026. Update these when the profile changes.
+// Figures for the stats strip and reviews section that only the client can supply (null / false hides them).
+// Rating and count from the client's Google Business profile (CID 18147134516182513345), November 2026.
+// Update them when the profile changes; visitors can check them through googleReviewsUrl.
 export const proof = {
-  googleRating: 4.8 as number | null,
-  googleReviewCount: 17 as number | null,
+  googleRating: 5.0 as number | null,
+  googleReviewCount: 52 as number | null,
+  googleReviewsUrl: 'https://maps.google.com/maps?cid=18147134516182513345' as string | null,
   // Client's stated response time for free site visits and quotes.
   fastResponse: true,
 };

@@ -1,47 +1,100 @@
 ---
-import { reviewProfileUrl, reviews } from '../data/reviews';
+import { reviews } from '../data/reviews';
+import { proof } from '../data/site';
 
-const initials = (name: string) => name.split(/\s+/).map((p) => p[0]).join('').replace(/[^A-Za-z]/g, '').slice(0, 2).toUpperCase();
 // Enough cards to fill a wide screen before the loop repeats.
 const loop = reviews.length < 6 ? [...reviews, ...reviews] : reviews;
+const rating = proof.googleRating;
+const count = proof.googleReviewCount;
+const url = proof.googleReviewsUrl;
+const stars = (n: number) => '★'.repeat(Math.round(n)) + '☆'.repeat(5 - Math.round(n));
 ---
-{reviews.length > 0 && (
+{(url || reviews.length > 0) && (
   <section class="reviews section on-light" id="reviews" aria-labelledby="reviews-title">
     <div class="container reviews__head">
       <div>
         <p class="eyebrow" data-reveal>Reviews</p>
         <h2 class="h2" id="reviews-title" data-reveal>What our customers say.</h2>
+        {rating && count && (
+          <p class="lede reviews__lede" data-reveal>Rated {rating.toFixed(1)} out of 5 from {count} reviews on Google.</p>
+        )}
       </div>
-      {reviewProfileUrl && <a class="btn btn--outline-dark" href={reviewProfileUrl} target="_blank" rel="noopener" data-reveal>Read all reviews</a>}
+
+      {url && (
+        <div class="google" data-reveal>
+          <a class="google__badge" href={url} target="_blank" rel="noopener" aria-label={`Google rating ${rating?.toFixed(1)} out of 5 from ${count} reviews. Read them on Google.`}>
+            <svg class="google__logo" aria-hidden="true" viewBox="0 0 48 48" width="40" height="40">
+              <path fill="#FFC107" d="M43.6 20.5H42V20H24v8h11.3C33.7 32.7 29.2 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34 6.1 29.3 4 24 4 13 4 4 13 4 24s9 20 20 20 20-9 20-20c0-1.3-.1-2.4-.4-3.5z"/>
+              <path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.7 15.1 19 12 24 12c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34 6.1 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"/>
+              <path fill="#4CAF50" d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.2 35.1 26.7 36 24 36c-5.2 0-9.6-3.3-11.3-8l-6.5 5C9.5 39.6 16.2 44 24 44z"/>
+              <path fill="#1976D2" d="M43.6 20.5H42V20H24v8h11.3c-.8 2.2-2.2 4.2-4.1 5.6l6.2 5.2C37 39.2 44 34 44 24c0-1.3-.1-2.4-.4-3.5z"/>
+            </svg>
+            <span class="google__body">
+              {rating && <span class="google__score">{rating.toFixed(1)} <span class="google__stars" aria-hidden="true">{stars(rating)}</span></span>}
+              {count && <span class="google__count">{count} Google reviews</span>}
+            </span>
+          </a>
+          <a class="btn btn--primary" href={url} target="_blank" rel="noopener">
+            Read All Reviews on Google
+            <svg aria-hidden="true" viewBox="0 0 24 24" width="18" height="18"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </a>
+        </div>
+      )}
     </div>
 
-    <div class="reviews__viewport" data-reveal>
-      <div class="reviews__track">
-        {[loop, loop].map((set, copy) => (
-          <ul class="reviews__set" role="list" aria-hidden={copy === 1 ? 'true' : undefined}>
-            {set.map((r, i) => (
-              <li class="card">
-                <div class="card__head">
-                  <span class={`card__avatar card__avatar--${i % 2 ? 'dark' : 'blue'}`} aria-hidden="true">{initials(r.name)}</span>
-                  <div>
-                    <p class="card__name">{r.name}</p>
-                    {r.context && <p class="card__context">{r.context}</p>}
+    {reviews.length > 0 && (
+      <div class="reviews__viewport" data-reveal>
+        <div class="reviews__track">
+          {[loop, loop].map((set, copy) => (
+            <ul class="reviews__set" role="list" aria-hidden={copy === 1 ? 'true' : undefined}>
+              {set.map((r) => (
+                <li class="card">
+                  <!-- Reviewers' names are not shown, at the client's request. -->
+                  <div class="card__head">
+                    <span class="card__avatar" aria-hidden="true">
+                      <svg viewBox="0 0 48 48" width="22" height="22">
+                        <path fill="#FFC107" d="M43.6 20.5H42V20H24v8h11.3C33.7 32.7 29.2 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34 6.1 29.3 4 24 4 13 4 4 13 4 24s9 20 20 20 20-9 20-20c0-1.3-.1-2.4-.4-3.5z"/>
+                        <path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.7 15.1 19 12 24 12c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34 6.1 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"/>
+                        <path fill="#4CAF50" d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.2 35.1 26.7 36 24 36c-5.2 0-9.6-3.3-11.3-8l-6.5 5C9.5 39.6 16.2 44 24 44z"/>
+                        <path fill="#1976D2" d="M43.6 20.5H42V20H24v8h11.3c-.8 2.2-2.2 4.2-4.1 5.6l6.2 5.2C37 39.2 44 34 44 24c0-1.3-.1-2.4-.4-3.5z"/>
+                      </svg>
+                    </span>
+                    <div>
+                      <p class="card__name">{r.source} review</p>
+                      {r.date && <p class="card__context">{r.date}</p>}
+                    </div>
+                    {r.rating && <span class="card__stars" aria-label={`${r.rating} out of 5 stars`}>{stars(r.rating)}</span>}
                   </div>
-                  <svg class="card__mark" aria-hidden="true" viewBox="0 0 32 24" width="34" height="26"><path fill="currentColor" d="M0 24V14C0 6 4 1.5 12 0l1.5 3C9 4.5 7 7.5 7 11h6v13H0zm19 0V14c0-8 4-12.5 12-14l1.5 3C28 4.5 26 7.5 26 11h6v13H19z"/></svg>
-                </div>
-                <blockquote class="card__quote">{r.quote}</blockquote>
-              </li>
-            ))}
-          </ul>
-        ))}
+                  <blockquote class="card__quote">{r.quote}</blockquote>
+                </li>
+              ))}
+            </ul>
+          ))}
+        </div>
       </div>
-    </div>
+    )}
   </section>
 )}
 
 <style>
-  .reviews__head { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 24px; margin-bottom: clamp(40px, 5vw, 64px); }
+  .reviews__head { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 32px; margin-bottom: clamp(40px, 5vw, 64px); }
   .reviews__head .eyebrow { margin-bottom: 20px; }
+  .reviews__lede { margin-top: 18px; }
+  /* No review cards yet: the heading row is the whole section. */
+  .reviews__head:last-child { margin-bottom: 0; }
+
+  .google { display: flex; flex-wrap: wrap; align-items: center; gap: 16px; }
+  .google__badge {
+    display: inline-flex; align-items: center; gap: 14px; padding: 14px 20px;
+    border: 1px solid var(--rule); border-radius: 14px; background: var(--sand-2);
+    color: var(--char); text-decoration: none; transition: border-color 0.25s ease;
+  }
+  .google__badge:hover { border-color: var(--brand-tint); }
+  .google__logo { flex: none; background: #fff; border-radius: 50%; padding: 6px; }
+  .google__body { display: grid; gap: 2px; }
+  .google__score { font: 800 26px/1 var(--font-display); letter-spacing: -0.02em; }
+  .google__stars { margin-left: 4px; font-size: 18px; letter-spacing: 2px; color: var(--brand-tint); }
+  .google__count { font-size: 13.5px; color: var(--char-dim); }
 
   .reviews__viewport {
     overflow: hidden;
@@ -55,13 +108,16 @@ const loop = reviews.length < 6 ? [...reviews, ...reviews] : reviews;
 
   .card { width: clamp(300px, 30vw, 400px); padding: 32px; background: var(--sand-2); border: 1px solid var(--rule); display: grid; gap: 22px; align-content: start; }
   .card__head { display: grid; grid-template-columns: 46px 1fr auto; gap: 14px; align-items: center; }
-  .card__avatar { display: grid; place-items: center; width: 46px; height: 46px; border-radius: 50%; color: #fff; font-size: 14px; font-weight: 700; letter-spacing: 0.02em; }
-  .card__avatar--blue { background: var(--gold-fill); color: var(--on-brand); }
-  .card__avatar--dark { background: #2a2a2a; border: 1px solid var(--brand-deep); }
+  .card__avatar { display: grid; place-items: center; width: 46px; height: 46px; border-radius: 50%; background: #fff; }
   .card__name { font-weight: 700; font-size: 15px; }
   .card__context { font-size: 13px; color: var(--char-faint); margin-top: 2px; }
-  .card__mark { color: rgba(240, 199, 90, 0.35); align-self: start; }
+  .card__stars { align-self: start; font-size: 15px; letter-spacing: 1px; color: var(--brand-tint); }
   .card__quote { margin: 0; font-size: 17px; line-height: 1.6; color: var(--char); }
+
+  @media (max-width: 640px) {
+    .google { width: 100%; }
+    .google .btn { width: 100%; }
+  }
 
   @media (prefers-reduced-motion: reduce) {
     .reviews__viewport { overflow-x: auto; -webkit-mask-image: none; mask-image: none; padding-inline: var(--gutter); }
