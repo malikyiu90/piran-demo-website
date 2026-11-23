@@ -25,7 +25,7 @@ export const site = {
   social: {
     facebook: 'https://www.facebook.com/3piran/' as string | null,
     // Add the client's Instagram and TikTok profile links here; their footer icons appear once set.
-    instagram: null as string | null,
+    instagram: 'https://www.instagram.com/piran9636/' as string | null,
     tiktok: null as string | null,
     youtube: null as string | null,
   },

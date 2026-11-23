@@ -8,16 +8,37 @@ export interface Project {
   /** Town the work was done in, shown after the project type. Real projects only. */
   town?: string;
   href?: string;
+  /** Image candidates with their real widths, when they differ from the stock 960w / 2560w pair. */
+  srcset?: string;
   /** True for stand-in images that are not Piran’s own work. The gallery heading reflects how many are real. */
   placeholder: boolean;
 }
 
-// Real Piran projects. Put the photo in public/projects/ (about 2000px wide, .webp or .jpg) and add it here:
-//   { src: '/projects/nuneaton-kitchen.webp', alt: 'Kitchen renovation', town: 'Nuneaton', category: 'kitchens-bathrooms',
-//     href: '/services/kitchen-renovation', placeholder: false },
-// Only photos of work Piran did belong here; the tile reads "Kitchen renovation · Nuneaton".
-// Real projects come first. Once there are any, the heading becomes "Our completed projects".
-const completed: Project[] = [];
+// Real Piran projects. Save the photo as public/gallery/project-<name>.webp (up to 2000px) plus a 960px copy in
+// public/gallery/sm/, and add it here; add `town` when it is known and the tile reads "Kitchen renovation · Nuneaton".
+// Only photos of work Piran did belong here. Real projects come first; once there are any, the heading becomes
+// "Our Completed Projects".
+//
+// From the client's own Facebook page (facebook.com/3piran), November 2026. Towns were not given, so none are shown.
+// Facebook serves 2000x924 landscape or 924x2000 portrait photos; the 960px copies are 960 or 444 wide to match.
+const real = (name: string, alt: string, category: CategoryId, href: string, portrait = false): Project => ({
+  src: `/gallery/project-${name}.webp`,
+  srcset: `/gallery/sm/project-${name}.webp ${portrait ? 444 : 960}w, /gallery/project-${name}.webp ${portrait ? 924 : 2000}w`,
+  alt, category, href, placeholder: false,
+});
+const completed: Project[] = [
+  real('open-plan-kitchen-1', 'Open-plan kitchen', 'kitchens-bathrooms', '/services/kitchen-renovation'),
+  real('flat-roof-1', 'Flat roof', 'exterior', '/services/roof-work'),
+  real('downstairs-wc-1', 'Downstairs WC', 'kitchens-bathrooms', '/services/bathrooms', true),
+  real('hallway-stairs-1', 'Hallway & staircase', 'interiors', '/services/decorating', true),
+  real('open-plan-kitchen-2', 'Open-plan kitchen', 'kitchens-bathrooms', '/services/kitchen-renovation', true),
+  real('flat-roof-2', 'Flat roof', 'exterior', '/services/roof-work'),
+  real('stairs-flooring-1', 'Stair flooring', 'interiors', '/services/tile-and-flooring', true),
+  real('open-plan-kitchen-3', 'Open-plan kitchen', 'kitchens-bathrooms', '/services/kitchen-renovation'),
+  real('downstairs-wc-2', 'Downstairs WC', 'kitchens-bathrooms', '/services/bathrooms', true),
+  real('flat-roof-3', 'Flat roof', 'exterior', '/services/roof-work', true),
+  real('open-plan-kitchen-4', 'Open-plan kitchen', 'kitchens-bathrooms', '/services/kitchen-renovation', true),
+];
 
 // Stock photos (Pexels, Unsplash and Pixabay; see content/stock/pixabay.txt) fill the gallery until there are
 // enough real projects. They carry no town, because they are not Piran's work.
@@ -56,8 +77,8 @@ export const realWork: 'none' | 'some' | 'all' = realCount === 0 ? 'none' : real
 // Gallery wording: it only says "completed projects" for as much of the gallery as really is Piran's work.
 export const galleryCopy = {
   none: { eyebrow: 'Gallery', title: 'Ideas for your project.', lede: 'A few ideas to get you started. Ask us for photos of our recent work in your area.' },
-  some: { eyebrow: 'Our work', title: 'Our completed projects.', lede: 'Projects we have finished across Coventry and Warwickshire, alongside a few ideas to get you started.' },
-  all: { eyebrow: 'Our work', title: 'Our completed projects.', lede: 'Projects we have finished across Coventry and Warwickshire.' },
+  some: { eyebrow: 'Our work', title: 'Our Completed Projects.', lede: 'Recent work by our team, alongside a few ideas to get you started.' },
+  all: { eyebrow: 'Our work', title: 'Our Completed Projects.', lede: 'Recent work by our team: kitchens, bathrooms, interiors and roofs, finished properly.' },
 }[realWork];
 
 /** Tile caption: project type, plus the town for real projects. */
