@@ -21,7 +21,7 @@ export const site = {
   country: 'GB',
   // The content="..." code from Google Search Console's "HTML tag" verification method; null leaves the tag out.
   // Not needed when the domain is verified through a DNS record instead.
-  googleSiteVerification: null as string | null,
+  googleSiteVerification: 'bSIKS-Twww_W_zcZOH8-m51oe75LWLxWdbsbowQGck0' as string | null,
   social: {
     facebook: 'https://www.facebook.com/3piran/' as string | null,
     // Add the client's Instagram and TikTok profile links here; their footer icons appear once set.
